@@ -18,6 +18,7 @@ USER_AGENT_EXTERNE = "Tema2-TAD-Masuratori/1.0 (educational project)"
 METODE_HTTP = ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE"]
 METODE_COLECTIE = METODE_HTTP
 METODE_ELEMENT = METODE_HTTP
+CORS_ALLOW_HEADERS = "Content-Type, Authorization, Accept"
 
 
 def acum_utc_iso():
@@ -171,6 +172,14 @@ def metode_cu_head_unice(metode):
 
 def header_allow_pentru(metode):
     return ", ".join(metode_cu_head_unice(metode))
+
+
+@app.after_request
+def adauga_antete_cors(raspuns):
+    raspuns.headers["Access-Control-Allow-Origin"] = "*"
+    raspuns.headers["Access-Control-Allow-Methods"] = header_allow_pentru(METODE_HTTP)
+    raspuns.headers["Access-Control-Allow-Headers"] = CORS_ALLOW_HEADERS
+    return raspuns
 
 
 def raspuns_options(ruta, metode, descriere_resursa):

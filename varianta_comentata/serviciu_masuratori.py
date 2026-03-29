@@ -38,1853 +38,1871 @@ METODE_HTTP = ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRAC
 METODE_COLECTIE = METODE_HTTP
 # [AUTO-COMMENT] Linia 20.
 METODE_ELEMENT = METODE_HTTP
-# [AUTO-COMMENT] Linia 21: linie goală.
-
+# [AUTO-COMMENT] Linia 21.
+CORS_ALLOW_HEADERS = "Content-Type, Authorization, Accept"
 # [AUTO-COMMENT] Linia 22: linie goală.
 
-# [AUTO-COMMENT] Linia 23.
-def acum_utc_iso():
-# [AUTO-COMMENT] Linia 24.
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-# [AUTO-COMMENT] Linia 25: linie goală.
+# [AUTO-COMMENT] Linia 23: linie goală.
 
+# [AUTO-COMMENT] Linia 24.
+def acum_utc_iso():
+# [AUTO-COMMENT] Linia 25.
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 # [AUTO-COMMENT] Linia 26: linie goală.
 
-# [AUTO-COMMENT] Linia 27.
-def lista_ordonata():
-# [AUTO-COMMENT] Linia 28.
-    return [baza_masuratori[item_id] for item_id in sorted(baza_masuratori.keys())]
-# [AUTO-COMMENT] Linia 29: linie goală.
+# [AUTO-COMMENT] Linia 27: linie goală.
 
+# [AUTO-COMMENT] Linia 28.
+def lista_ordonata():
+# [AUTO-COMMENT] Linia 29.
+    return [baza_masuratori[item_id] for item_id in sorted(baza_masuratori.keys())]
 # [AUTO-COMMENT] Linia 30: linie goală.
 
-# [AUTO-COMMENT] Linia 31.
-def prima_valoare(payload, chei):
-# [AUTO-COMMENT] Linia 32.
-    for cheie in chei:
-# [AUTO-COMMENT] Linia 33.
-        if cheie in payload:
-# [AUTO-COMMENT] Linia 34.
-            return payload.get(cheie)
-# [AUTO-COMMENT] Linia 35.
-    return None
-# [AUTO-COMMENT] Linia 36: linie goală.
+# [AUTO-COMMENT] Linia 31: linie goală.
 
+# [AUTO-COMMENT] Linia 32.
+def prima_valoare(payload, chei):
+# [AUTO-COMMENT] Linia 33.
+    for cheie in chei:
+# [AUTO-COMMENT] Linia 34.
+        if cheie in payload:
+# [AUTO-COMMENT] Linia 35.
+            return payload.get(cheie)
+# [AUTO-COMMENT] Linia 36.
+    return None
 # [AUTO-COMMENT] Linia 37: linie goală.
 
-# [AUTO-COMMENT] Linia 38.
-def valoare_numerica(brut):
+# [AUTO-COMMENT] Linia 38: linie goală.
+
 # [AUTO-COMMENT] Linia 39.
-    if isinstance(brut, bool):
+def valoare_numerica(brut):
 # [AUTO-COMMENT] Linia 40.
-        return None
+    if isinstance(brut, bool):
 # [AUTO-COMMENT] Linia 41.
-    if isinstance(brut, (int, float)):
+        return None
 # [AUTO-COMMENT] Linia 42.
-        valoare = float(brut)
+    if isinstance(brut, (int, float)):
 # [AUTO-COMMENT] Linia 43.
-    elif isinstance(brut, str):
+        valoare = float(brut)
 # [AUTO-COMMENT] Linia 44.
-        text = brut.strip()
+    elif isinstance(brut, str):
 # [AUTO-COMMENT] Linia 45.
-        if not text:
+        text = brut.strip()
 # [AUTO-COMMENT] Linia 46.
-            return None
+        if not text:
 # [AUTO-COMMENT] Linia 47.
-        try:
-# [AUTO-COMMENT] Linia 48.
-            valoare = float(text)
-# [AUTO-COMMENT] Linia 49.
-        except ValueError:
-# [AUTO-COMMENT] Linia 50.
             return None
+# [AUTO-COMMENT] Linia 48.
+        try:
+# [AUTO-COMMENT] Linia 49.
+            valoare = float(text)
+# [AUTO-COMMENT] Linia 50.
+        except ValueError:
 # [AUTO-COMMENT] Linia 51.
-    else:
+            return None
 # [AUTO-COMMENT] Linia 52.
+    else:
+# [AUTO-COMMENT] Linia 53.
         return None
-# [AUTO-COMMENT] Linia 53: linie goală.
+# [AUTO-COMMENT] Linia 54: linie goală.
 
-# [AUTO-COMMENT] Linia 54.
-    if valoare < 0:
 # [AUTO-COMMENT] Linia 55.
+    if valoare < 0:
+# [AUTO-COMMENT] Linia 56.
         return None
-# [AUTO-COMMENT] Linia 56: linie goală.
+# [AUTO-COMMENT] Linia 57: linie goală.
 
-# [AUTO-COMMENT] Linia 57.
-    if valoare.is_integer():
 # [AUTO-COMMENT] Linia 58.
-        return int(valoare)
+    if valoare.is_integer():
 # [AUTO-COMMENT] Linia 59.
+        return int(valoare)
+# [AUTO-COMMENT] Linia 60.
     return valoare
-# [AUTO-COMMENT] Linia 60: linie goală.
-
 # [AUTO-COMMENT] Linia 61: linie goală.
 
-# [AUTO-COMMENT] Linia 62.
-def text_scurt(valoare):
-# [AUTO-COMMENT] Linia 63.
-    if valoare is None:
-# [AUTO-COMMENT] Linia 64.
-        return None
-# [AUTO-COMMENT] Linia 65.
-    if not isinstance(valoare, str):
-# [AUTO-COMMENT] Linia 66.
-        return None
-# [AUTO-COMMENT] Linia 67.
-    curat = valoare.strip()
-# [AUTO-COMMENT] Linia 68.
-    return curat if curat else None
-# [AUTO-COMMENT] Linia 69: linie goală.
+# [AUTO-COMMENT] Linia 62: linie goală.
 
+# [AUTO-COMMENT] Linia 63.
+def text_scurt(valoare):
+# [AUTO-COMMENT] Linia 64.
+    if valoare is None:
+# [AUTO-COMMENT] Linia 65.
+        return None
+# [AUTO-COMMENT] Linia 66.
+    if not isinstance(valoare, str):
+# [AUTO-COMMENT] Linia 67.
+        return None
+# [AUTO-COMMENT] Linia 68.
+    curat = valoare.strip()
+# [AUTO-COMMENT] Linia 69.
+    return curat if curat else None
 # [AUTO-COMMENT] Linia 70: linie goală.
 
-# [AUTO-COMMENT] Linia 71.
-def valideaza_etichete(etichete):
+# [AUTO-COMMENT] Linia 71: linie goală.
+
 # [AUTO-COMMENT] Linia 72.
-    if etichete is None:
+def valideaza_etichete(etichete):
 # [AUTO-COMMENT] Linia 73.
-        return None, None
+    if etichete is None:
 # [AUTO-COMMENT] Linia 74.
-    if not isinstance(etichete, list):
+        return None, None
 # [AUTO-COMMENT] Linia 75.
+    if not isinstance(etichete, list):
+# [AUTO-COMMENT] Linia 76.
         return None, "etichete/tags trebuie să fie listă de texte."
-# [AUTO-COMMENT] Linia 76: linie goală.
+# [AUTO-COMMENT] Linia 77: linie goală.
 
-# [AUTO-COMMENT] Linia 77.
-    rezultat = []
 # [AUTO-COMMENT] Linia 78.
-    for element in etichete:
+    rezultat = []
 # [AUTO-COMMENT] Linia 79.
-        if not isinstance(element, str) or not element.strip():
+    for element in etichete:
 # [AUTO-COMMENT] Linia 80.
-            return None, "fiecare etichetă trebuie să fie text nevid."
+        if not isinstance(element, str) or not element.strip():
 # [AUTO-COMMENT] Linia 81.
-        rezultat.append(element.strip())
+            return None, "fiecare etichetă trebuie să fie text nevid."
 # [AUTO-COMMENT] Linia 82.
+        rezultat.append(element.strip())
+# [AUTO-COMMENT] Linia 83.
     return rezultat, None
-# [AUTO-COMMENT] Linia 83: linie goală.
-
 # [AUTO-COMMENT] Linia 84: linie goală.
 
-# [AUTO-COMMENT] Linia 85.
-def valideaza_interval(interval):
-# [AUTO-COMMENT] Linia 86.
-    if interval is None:
-# [AUTO-COMMENT] Linia 87.
-        return None, None
-# [AUTO-COMMENT] Linia 88.
-    numeric = valoare_numerica(interval)
-# [AUTO-COMMENT] Linia 89.
-    if numeric is None or numeric == 0:
-# [AUTO-COMMENT] Linia 90.
-        return None, "sampling_interval_seconds/frecventa_secunde trebuie să fie numeric și > 0."
-# [AUTO-COMMENT] Linia 91.
-    return numeric, None
-# [AUTO-COMMENT] Linia 92: linie goală.
+# [AUTO-COMMENT] Linia 85: linie goală.
 
+# [AUTO-COMMENT] Linia 86.
+def valideaza_interval(interval):
+# [AUTO-COMMENT] Linia 87.
+    if interval is None:
+# [AUTO-COMMENT] Linia 88.
+        return None, None
+# [AUTO-COMMENT] Linia 89.
+    numeric = valoare_numerica(interval)
+# [AUTO-COMMENT] Linia 90.
+    if numeric is None or numeric == 0:
+# [AUTO-COMMENT] Linia 91.
+        return None, "sampling_interval_seconds/frecventa_secunde trebuie să fie numeric și > 0."
+# [AUTO-COMMENT] Linia 92.
+    return numeric, None
 # [AUTO-COMMENT] Linia 93: linie goală.
 
-# [AUTO-COMMENT] Linia 94.
-def valideaza_payload(payload):
+# [AUTO-COMMENT] Linia 94: linie goală.
+
 # [AUTO-COMMENT] Linia 95.
-    if not isinstance(payload, dict):
+def valideaza_payload(payload):
 # [AUTO-COMMENT] Linia 96.
+    if not isinstance(payload, dict):
+# [AUTO-COMMENT] Linia 97.
         return None, "Body trebuie să fie obiect JSON."
-# [AUTO-COMMENT] Linia 97: linie goală.
+# [AUTO-COMMENT] Linia 98: linie goală.
 
-# [AUTO-COMMENT] Linia 98.
-    statie = text_scurt(prima_valoare(payload, ["station", "statie", "punct_masurare"]))
 # [AUTO-COMMENT] Linia 99.
-    indicator = text_scurt(prima_valoare(payload, ["metric", "indicator", "parametru"]))
+    statie = text_scurt(prima_valoare(payload, ["station", "statie", "punct_masurare"]))
 # [AUTO-COMMENT] Linia 100.
-    unitate = text_scurt(prima_valoare(payload, ["unit", "unitate", "unitate_masura"]))
+    indicator = text_scurt(prima_valoare(payload, ["metric", "indicator", "parametru"]))
 # [AUTO-COMMENT] Linia 101.
+    unitate = text_scurt(prima_valoare(payload, ["unit", "unitate", "unitate_masura"]))
+# [AUTO-COMMENT] Linia 102.
     valoare = valoare_numerica(prima_valoare(payload, ["value", "valoare", "valoare_masurata"]))
-# [AUTO-COMMENT] Linia 102: linie goală.
+# [AUTO-COMMENT] Linia 103: linie goală.
 
-# [AUTO-COMMENT] Linia 103.
-    if not statie:
 # [AUTO-COMMENT] Linia 104.
-        return None, "Lipsește station/statie/punct_masurare."
+    if not statie:
 # [AUTO-COMMENT] Linia 105.
-    if not indicator:
+        return None, "Lipsește station/statie/punct_masurare."
 # [AUTO-COMMENT] Linia 106.
-        return None, "Lipsește metric/indicator/parametru."
+    if not indicator:
 # [AUTO-COMMENT] Linia 107.
-    if not unitate:
+        return None, "Lipsește metric/indicator/parametru."
 # [AUTO-COMMENT] Linia 108.
-        return None, "Lipsește unit/unitate/unitate_masura."
+    if not unitate:
 # [AUTO-COMMENT] Linia 109.
-    if valoare is None:
+        return None, "Lipsește unit/unitate/unitate_masura."
 # [AUTO-COMMENT] Linia 110.
+    if valoare is None:
+# [AUTO-COMMENT] Linia 111.
         return None, "value/valoare trebuie să fie numeric și >= 0."
-# [AUTO-COMMENT] Linia 111: linie goală.
+# [AUTO-COMMENT] Linia 112: linie goală.
 
-# [AUTO-COMMENT] Linia 112.
-    moment = prima_valoare(payload, ["timestamp", "moment", "moment_inregistrare"])
 # [AUTO-COMMENT] Linia 113.
-    if moment is None:
+    moment = prima_valoare(payload, ["timestamp", "moment", "moment_inregistrare"])
 # [AUTO-COMMENT] Linia 114.
-        moment = acum_utc_iso()
+    if moment is None:
 # [AUTO-COMMENT] Linia 115.
-    else:
+        moment = acum_utc_iso()
 # [AUTO-COMMENT] Linia 116.
-        moment = text_scurt(moment)
+    else:
 # [AUTO-COMMENT] Linia 117.
-        if not moment:
+        moment = text_scurt(moment)
 # [AUTO-COMMENT] Linia 118.
+        if not moment:
+# [AUTO-COMMENT] Linia 119.
             return None, "timestamp/moment trebuie să fie text nevid dacă este trimis."
-# [AUTO-COMMENT] Linia 119: linie goală.
+# [AUTO-COMMENT] Linia 120: linie goală.
 
-# [AUTO-COMMENT] Linia 120.
-    campuri_text_optionale = {
 # [AUTO-COMMENT] Linia 121.
-        "location": ["location", "locatie", "pozitie_instalare"],
+    campuri_text_optionale = {
 # [AUTO-COMMENT] Linia 122.
-        "description": ["description", "descriere", "detalii"],
+        "location": ["location", "locatie", "pozitie_instalare"],
 # [AUTO-COMMENT] Linia 123.
-        "category": ["category", "categorie", "domeniu"],
+        "description": ["description", "descriere", "detalii"],
 # [AUTO-COMMENT] Linia 124.
-        "sensor_name": ["sensor_name", "nume_senzor"],
+        "category": ["category", "categorie", "domeniu"],
 # [AUTO-COMMENT] Linia 125.
-        "sensor_model": ["sensor_model", "model_senzor"],
+        "sensor_name": ["sensor_name", "nume_senzor"],
 # [AUTO-COMMENT] Linia 126.
-        "sensor_manufacturer": ["sensor_manufacturer", "producator_senzor"],
+        "sensor_model": ["sensor_model", "model_senzor"],
 # [AUTO-COMMENT] Linia 127.
-        "operator_name": ["operator_name", "responsabil", "persoana_responsabila"],
+        "sensor_manufacturer": ["sensor_manufacturer", "producator_senzor"],
 # [AUTO-COMMENT] Linia 128.
-        "city": ["city", "oras"],
+        "operator_name": ["operator_name", "responsabil", "persoana_responsabila"],
 # [AUTO-COMMENT] Linia 129.
-        "county": ["county", "judet"],
+        "city": ["city", "oras"],
 # [AUTO-COMMENT] Linia 130.
-        "source_system": ["source_system", "sursa_date", "platforma_sursa"],
+        "county": ["county", "judet"],
 # [AUTO-COMMENT] Linia 131.
+        "source_system": ["source_system", "sursa_date", "platforma_sursa"],
+# [AUTO-COMMENT] Linia 132.
     }
-# [AUTO-COMMENT] Linia 132: linie goală.
+# [AUTO-COMMENT] Linia 133: linie goală.
 
-# [AUTO-COMMENT] Linia 133.
-    rezultat = {
 # [AUTO-COMMENT] Linia 134.
-        "station": statie,
+    rezultat = {
 # [AUTO-COMMENT] Linia 135.
-        "metric": indicator,
+        "station": statie,
 # [AUTO-COMMENT] Linia 136.
-        "value": valoare,
+        "metric": indicator,
 # [AUTO-COMMENT] Linia 137.
-        "unit": unitate,
+        "value": valoare,
 # [AUTO-COMMENT] Linia 138.
-        "timestamp": moment,
+        "unit": unitate,
 # [AUTO-COMMENT] Linia 139.
+        "timestamp": moment,
+# [AUTO-COMMENT] Linia 140.
     }
-# [AUTO-COMMENT] Linia 140: linie goală.
+# [AUTO-COMMENT] Linia 141: linie goală.
 
-# [AUTO-COMMENT] Linia 141.
-    for camp, aliasuri in campuri_text_optionale.items():
 # [AUTO-COMMENT] Linia 142.
-        valoare_text = text_scurt(prima_valoare(payload, aliasuri))
+    for camp, aliasuri in campuri_text_optionale.items():
 # [AUTO-COMMENT] Linia 143.
-        if valoare_text:
+        valoare_text = text_scurt(prima_valoare(payload, aliasuri))
 # [AUTO-COMMENT] Linia 144.
+        if valoare_text:
+# [AUTO-COMMENT] Linia 145.
             rezultat[camp] = valoare_text
-# [AUTO-COMMENT] Linia 145: linie goală.
+# [AUTO-COMMENT] Linia 146: linie goală.
 
-# [AUTO-COMMENT] Linia 146.
-    etichete, eroare_etichete = valideaza_etichete(prima_valoare(payload, ["tags", "etichete", "cuvinte_cheie"]))
 # [AUTO-COMMENT] Linia 147.
-    if eroare_etichete:
+    etichete, eroare_etichete = valideaza_etichete(prima_valoare(payload, ["tags", "etichete", "cuvinte_cheie"]))
 # [AUTO-COMMENT] Linia 148.
-        return None, eroare_etichete
+    if eroare_etichete:
 # [AUTO-COMMENT] Linia 149.
-    if etichete:
+        return None, eroare_etichete
 # [AUTO-COMMENT] Linia 150.
+    if etichete:
+# [AUTO-COMMENT] Linia 151.
         rezultat["tags"] = etichete
-# [AUTO-COMMENT] Linia 151: linie goală.
+# [AUTO-COMMENT] Linia 152: linie goală.
 
-# [AUTO-COMMENT] Linia 152.
-    interval, eroare_interval = valideaza_interval(prima_valoare(payload, ["sampling_interval_seconds", "frecventa_secunde", "interval_esantionare"]))
 # [AUTO-COMMENT] Linia 153.
-    if eroare_interval:
+    interval, eroare_interval = valideaza_interval(prima_valoare(payload, ["sampling_interval_seconds", "frecventa_secunde", "interval_esantionare"]))
 # [AUTO-COMMENT] Linia 154.
-        return None, eroare_interval
+    if eroare_interval:
 # [AUTO-COMMENT] Linia 155.
-    if interval is not None:
+        return None, eroare_interval
 # [AUTO-COMMENT] Linia 156.
+    if interval is not None:
+# [AUTO-COMMENT] Linia 157.
         rezultat["sampling_interval_seconds"] = interval
-# [AUTO-COMMENT] Linia 157: linie goală.
+# [AUTO-COMMENT] Linia 158: linie goală.
 
-# [AUTO-COMMENT] Linia 158.
-    rezumat = f"{indicator} măsurat la {statie}: {valoare} {unitate}"
 # [AUTO-COMMENT] Linia 159.
+    rezumat = f"{indicator} măsurat la {statie}: {valoare} {unitate}"
+# [AUTO-COMMENT] Linia 160.
     rezultat["measurement_summary"] = rezumat
-# [AUTO-COMMENT] Linia 160: linie goală.
+# [AUTO-COMMENT] Linia 161: linie goală.
 
-# [AUTO-COMMENT] Linia 161.
+# [AUTO-COMMENT] Linia 162.
     return rezultat, None
-# [AUTO-COMMENT] Linia 162: linie goală.
-
 # [AUTO-COMMENT] Linia 163: linie goală.
 
-# [AUTO-COMMENT] Linia 164.
-def raspuns_eroare(mesaj, cod=400):
-# [AUTO-COMMENT] Linia 165.
-    return jsonify({"eroare": mesaj}), cod
-# [AUTO-COMMENT] Linia 166: linie goală.
+# [AUTO-COMMENT] Linia 164: linie goală.
 
+# [AUTO-COMMENT] Linia 165.
+def raspuns_eroare(mesaj, cod=400):
+# [AUTO-COMMENT] Linia 166.
+    return jsonify({"eroare": mesaj}), cod
 # [AUTO-COMMENT] Linia 167: linie goală.
 
-# [AUTO-COMMENT] Linia 168.
-def metode_cu_head_unice(metode):
-# [AUTO-COMMENT] Linia 169.
-    return list(dict.fromkeys([*metode, "HEAD"]))
-# [AUTO-COMMENT] Linia 170: linie goală.
+# [AUTO-COMMENT] Linia 168: linie goală.
 
+# [AUTO-COMMENT] Linia 169.
+def metode_cu_head_unice(metode):
+# [AUTO-COMMENT] Linia 170.
+    return list(dict.fromkeys([*metode, "HEAD"]))
 # [AUTO-COMMENT] Linia 171: linie goală.
 
-# [AUTO-COMMENT] Linia 172.
-def header_allow_pentru(metode):
-# [AUTO-COMMENT] Linia 173.
-    return ", ".join(metode_cu_head_unice(metode))
-# [AUTO-COMMENT] Linia 174: linie goală.
+# [AUTO-COMMENT] Linia 172: linie goală.
 
+# [AUTO-COMMENT] Linia 173.
+def header_allow_pentru(metode):
+# [AUTO-COMMENT] Linia 174.
+    return ", ".join(metode_cu_head_unice(metode))
 # [AUTO-COMMENT] Linia 175: linie goală.
 
-# [AUTO-COMMENT] Linia 176.
-def raspuns_options(ruta, metode, descriere_resursa):
+# [AUTO-COMMENT] Linia 176: linie goală.
+
 # [AUTO-COMMENT] Linia 177.
-    metode_permise = metode_cu_head_unice(metode)
+@app.after_request
 # [AUTO-COMMENT] Linia 178.
-    payload = {
+def adauga_antete_cors(raspuns):
 # [AUTO-COMMENT] Linia 179.
-        "tip_raspuns": "options",
+    raspuns.headers["Access-Control-Allow-Origin"] = "*"
 # [AUTO-COMMENT] Linia 180.
-        "ruta": ruta,
+    raspuns.headers["Access-Control-Allow-Methods"] = header_allow_pentru(METODE_HTTP)
 # [AUTO-COMMENT] Linia 181.
-        "resursa": descriere_resursa,
+    raspuns.headers["Access-Control-Allow-Headers"] = CORS_ALLOW_HEADERS
 # [AUTO-COMMENT] Linia 182.
-        "metode_permise": metode_permise,
-# [AUTO-COMMENT] Linia 183.
-        "nota": "Metoda OPTIONS descrie capabilitățile resursei.",
-# [AUTO-COMMENT] Linia 184.
-    }
-# [AUTO-COMMENT] Linia 185: linie goală.
+    return raspuns
+# [AUTO-COMMENT] Linia 183: linie goală.
 
+# [AUTO-COMMENT] Linia 184: linie goală.
+
+# [AUTO-COMMENT] Linia 185.
+def raspuns_options(ruta, metode, descriere_resursa):
 # [AUTO-COMMENT] Linia 186.
-    raspuns = make_response(jsonify(payload), 200)
+    metode_permise = metode_cu_head_unice(metode)
 # [AUTO-COMMENT] Linia 187.
-    allow = header_allow_pentru(metode)
-# [AUTO-COMMENT] Linia 188.
-    raspuns.headers["Allow"] = allow
-# [AUTO-COMMENT] Linia 189.
-    raspuns.headers["Access-Control-Allow-Methods"] = allow
-# [AUTO-COMMENT] Linia 190.
-    raspuns.headers["Access-Control-Allow-Headers"] = "Content-Type"
-# [AUTO-COMMENT] Linia 191.
-    return raspuns
-# [AUTO-COMMENT] Linia 192: linie goală.
-
-# [AUTO-COMMENT] Linia 193: linie goală.
-
-# [AUTO-COMMENT] Linia 194.
-def construieste_payload_trace(ruta, descriere_resursa, simulat_ui=False):
-# [AUTO-COMMENT] Linia 195.
     payload = {
-# [AUTO-COMMENT] Linia 196.
-        "tip_raspuns": "trace",
-# [AUTO-COMMENT] Linia 197.
+# [AUTO-COMMENT] Linia 188.
+        "tip_raspuns": "options",
+# [AUTO-COMMENT] Linia 189.
         "ruta": ruta,
-# [AUTO-COMMENT] Linia 198.
+# [AUTO-COMMENT] Linia 190.
         "resursa": descriere_resursa,
-# [AUTO-COMMENT] Linia 199.
-        "metoda_reflectata": "TRACE",
-# [AUTO-COMMENT] Linia 200.
-        "metoda_transport": request.method,
-# [AUTO-COMMENT] Linia 201.
-        "query_params": request.args.to_dict(flat=True),
-# [AUTO-COMMENT] Linia 202.
-        "headers_primite": dict(request.headers),
-# [AUTO-COMMENT] Linia 203.
-        "body_primit": request.get_data(as_text=True),
-# [AUTO-COMMENT] Linia 204.
-        "simulare_ui": simulat_ui,
-# [AUTO-COMMENT] Linia 205.
+# [AUTO-COMMENT] Linia 191.
+        "metode_permise": metode_permise,
+# [AUTO-COMMENT] Linia 192.
+        "nota": "Metoda OPTIONS descrie capabilitățile resursei.",
+# [AUTO-COMMENT] Linia 193.
     }
-# [AUTO-COMMENT] Linia 206: linie goală.
+# [AUTO-COMMENT] Linia 194: linie goală.
 
-# [AUTO-COMMENT] Linia 207.
-    if simulat_ui:
-# [AUTO-COMMENT] Linia 208.
-        payload["nota"] = "Browserul blochează metoda TRACE direct; răspunsul este obținut prin endpoint helper POST."
-# [AUTO-COMMENT] Linia 209: linie goală.
-
-# [AUTO-COMMENT] Linia 210.
-    return payload
-# [AUTO-COMMENT] Linia 211: linie goală.
-
-# [AUTO-COMMENT] Linia 212: linie goală.
-
-# [AUTO-COMMENT] Linia 213.
-def raspuns_trace(ruta, descriere_resursa, metode, simulat_ui=False):
-# [AUTO-COMMENT] Linia 214.
-    payload = construieste_payload_trace(ruta, descriere_resursa, simulat_ui=simulat_ui)
-# [AUTO-COMMENT] Linia 215.
+# [AUTO-COMMENT] Linia 195.
     raspuns = make_response(jsonify(payload), 200)
-# [AUTO-COMMENT] Linia 216.
-    raspuns.headers["Allow"] = header_allow_pentru(metode)
-# [AUTO-COMMENT] Linia 217.
+# [AUTO-COMMENT] Linia 196.
+    allow = header_allow_pentru(metode)
+# [AUTO-COMMENT] Linia 197.
+    raspuns.headers["Allow"] = allow
+# [AUTO-COMMENT] Linia 198.
+    raspuns.headers["Access-Control-Allow-Methods"] = allow
+# [AUTO-COMMENT] Linia 199.
+    raspuns.headers["Access-Control-Allow-Headers"] = "Content-Type"
+# [AUTO-COMMENT] Linia 200.
     return raspuns
+# [AUTO-COMMENT] Linia 201: linie goală.
+
+# [AUTO-COMMENT] Linia 202: linie goală.
+
+# [AUTO-COMMENT] Linia 203.
+def construieste_payload_trace(ruta, descriere_resursa, simulat_ui=False):
+# [AUTO-COMMENT] Linia 204.
+    payload = {
+# [AUTO-COMMENT] Linia 205.
+        "tip_raspuns": "trace",
+# [AUTO-COMMENT] Linia 206.
+        "ruta": ruta,
+# [AUTO-COMMENT] Linia 207.
+        "resursa": descriere_resursa,
+# [AUTO-COMMENT] Linia 208.
+        "metoda_reflectata": "TRACE",
+# [AUTO-COMMENT] Linia 209.
+        "metoda_transport": request.method,
+# [AUTO-COMMENT] Linia 210.
+        "query_params": request.args.to_dict(flat=True),
+# [AUTO-COMMENT] Linia 211.
+        "headers_primite": dict(request.headers),
+# [AUTO-COMMENT] Linia 212.
+        "body_primit": request.get_data(as_text=True),
+# [AUTO-COMMENT] Linia 213.
+        "simulare_ui": simulat_ui,
+# [AUTO-COMMENT] Linia 214.
+    }
+# [AUTO-COMMENT] Linia 215: linie goală.
+
+# [AUTO-COMMENT] Linia 216.
+    if simulat_ui:
+# [AUTO-COMMENT] Linia 217.
+        payload["nota"] = "Browserul blochează metoda TRACE direct; răspunsul este obținut prin endpoint helper POST."
 # [AUTO-COMMENT] Linia 218: linie goală.
 
-# [AUTO-COMMENT] Linia 219: linie goală.
+# [AUTO-COMMENT] Linia 219.
+    return payload
+# [AUTO-COMMENT] Linia 220: linie goală.
 
-# [AUTO-COMMENT] Linia 220.
-def raspuns_colectie():
-# [AUTO-COMMENT] Linia 221.
-    return {
+# [AUTO-COMMENT] Linia 221: linie goală.
+
 # [AUTO-COMMENT] Linia 222.
-        "tip_raspuns": "colectie_masuratori",
+def raspuns_trace(ruta, descriere_resursa, metode, simulat_ui=False):
 # [AUTO-COMMENT] Linia 223.
-        "descriere": "Colecție completă de măsurători, cu metadate și elemente.",
+    payload = construieste_payload_trace(ruta, descriere_resursa, simulat_ui=simulat_ui)
 # [AUTO-COMMENT] Linia 224.
-        "operatii_colectie": METODE_COLECTIE,
+    raspuns = make_response(jsonify(payload), 200)
 # [AUTO-COMMENT] Linia 225.
-        "operatii_element": METODE_ELEMENT,
+    raspuns.headers["Allow"] = header_allow_pentru(metode)
 # [AUTO-COMMENT] Linia 226.
-        "operatii_ui": METODE_COLECTIE,
-# [AUTO-COMMENT] Linia 227.
-        "etichete_ui": {
-# [AUTO-COMMENT] Linia 228.
-            "GET": "preia / vezi",
+    return raspuns
+# [AUTO-COMMENT] Linia 227: linie goală.
+
+# [AUTO-COMMENT] Linia 228: linie goală.
+
 # [AUTO-COMMENT] Linia 229.
-            "HEAD": "verifică antete / existență",
+def raspuns_colectie():
 # [AUTO-COMMENT] Linia 230.
-            "POST": "adaugă / creează",
+    return {
 # [AUTO-COMMENT] Linia 231.
-            "PUT": "înlocuiește / salvează",
+        "tip_raspuns": "colectie_masuratori",
 # [AUTO-COMMENT] Linia 232.
-            "PATCH": "actualizare parțială",
+        "descriere": "Colecție completă de măsurători, cu metadate și elemente.",
 # [AUTO-COMMENT] Linia 233.
-            "DELETE": "șterge",
+        "operatii_colectie": METODE_COLECTIE,
 # [AUTO-COMMENT] Linia 234.
-            "OPTIONS": "capacități / metode permise",
+        "operatii_element": METODE_ELEMENT,
 # [AUTO-COMMENT] Linia 235.
-            "TRACE": "diagnostic trasabilitate",
+        "operatii_ui": METODE_COLECTIE,
 # [AUTO-COMMENT] Linia 236.
-        },
+        "etichete_ui": {
 # [AUTO-COMMENT] Linia 237.
-        "nota_operatii_ui": "În browser, TRACE este disponibil prin butoane helper care trimit POST către endpointuri dedicate.",
+            "GET": "preia / vezi",
 # [AUTO-COMMENT] Linia 238.
-        "regula_date": "Operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).",
+            "HEAD": "verifică antete / existență",
 # [AUTO-COMMENT] Linia 239.
-        "actiuni_semantice_colectie": [
+            "POST": "adaugă / creează",
 # [AUTO-COMMENT] Linia 240.
-            {"nume": "preia_masuratori", "metoda": "GET", "ruta": "/masuratori"},
+            "PUT": "înlocuiește / salvează",
 # [AUTO-COMMENT] Linia 241.
-            {"nume": "verifica_antete_colectie", "metoda": "HEAD", "ruta": "/masuratori"},
+            "PATCH": "actualizare parțială",
 # [AUTO-COMMENT] Linia 242.
-            {"nume": "adauga_masurare", "metoda": "POST", "ruta": "/masuratori"},
+            "DELETE": "șterge",
 # [AUTO-COMMENT] Linia 243.
-            {"nume": "inlocuieste_colectia", "metoda": "PUT", "ruta": "/masuratori"},
+            "OPTIONS": "capacități / metode permise",
 # [AUTO-COMMENT] Linia 244.
-            {"nume": "actualizeaza_partial_colectia", "metoda": "PATCH", "ruta": "/masuratori"},
+            "TRACE": "diagnostic trasabilitate",
 # [AUTO-COMMENT] Linia 245.
-            {"nume": "goleste_colectia", "metoda": "DELETE", "ruta": "/masuratori"},
+        },
 # [AUTO-COMMENT] Linia 246.
-            {"nume": "capabilitati_colectie", "metoda": "OPTIONS", "ruta": "/masuratori"},
+        "nota_operatii_ui": "În browser, TRACE este disponibil prin butoane helper care trimit POST către endpointuri dedicate.",
 # [AUTO-COMMENT] Linia 247.
-            {"nume": "trace_colectie", "metoda": "TRACE", "ruta": "/masuratori"},
+        "regula_date": "Operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).",
 # [AUTO-COMMENT] Linia 248.
-            {"nume": "trace_colectie_ui", "metoda": "POST", "ruta": "/masuratori/trace/colectie"},
+        "actiuni_semantice_colectie": [
 # [AUTO-COMMENT] Linia 249.
-            {"nume": "preview_date_externe", "metoda": "POST", "ruta": "/masuratori/preview-extern"},
+            {"nume": "preia_masuratori", "metoda": "GET", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 250.
-            {"nume": "sincronizeaza_din_open_meteo", "metoda": "POST", "ruta": "/masuratori/sincronizeaza"},
+            {"nume": "verifica_antete_colectie", "metoda": "HEAD", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 251.
-        ],
+            {"nume": "adauga_masurare", "metoda": "POST", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 252.
-        "actiuni_semantice_element": [
+            {"nume": "inlocuieste_colectia", "metoda": "PUT", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 253.
-            {"nume": "vezi_masurare", "metoda": "GET", "ruta": "/masuratori/<id>"},
+            {"nume": "actualizeaza_partial_colectia", "metoda": "PATCH", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 254.
-            {"nume": "verifica_antete_element", "metoda": "HEAD", "ruta": "/masuratori/<id>"},
+            {"nume": "goleste_colectia", "metoda": "DELETE", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 255.
-            {"nume": "creeaza_masurare_la_id", "metoda": "POST", "ruta": "/masuratori/<id>"},
+            {"nume": "capabilitati_colectie", "metoda": "OPTIONS", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 256.
-            {"nume": "salveaza_masurare", "metoda": "PUT", "ruta": "/masuratori/<id>"},
+            {"nume": "trace_colectie", "metoda": "TRACE", "ruta": "/masuratori"},
 # [AUTO-COMMENT] Linia 257.
-            {"nume": "actualizeaza_partial_element", "metoda": "PATCH", "ruta": "/masuratori/<id>"},
+            {"nume": "trace_colectie_ui", "metoda": "POST", "ruta": "/masuratori/trace/colectie"},
 # [AUTO-COMMENT] Linia 258.
-            {"nume": "sterge_masurare", "metoda": "DELETE", "ruta": "/masuratori/<id>"},
+            {"nume": "preview_date_externe", "metoda": "POST", "ruta": "/masuratori/preview-extern"},
 # [AUTO-COMMENT] Linia 259.
-            {"nume": "capabilitati_element", "metoda": "OPTIONS", "ruta": "/masuratori/<id>"},
+            {"nume": "sincronizeaza_din_open_meteo", "metoda": "POST", "ruta": "/masuratori/sincronizeaza"},
 # [AUTO-COMMENT] Linia 260.
-            {"nume": "trace_element", "metoda": "TRACE", "ruta": "/masuratori/<id>"},
+        ],
 # [AUTO-COMMENT] Linia 261.
-            {"nume": "trace_element_ui", "metoda": "POST", "ruta": "/masuratori/trace/element/<id>"},
+        "actiuni_semantice_element": [
 # [AUTO-COMMENT] Linia 262.
-        ],
+            {"nume": "vezi_masurare", "metoda": "GET", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 263.
-        "campuri_principale": ["id", "station", "metric", "value", "unit", "timestamp"],
+            {"nume": "verifica_antete_element", "metoda": "HEAD", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 264.
-        "campuri_optionale": [
+            {"nume": "creeaza_masurare_la_id", "metoda": "POST", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 265.
-            "location",
+            {"nume": "salveaza_masurare", "metoda": "PUT", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 266.
-            "description",
+            {"nume": "actualizeaza_partial_element", "metoda": "PATCH", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 267.
-            "category",
+            {"nume": "sterge_masurare", "metoda": "DELETE", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 268.
-            "sensor_name",
+            {"nume": "capabilitati_element", "metoda": "OPTIONS", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 269.
-            "sensor_model",
+            {"nume": "trace_element", "metoda": "TRACE", "ruta": "/masuratori/<id>"},
 # [AUTO-COMMENT] Linia 270.
-            "sensor_manufacturer",
+            {"nume": "trace_element_ui", "metoda": "POST", "ruta": "/masuratori/trace/element/<id>"},
 # [AUTO-COMMENT] Linia 271.
-            "operator_name",
-# [AUTO-COMMENT] Linia 272.
-            "city",
-# [AUTO-COMMENT] Linia 273.
-            "county",
-# [AUTO-COMMENT] Linia 274.
-            "source_system",
-# [AUTO-COMMENT] Linia 275.
-            "tags",
-# [AUTO-COMMENT] Linia 276.
-            "sampling_interval_seconds",
-# [AUTO-COMMENT] Linia 277.
-            "measurement_summary",
-# [AUTO-COMMENT] Linia 278.
         ],
+# [AUTO-COMMENT] Linia 272.
+        "campuri_principale": ["id", "station", "metric", "value", "unit", "timestamp"],
+# [AUTO-COMMENT] Linia 273.
+        "campuri_optionale": [
+# [AUTO-COMMENT] Linia 274.
+            "location",
+# [AUTO-COMMENT] Linia 275.
+            "description",
+# [AUTO-COMMENT] Linia 276.
+            "category",
+# [AUTO-COMMENT] Linia 277.
+            "sensor_name",
+# [AUTO-COMMENT] Linia 278.
+            "sensor_model",
 # [AUTO-COMMENT] Linia 279.
-        "numar_elemente": len(baza_masuratori),
+            "sensor_manufacturer",
 # [AUTO-COMMENT] Linia 280.
-        "elemente": lista_ordonata(),
+            "operator_name",
 # [AUTO-COMMENT] Linia 281.
-    }
-# [AUTO-COMMENT] Linia 282: linie goală.
-
-# [AUTO-COMMENT] Linia 283: linie goală.
-
+            "city",
+# [AUTO-COMMENT] Linia 282.
+            "county",
+# [AUTO-COMMENT] Linia 283.
+            "source_system",
 # [AUTO-COMMENT] Linia 284.
-def preia_json(url, timeout_secunde=12, antete=None):
+            "tags",
 # [AUTO-COMMENT] Linia 285.
-    antete_finale = {
+            "sampling_interval_seconds",
 # [AUTO-COMMENT] Linia 286.
-        "User-Agent": USER_AGENT_EXTERNE,
+            "measurement_summary",
 # [AUTO-COMMENT] Linia 287.
-        "Accept": "application/json",
+        ],
 # [AUTO-COMMENT] Linia 288.
-    }
+        "numar_elemente": len(baza_masuratori),
 # [AUTO-COMMENT] Linia 289.
-    if antete:
+        "elemente": lista_ordonata(),
 # [AUTO-COMMENT] Linia 290.
-        antete_finale.update(antete)
+    }
 # [AUTO-COMMENT] Linia 291: linie goală.
 
-# [AUTO-COMMENT] Linia 292.
-    cerere = Request(url, headers=antete_finale, method="GET")
+# [AUTO-COMMENT] Linia 292: linie goală.
+
 # [AUTO-COMMENT] Linia 293.
-    with urlopen(cerere, timeout=timeout_secunde) as raspuns:
+def preia_json(url, timeout_secunde=12, antete=None):
 # [AUTO-COMMENT] Linia 294.
-        continut = raspuns.read().decode("utf-8")
+    antete_finale = {
 # [AUTO-COMMENT] Linia 295.
-    return json.loads(continut)
-# [AUTO-COMMENT] Linia 296: linie goală.
-
-# [AUTO-COMMENT] Linia 297: linie goală.
-
-# [AUTO-COMMENT] Linia 298.
-def geocode_oras_nominatim(oras, judet=None, tara="Romania"):
-# [AUTO-COMMENT] Linia 299.
-    bucati = [oras]
-# [AUTO-COMMENT] Linia 300.
-    if judet:
-# [AUTO-COMMENT] Linia 301.
-        bucati.append(judet)
-# [AUTO-COMMENT] Linia 302.
-    if tara:
-# [AUTO-COMMENT] Linia 303.
-        bucati.append(tara)
-# [AUTO-COMMENT] Linia 304: linie goală.
-
-# [AUTO-COMMENT] Linia 305.
-    params = {
-# [AUTO-COMMENT] Linia 306.
-        "q": ", ".join(bucati),
-# [AUTO-COMMENT] Linia 307.
-        "format": "jsonv2",
-# [AUTO-COMMENT] Linia 308.
-        "limit": 1,
-# [AUTO-COMMENT] Linia 309.
-        "addressdetails": 1,
-# [AUTO-COMMENT] Linia 310.
+        "User-Agent": USER_AGENT_EXTERNE,
+# [AUTO-COMMENT] Linia 296.
+        "Accept": "application/json",
+# [AUTO-COMMENT] Linia 297.
     }
+# [AUTO-COMMENT] Linia 298.
+    if antete:
+# [AUTO-COMMENT] Linia 299.
+        antete_finale.update(antete)
+# [AUTO-COMMENT] Linia 300: linie goală.
+
+# [AUTO-COMMENT] Linia 301.
+    cerere = Request(url, headers=antete_finale, method="GET")
+# [AUTO-COMMENT] Linia 302.
+    with urlopen(cerere, timeout=timeout_secunde) as raspuns:
+# [AUTO-COMMENT] Linia 303.
+        continut = raspuns.read().decode("utf-8")
+# [AUTO-COMMENT] Linia 304.
+    return json.loads(continut)
+# [AUTO-COMMENT] Linia 305: linie goală.
+
+# [AUTO-COMMENT] Linia 306: linie goală.
+
+# [AUTO-COMMENT] Linia 307.
+def geocode_oras_nominatim(oras, judet=None, tara="Romania"):
+# [AUTO-COMMENT] Linia 308.
+    bucati = [oras]
+# [AUTO-COMMENT] Linia 309.
+    if judet:
+# [AUTO-COMMENT] Linia 310.
+        bucati.append(judet)
 # [AUTO-COMMENT] Linia 311.
-    url = f"{NOMINATIM_SEARCH_URL}?{urlencode(params)}"
+    if tara:
 # [AUTO-COMMENT] Linia 312.
-    rezultate = preia_json(url)
+        bucati.append(tara)
 # [AUTO-COMMENT] Linia 313: linie goală.
 
 # [AUTO-COMMENT] Linia 314.
-    if not isinstance(rezultate, list) or not rezultate:
+    params = {
 # [AUTO-COMMENT] Linia 315.
-        raise ValueError("Nu am găsit coordonate pentru localitatea cerută.")
-# [AUTO-COMMENT] Linia 316: linie goală.
-
+        "q": ", ".join(bucati),
+# [AUTO-COMMENT] Linia 316.
+        "format": "jsonv2",
 # [AUTO-COMMENT] Linia 317.
-    rezultat = rezultate[0]
+        "limit": 1,
 # [AUTO-COMMENT] Linia 318.
-    adresa = rezultat.get("address", {})
-# [AUTO-COMMENT] Linia 319: linie goală.
-
+        "addressdetails": 1,
+# [AUTO-COMMENT] Linia 319.
+    }
 # [AUTO-COMMENT] Linia 320.
-    try:
+    url = f"{NOMINATIM_SEARCH_URL}?{urlencode(params)}"
 # [AUTO-COMMENT] Linia 321.
-        latitudine = float(rezultat["lat"])
-# [AUTO-COMMENT] Linia 322.
-        longitudine = float(rezultat["lon"])
+    rezultate = preia_json(url)
+# [AUTO-COMMENT] Linia 322: linie goală.
+
 # [AUTO-COMMENT] Linia 323.
-    except (KeyError, TypeError, ValueError) as eroare:
+    if not isinstance(rezultate, list) or not rezultate:
 # [AUTO-COMMENT] Linia 324.
-        raise ValueError("Răspuns invalid de la Nominatim pentru coordonate.") from eroare
+        raise ValueError("Nu am găsit coordonate pentru localitatea cerută.")
 # [AUTO-COMMENT] Linia 325: linie goală.
 
 # [AUTO-COMMENT] Linia 326.
-    oras_rezolvat = (
+    rezultat = rezultate[0]
 # [AUTO-COMMENT] Linia 327.
-        adresa.get("city")
-# [AUTO-COMMENT] Linia 328.
-        or adresa.get("town")
-# [AUTO-COMMENT] Linia 329.
-        or adresa.get("village")
-# [AUTO-COMMENT] Linia 330.
-        or adresa.get("municipality")
-# [AUTO-COMMENT] Linia 331.
-        or oras
-# [AUTO-COMMENT] Linia 332.
-    )
-# [AUTO-COMMENT] Linia 333.
-    judet_rezolvat = adresa.get("county") or adresa.get("state_district") or judet
-# [AUTO-COMMENT] Linia 334.
-    tara_rezolvata = adresa.get("country") or tara
-# [AUTO-COMMENT] Linia 335: linie goală.
+    adresa = rezultat.get("address", {})
+# [AUTO-COMMENT] Linia 328: linie goală.
 
+# [AUTO-COMMENT] Linia 329.
+    try:
+# [AUTO-COMMENT] Linia 330.
+        latitudine = float(rezultat["lat"])
+# [AUTO-COMMENT] Linia 331.
+        longitudine = float(rezultat["lon"])
+# [AUTO-COMMENT] Linia 332.
+    except (KeyError, TypeError, ValueError) as eroare:
+# [AUTO-COMMENT] Linia 333.
+        raise ValueError("Răspuns invalid de la Nominatim pentru coordonate.") from eroare
+# [AUTO-COMMENT] Linia 334: linie goală.
+
+# [AUTO-COMMENT] Linia 335.
+    oras_rezolvat = (
 # [AUTO-COMMENT] Linia 336.
-    return {
+        adresa.get("city")
 # [AUTO-COMMENT] Linia 337.
-        "latitude": latitudine,
+        or adresa.get("town")
 # [AUTO-COMMENT] Linia 338.
-        "longitude": longitudine,
+        or adresa.get("village")
 # [AUTO-COMMENT] Linia 339.
-        "city": oras_rezolvat,
+        or adresa.get("municipality")
 # [AUTO-COMMENT] Linia 340.
-        "county": judet_rezolvat,
+        or oras
 # [AUTO-COMMENT] Linia 341.
-        "country": tara_rezolvata,
+    )
 # [AUTO-COMMENT] Linia 342.
-        "display_name": rezultat.get("display_name") or oras_rezolvat,
+    judet_rezolvat = adresa.get("county") or adresa.get("state_district") or judet
 # [AUTO-COMMENT] Linia 343.
-    }
+    tara_rezolvata = adresa.get("country") or tara
 # [AUTO-COMMENT] Linia 344: linie goală.
 
-# [AUTO-COMMENT] Linia 345: linie goală.
-
-# [AUTO-COMMENT] Linia 346.
-def citeste_open_meteo(latitudine, longitudine):
-# [AUTO-COMMENT] Linia 347.
-    parametri_curenti = ",".join([
-# [AUTO-COMMENT] Linia 348.
-        "temperature_2m",
-# [AUTO-COMMENT] Linia 349.
-        "apparent_temperature",
-# [AUTO-COMMENT] Linia 350.
-        "relative_humidity_2m",
-# [AUTO-COMMENT] Linia 351.
-        "wind_speed_10m",
-# [AUTO-COMMENT] Linia 352.
-        "pressure_msl",
-# [AUTO-COMMENT] Linia 353.
-        "precipitation",
-# [AUTO-COMMENT] Linia 354.
-    ])
-# [AUTO-COMMENT] Linia 355: linie goală.
-
-# [AUTO-COMMENT] Linia 356.
-    params = {
-# [AUTO-COMMENT] Linia 357.
-        "latitude": f"{latitudine:.6f}",
-# [AUTO-COMMENT] Linia 358.
-        "longitude": f"{longitudine:.6f}",
-# [AUTO-COMMENT] Linia 359.
-        "current": parametri_curenti,
-# [AUTO-COMMENT] Linia 360.
-        "timezone": "auto",
-# [AUTO-COMMENT] Linia 361.
-        "forecast_days": 1,
-# [AUTO-COMMENT] Linia 362.
-    }
-# [AUTO-COMMENT] Linia 363: linie goală.
-
-# [AUTO-COMMENT] Linia 364.
-    url = f"{OPEN_METEO_FORECAST_URL}?{urlencode(params)}"
-# [AUTO-COMMENT] Linia 365.
-    raspuns = preia_json(url)
-# [AUTO-COMMENT] Linia 366: linie goală.
-
-# [AUTO-COMMENT] Linia 367.
-    valori_curente = raspuns.get("current")
-# [AUTO-COMMENT] Linia 368.
-    unitati_curente = raspuns.get("current_units")
-# [AUTO-COMMENT] Linia 369.
-    if not isinstance(valori_curente, dict) or not isinstance(unitati_curente, dict):
-# [AUTO-COMMENT] Linia 370.
-        raise ValueError("Răspuns invalid de la Open-Meteo.")
-# [AUTO-COMMENT] Linia 371: linie goală.
-
-# [AUTO-COMMENT] Linia 372.
+# [AUTO-COMMENT] Linia 345.
     return {
+# [AUTO-COMMENT] Linia 346.
+        "latitude": latitudine,
+# [AUTO-COMMENT] Linia 347.
+        "longitude": longitudine,
+# [AUTO-COMMENT] Linia 348.
+        "city": oras_rezolvat,
+# [AUTO-COMMENT] Linia 349.
+        "county": judet_rezolvat,
+# [AUTO-COMMENT] Linia 350.
+        "country": tara_rezolvata,
+# [AUTO-COMMENT] Linia 351.
+        "display_name": rezultat.get("display_name") or oras_rezolvat,
+# [AUTO-COMMENT] Linia 352.
+    }
+# [AUTO-COMMENT] Linia 353: linie goală.
+
+# [AUTO-COMMENT] Linia 354: linie goală.
+
+# [AUTO-COMMENT] Linia 355.
+def citeste_open_meteo(latitudine, longitudine):
+# [AUTO-COMMENT] Linia 356.
+    parametri_curenti = ",".join([
+# [AUTO-COMMENT] Linia 357.
+        "temperature_2m",
+# [AUTO-COMMENT] Linia 358.
+        "apparent_temperature",
+# [AUTO-COMMENT] Linia 359.
+        "relative_humidity_2m",
+# [AUTO-COMMENT] Linia 360.
+        "wind_speed_10m",
+# [AUTO-COMMENT] Linia 361.
+        "pressure_msl",
+# [AUTO-COMMENT] Linia 362.
+        "precipitation",
+# [AUTO-COMMENT] Linia 363.
+    ])
+# [AUTO-COMMENT] Linia 364: linie goală.
+
+# [AUTO-COMMENT] Linia 365.
+    params = {
+# [AUTO-COMMENT] Linia 366.
+        "latitude": f"{latitudine:.6f}",
+# [AUTO-COMMENT] Linia 367.
+        "longitude": f"{longitudine:.6f}",
+# [AUTO-COMMENT] Linia 368.
+        "current": parametri_curenti,
+# [AUTO-COMMENT] Linia 369.
+        "timezone": "auto",
+# [AUTO-COMMENT] Linia 370.
+        "forecast_days": 1,
+# [AUTO-COMMENT] Linia 371.
+    }
+# [AUTO-COMMENT] Linia 372: linie goală.
+
 # [AUTO-COMMENT] Linia 373.
-        "current": valori_curente,
+    url = f"{OPEN_METEO_FORECAST_URL}?{urlencode(params)}"
 # [AUTO-COMMENT] Linia 374.
-        "current_units": unitati_curente,
-# [AUTO-COMMENT] Linia 375.
-        "timezone": raspuns.get("timezone"),
+    raspuns = preia_json(url)
+# [AUTO-COMMENT] Linia 375: linie goală.
+
 # [AUTO-COMMENT] Linia 376.
-    }
-# [AUTO-COMMENT] Linia 377: linie goală.
-
-# [AUTO-COMMENT] Linia 378: linie goală.
-
+    valori_curente = raspuns.get("current")
+# [AUTO-COMMENT] Linia 377.
+    unitati_curente = raspuns.get("current_units")
+# [AUTO-COMMENT] Linia 378.
+    if not isinstance(valori_curente, dict) or not isinstance(unitati_curente, dict):
 # [AUTO-COMMENT] Linia 379.
-def payloaduri_din_open_meteo(info_geo, meteo):
-# [AUTO-COMMENT] Linia 380.
-    valori_curente = meteo.get("current", {})
+        raise ValueError("Răspuns invalid de la Open-Meteo.")
+# [AUTO-COMMENT] Linia 380: linie goală.
+
 # [AUTO-COMMENT] Linia 381.
-    unitati_curente = meteo.get("current_units", {})
+    return {
 # [AUTO-COMMENT] Linia 382.
-    moment = valori_curente.get("time") or acum_utc_iso()
-# [AUTO-COMMENT] Linia 383: linie goală.
-
+        "current": valori_curente,
+# [AUTO-COMMENT] Linia 383.
+        "current_units": unitati_curente,
 # [AUTO-COMMENT] Linia 384.
-    locatie_text = f"lat {info_geo['latitude']:.4f}, lon {info_geo['longitude']:.4f}"
+        "timezone": raspuns.get("timezone"),
 # [AUTO-COMMENT] Linia 385.
-    statie = info_geo.get("display_name") or info_geo.get("city") or "Open-Meteo"
-# [AUTO-COMMENT] Linia 386.
-    oras = info_geo.get("city")
-# [AUTO-COMMENT] Linia 387.
-    judet = info_geo.get("county")
-# [AUTO-COMMENT] Linia 388: linie goală.
-
-# [AUTO-COMMENT] Linia 389.
-    baza_payload = {
-# [AUTO-COMMENT] Linia 390.
-        "statie": statie,
-# [AUTO-COMMENT] Linia 391.
-        "oras": oras,
-# [AUTO-COMMENT] Linia 392.
-        "judet": judet,
-# [AUTO-COMMENT] Linia 393.
-        "locatie": locatie_text,
-# [AUTO-COMMENT] Linia 394.
-        "platforma_sursa": "open-meteo",
-# [AUTO-COMMENT] Linia 395.
-        "descriere": f"Import automat din Open-Meteo pentru {oras or 'localitatea selectată'}.",
-# [AUTO-COMMENT] Linia 396.
-        "moment_inregistrare": moment,
-# [AUTO-COMMENT] Linia 397.
     }
-# [AUTO-COMMENT] Linia 398: linie goală.
+# [AUTO-COMMENT] Linia 386: linie goală.
 
+# [AUTO-COMMENT] Linia 387: linie goală.
+
+# [AUTO-COMMENT] Linia 388.
+def payloaduri_din_open_meteo(info_geo, meteo):
+# [AUTO-COMMENT] Linia 389.
+    valori_curente = meteo.get("current", {})
+# [AUTO-COMMENT] Linia 390.
+    unitati_curente = meteo.get("current_units", {})
+# [AUTO-COMMENT] Linia 391.
+    moment = valori_curente.get("time") or acum_utc_iso()
+# [AUTO-COMMENT] Linia 392: linie goală.
+
+# [AUTO-COMMENT] Linia 393.
+    locatie_text = f"lat {info_geo['latitude']:.4f}, lon {info_geo['longitude']:.4f}"
+# [AUTO-COMMENT] Linia 394.
+    statie = info_geo.get("display_name") or info_geo.get("city") or "Open-Meteo"
+# [AUTO-COMMENT] Linia 395.
+    oras = info_geo.get("city")
+# [AUTO-COMMENT] Linia 396.
+    judet = info_geo.get("county")
+# [AUTO-COMMENT] Linia 397: linie goală.
+
+# [AUTO-COMMENT] Linia 398.
+    baza_payload = {
 # [AUTO-COMMENT] Linia 399.
-    mapare_metrici = [
+        "statie": statie,
 # [AUTO-COMMENT] Linia 400.
-        {
+        "oras": oras,
 # [AUTO-COMMENT] Linia 401.
-            "cheie": "relative_humidity_2m",
+        "judet": judet,
 # [AUTO-COMMENT] Linia 402.
-            "indicator": "umiditate relativă",
+        "locatie": locatie_text,
 # [AUTO-COMMENT] Linia 403.
-            "unitate_implicita": "u.m.",
+        "platforma_sursa": "open-meteo",
 # [AUTO-COMMENT] Linia 404.
-        },
+        "descriere": f"Import automat din Open-Meteo pentru {oras or 'localitatea selectată'}.",
 # [AUTO-COMMENT] Linia 405.
-        {
+        "moment_inregistrare": moment,
 # [AUTO-COMMENT] Linia 406.
-            "cheie": "wind_speed_10m",
-# [AUTO-COMMENT] Linia 407.
-            "indicator": "viteză vânt la 10m",
+    }
+# [AUTO-COMMENT] Linia 407: linie goală.
+
 # [AUTO-COMMENT] Linia 408.
-            "unitate_implicita": "u.m.",
+    mapare_metrici = [
 # [AUTO-COMMENT] Linia 409.
-        },
+        {
 # [AUTO-COMMENT] Linia 410.
-        {
+            "cheie": "relative_humidity_2m",
 # [AUTO-COMMENT] Linia 411.
-            "cheie": "pressure_msl",
+            "indicator": "umiditate relativă",
 # [AUTO-COMMENT] Linia 412.
-            "indicator": "presiune atmosferică la nivelul mării",
+            "unitate_implicita": "u.m.",
 # [AUTO-COMMENT] Linia 413.
-            "unitate_implicita": "u.m.",
+        },
 # [AUTO-COMMENT] Linia 414.
-        },
+        {
 # [AUTO-COMMENT] Linia 415.
-        {
+            "cheie": "wind_speed_10m",
 # [AUTO-COMMENT] Linia 416.
-            "cheie": "precipitation",
+            "indicator": "viteză vânt la 10m",
 # [AUTO-COMMENT] Linia 417.
-            "indicator": "precipitații curente",
-# [AUTO-COMMENT] Linia 418.
             "unitate_implicita": "u.m.",
+# [AUTO-COMMENT] Linia 418.
+        },
 # [AUTO-COMMENT] Linia 419.
-        },
-# [AUTO-COMMENT] Linia 420.
         {
+# [AUTO-COMMENT] Linia 420.
+            "cheie": "pressure_msl",
 # [AUTO-COMMENT] Linia 421.
-            "cheie": "temperature_2m",
+            "indicator": "presiune atmosferică la nivelul mării",
 # [AUTO-COMMENT] Linia 422.
-            "indicator": "temperatură aer exterior",
+            "unitate_implicita": "u.m.",
 # [AUTO-COMMENT] Linia 423.
-            "unitate_implicita": "°C",
-# [AUTO-COMMENT] Linia 424.
-            "fara_valori_negative": True,
-# [AUTO-COMMENT] Linia 425.
         },
+# [AUTO-COMMENT] Linia 424.
+        {
+# [AUTO-COMMENT] Linia 425.
+            "cheie": "precipitation",
 # [AUTO-COMMENT] Linia 426.
-    ]
-# [AUTO-COMMENT] Linia 427: linie goală.
-
+            "indicator": "precipitații curente",
+# [AUTO-COMMENT] Linia 427.
+            "unitate_implicita": "u.m.",
 # [AUTO-COMMENT] Linia 428.
-    payloaduri = []
+        },
 # [AUTO-COMMENT] Linia 429.
-    for metrica in mapare_metrici:
+        {
 # [AUTO-COMMENT] Linia 430.
-        cheie_api = metrica["cheie"]
+            "cheie": "temperature_2m",
 # [AUTO-COMMENT] Linia 431.
-        valoare = valori_curente.get(cheie_api)
+            "indicator": "temperatură aer exterior",
 # [AUTO-COMMENT] Linia 432.
-        if valoare is None:
+            "unitate_implicita": "°C",
 # [AUTO-COMMENT] Linia 433.
-            continue
-# [AUTO-COMMENT] Linia 434: linie goală.
-
+            "fara_valori_negative": True,
+# [AUTO-COMMENT] Linia 434.
+        },
 # [AUTO-COMMENT] Linia 435.
-        if metrica.get("fara_valori_negative"):
-# [AUTO-COMMENT] Linia 436.
-            if not isinstance(valoare, (int, float)) or valoare < 0:
+    ]
+# [AUTO-COMMENT] Linia 436: linie goală.
+
 # [AUTO-COMMENT] Linia 437.
-                continue
-# [AUTO-COMMENT] Linia 438: linie goală.
-
+    payloaduri = []
+# [AUTO-COMMENT] Linia 438.
+    for metrica in mapare_metrici:
 # [AUTO-COMMENT] Linia 439.
-        unitate = unitati_curente.get(cheie_api) or metrica["unitate_implicita"]
+        cheie_api = metrica["cheie"]
 # [AUTO-COMMENT] Linia 440.
-        payload = {
+        valoare = valori_curente.get(cheie_api)
 # [AUTO-COMMENT] Linia 441.
-            **baza_payload,
+        if valoare is None:
 # [AUTO-COMMENT] Linia 442.
-            "indicator": metrica["indicator"],
-# [AUTO-COMMENT] Linia 443.
-            "valoare": valoare,
+            continue
+# [AUTO-COMMENT] Linia 443: linie goală.
+
 # [AUTO-COMMENT] Linia 444.
-            "unitate": unitate,
+        if metrica.get("fara_valori_negative"):
 # [AUTO-COMMENT] Linia 445.
-            "etichete": ["extern", "open-meteo", "nominatim", cheie_api],
+            if not isinstance(valoare, (int, float)) or valoare < 0:
 # [AUTO-COMMENT] Linia 446.
-        }
-# [AUTO-COMMENT] Linia 447.
-        payloaduri.append(payload)
-# [AUTO-COMMENT] Linia 448: linie goală.
+                continue
+# [AUTO-COMMENT] Linia 447: linie goală.
 
+# [AUTO-COMMENT] Linia 448.
+        unitate = unitati_curente.get(cheie_api) or metrica["unitate_implicita"]
 # [AUTO-COMMENT] Linia 449.
-    return payloaduri
-# [AUTO-COMMENT] Linia 450: linie goală.
-
-# [AUTO-COMMENT] Linia 451: linie goală.
-
+        payload = {
+# [AUTO-COMMENT] Linia 450.
+            **baza_payload,
+# [AUTO-COMMENT] Linia 451.
+            "indicator": metrica["indicator"],
 # [AUTO-COMMENT] Linia 452.
-def text_normalizat(valoare):
+            "valoare": valoare,
 # [AUTO-COMMENT] Linia 453.
-    if not isinstance(valoare, str):
+            "unitate": unitate,
 # [AUTO-COMMENT] Linia 454.
-        return ""
-# [AUTO-COMMENT] Linia 455: linie goală.
-
+            "etichete": ["extern", "open-meteo", "nominatim", cheie_api],
+# [AUTO-COMMENT] Linia 455.
+        }
 # [AUTO-COMMENT] Linia 456.
-    baza = unicodedata.normalize("NFD", valoare.lower())
-# [AUTO-COMMENT] Linia 457.
-    fara_diacritice = "".join(caracter for caracter in baza if unicodedata.category(caracter) != "Mn")
+        payloaduri.append(payload)
+# [AUTO-COMMENT] Linia 457: linie goală.
+
 # [AUTO-COMMENT] Linia 458.
-    return " ".join(fara_diacritice.split())
+    return payloaduri
 # [AUTO-COMMENT] Linia 459: linie goală.
 
 # [AUTO-COMMENT] Linia 460: linie goală.
 
 # [AUTO-COMMENT] Linia 461.
-def extrage_payload_obiect_din_request():
+def text_normalizat(valoare):
 # [AUTO-COMMENT] Linia 462.
-    payload = request.get_json(silent=True)
+    if not isinstance(valoare, str):
 # [AUTO-COMMENT] Linia 463.
-    if payload is None:
-# [AUTO-COMMENT] Linia 464.
-        return {}, None
+        return ""
+# [AUTO-COMMENT] Linia 464: linie goală.
+
 # [AUTO-COMMENT] Linia 465.
-    if not isinstance(payload, dict):
+    baza = unicodedata.normalize("NFD", valoare.lower())
 # [AUTO-COMMENT] Linia 466.
-        return None, raspuns_eroare("Body trebuie să fie obiect JSON.", 400)
+    fara_diacritice = "".join(caracter for caracter in baza if unicodedata.category(caracter) != "Mn")
 # [AUTO-COMMENT] Linia 467.
-    return payload, None
+    return " ".join(fara_diacritice.split())
 # [AUTO-COMMENT] Linia 468: linie goală.
 
 # [AUTO-COMMENT] Linia 469: linie goală.
 
 # [AUTO-COMMENT] Linia 470.
-def extrage_localizare(payload):
+def extrage_payload_obiect_din_request():
 # [AUTO-COMMENT] Linia 471.
-    oras = text_scurt(prima_valoare(payload, ["oras", "city"])) or "Iasi"
+    payload = request.get_json(silent=True)
 # [AUTO-COMMENT] Linia 472.
-    judet = text_scurt(prima_valoare(payload, ["judet", "county", "state"]))
+    if payload is None:
 # [AUTO-COMMENT] Linia 473.
-    tara = text_scurt(prima_valoare(payload, ["tara", "country"])) or "Romania"
+        return {}, None
 # [AUTO-COMMENT] Linia 474.
-    return oras, judet, tara
-# [AUTO-COMMENT] Linia 475: linie goală.
+    if not isinstance(payload, dict):
+# [AUTO-COMMENT] Linia 475.
+        return None, raspuns_eroare("Body trebuie să fie obiect JSON.", 400)
+# [AUTO-COMMENT] Linia 476.
+    return payload, None
+# [AUTO-COMMENT] Linia 477: linie goală.
 
-# [AUTO-COMMENT] Linia 476: linie goală.
+# [AUTO-COMMENT] Linia 478: linie goală.
 
-# [AUTO-COMMENT] Linia 477.
-def pregateste_date_externe(payload):
-# [AUTO-COMMENT] Linia 478.
-    oras, judet, tara = extrage_localizare(payload)
 # [AUTO-COMMENT] Linia 479.
-    info_geo = geocode_oras_nominatim(oras, judet, tara)
+def extrage_localizare(payload):
 # [AUTO-COMMENT] Linia 480.
-    meteo = citeste_open_meteo(info_geo["latitude"], info_geo["longitude"])
+    oras = text_scurt(prima_valoare(payload, ["oras", "city"])) or "Iasi"
 # [AUTO-COMMENT] Linia 481.
-    candidati = payloaduri_din_open_meteo(info_geo, meteo)
-# [AUTO-COMMENT] Linia 482: linie goală.
-
+    judet = text_scurt(prima_valoare(payload, ["judet", "county", "state"]))
+# [AUTO-COMMENT] Linia 482.
+    tara = text_scurt(prima_valoare(payload, ["tara", "country"])) or "Romania"
 # [AUTO-COMMENT] Linia 483.
-    elemente_validate = []
-# [AUTO-COMMENT] Linia 484.
-    elemente_ignorate = []
-# [AUTO-COMMENT] Linia 485.
-    for candidat in candidati:
+    return oras, judet, tara
+# [AUTO-COMMENT] Linia 484: linie goală.
+
+# [AUTO-COMMENT] Linia 485: linie goală.
+
 # [AUTO-COMMENT] Linia 486.
-        element, mesaj = valideaza_payload(candidat)
+def pregateste_date_externe(payload):
 # [AUTO-COMMENT] Linia 487.
-        if mesaj:
+    oras, judet, tara = extrage_localizare(payload)
 # [AUTO-COMMENT] Linia 488.
-            elemente_ignorate.append({
+    info_geo = geocode_oras_nominatim(oras, judet, tara)
 # [AUTO-COMMENT] Linia 489.
-                "indicator": candidat.get("indicator"),
+    meteo = citeste_open_meteo(info_geo["latitude"], info_geo["longitude"])
 # [AUTO-COMMENT] Linia 490.
-                "motiv": mesaj,
-# [AUTO-COMMENT] Linia 491.
-            })
+    candidati = payloaduri_din_open_meteo(info_geo, meteo)
+# [AUTO-COMMENT] Linia 491: linie goală.
+
 # [AUTO-COMMENT] Linia 492.
-            continue
-# [AUTO-COMMENT] Linia 493: linie goală.
-
+    elemente_validate = []
+# [AUTO-COMMENT] Linia 493.
+    elemente_ignorate = []
 # [AUTO-COMMENT] Linia 494.
-        elemente_validate.append(element)
-# [AUTO-COMMENT] Linia 495: linie goală.
-
+    for candidat in candidati:
+# [AUTO-COMMENT] Linia 495.
+        element, mesaj = valideaza_payload(candidat)
 # [AUTO-COMMENT] Linia 496.
-    return {
+        if mesaj:
 # [AUTO-COMMENT] Linia 497.
-        "oras_cerut": oras,
+            elemente_ignorate.append({
 # [AUTO-COMMENT] Linia 498.
-        "info_geo": info_geo,
+                "indicator": candidat.get("indicator"),
 # [AUTO-COMMENT] Linia 499.
-        "elemente_validate": elemente_validate,
+                "motiv": mesaj,
 # [AUTO-COMMENT] Linia 500.
-        "elemente_ignorate": elemente_ignorate,
+            })
 # [AUTO-COMMENT] Linia 501.
-    }
+            continue
 # [AUTO-COMMENT] Linia 502: linie goală.
 
-# [AUTO-COMMENT] Linia 503: linie goală.
+# [AUTO-COMMENT] Linia 503.
+        elemente_validate.append(element)
+# [AUTO-COMMENT] Linia 504: linie goală.
 
-# [AUTO-COMMENT] Linia 504.
-def extrage_date_externe_din_request():
 # [AUTO-COMMENT] Linia 505.
-    payload, raspuns_eroare_payload = extrage_payload_obiect_din_request()
+    return {
 # [AUTO-COMMENT] Linia 506.
-    if raspuns_eroare_payload:
+        "oras_cerut": oras,
 # [AUTO-COMMENT] Linia 507.
-        return None, None, raspuns_eroare_payload
-# [AUTO-COMMENT] Linia 508: linie goală.
-
+        "info_geo": info_geo,
+# [AUTO-COMMENT] Linia 508.
+        "elemente_validate": elemente_validate,
 # [AUTO-COMMENT] Linia 509.
-    try:
+        "elemente_ignorate": elemente_ignorate,
 # [AUTO-COMMENT] Linia 510.
-        date_externe = pregateste_date_externe(payload)
-# [AUTO-COMMENT] Linia 511.
-    except ValueError as eroare:
-# [AUTO-COMMENT] Linia 512.
-        return payload, None, raspuns_eroare(str(eroare), 400)
-# [AUTO-COMMENT] Linia 513.
-    except (HTTPError, URLError, TimeoutError, OSError):
-# [AUTO-COMMENT] Linia 514.
-        return payload, None, raspuns_eroare("Sursa externă este indisponibilă momentan.", 502)
-# [AUTO-COMMENT] Linia 515: linie goală.
+    }
+# [AUTO-COMMENT] Linia 511: linie goală.
 
+# [AUTO-COMMENT] Linia 512: linie goală.
+
+# [AUTO-COMMENT] Linia 513.
+def extrage_date_externe_din_request():
+# [AUTO-COMMENT] Linia 514.
+    payload, raspuns_eroare_payload = extrage_payload_obiect_din_request()
+# [AUTO-COMMENT] Linia 515.
+    if raspuns_eroare_payload:
 # [AUTO-COMMENT] Linia 516.
-    return payload, date_externe, None
+        return None, None, raspuns_eroare_payload
 # [AUTO-COMMENT] Linia 517: linie goală.
 
-# [AUTO-COMMENT] Linia 518: linie goală.
-
+# [AUTO-COMMENT] Linia 518.
+    try:
 # [AUTO-COMMENT] Linia 519.
-def selecteaza_element_extern(elemente_validate, payload_client):
+        date_externe = pregateste_date_externe(payload)
 # [AUTO-COMMENT] Linia 520.
-    if not elemente_validate:
+    except ValueError as eroare:
 # [AUTO-COMMENT] Linia 521.
-        return None
-# [AUTO-COMMENT] Linia 522: linie goală.
-
+        return payload, None, raspuns_eroare(str(eroare), 400)
+# [AUTO-COMMENT] Linia 522.
+    except (HTTPError, URLError, TimeoutError, OSError):
 # [AUTO-COMMENT] Linia 523.
-    indicator_cerut = text_scurt(prima_valoare(payload_client, ["indicator", "metric", "parametru"]))
-# [AUTO-COMMENT] Linia 524.
-    if not indicator_cerut:
+        return payload, None, raspuns_eroare("Sursa externă este indisponibilă momentan.", 502)
+# [AUTO-COMMENT] Linia 524: linie goală.
+
 # [AUTO-COMMENT] Linia 525.
-        return elemente_validate[0]
+    return payload, date_externe, None
 # [AUTO-COMMENT] Linia 526: linie goală.
 
-# [AUTO-COMMENT] Linia 527.
-    indicator_cerut_normalizat = text_normalizat(indicator_cerut)
-# [AUTO-COMMENT] Linia 528: linie goală.
+# [AUTO-COMMENT] Linia 527: linie goală.
 
+# [AUTO-COMMENT] Linia 528.
+def selecteaza_element_extern(elemente_validate, payload_client):
 # [AUTO-COMMENT] Linia 529.
-    for element in elemente_validate:
+    if not elemente_validate:
 # [AUTO-COMMENT] Linia 530.
-        metric = element.get("metric")
-# [AUTO-COMMENT] Linia 531.
-        metric_normalizat = text_normalizat(metric)
+        return None
+# [AUTO-COMMENT] Linia 531: linie goală.
+
 # [AUTO-COMMENT] Linia 532.
-        if (
+    indicator_cerut = text_scurt(prima_valoare(payload_client, ["indicator", "metric", "parametru"]))
 # [AUTO-COMMENT] Linia 533.
-            metric_normalizat == indicator_cerut_normalizat
+    if not indicator_cerut:
 # [AUTO-COMMENT] Linia 534.
-            or indicator_cerut_normalizat in metric_normalizat
-# [AUTO-COMMENT] Linia 535.
-            or metric_normalizat in indicator_cerut_normalizat
+        return elemente_validate[0]
+# [AUTO-COMMENT] Linia 535: linie goală.
+
 # [AUTO-COMMENT] Linia 536.
-        ):
-# [AUTO-COMMENT] Linia 537.
-            return element
-# [AUTO-COMMENT] Linia 538: linie goală.
+    indicator_cerut_normalizat = text_normalizat(indicator_cerut)
+# [AUTO-COMMENT] Linia 537: linie goală.
 
+# [AUTO-COMMENT] Linia 538.
+    for element in elemente_validate:
 # [AUTO-COMMENT] Linia 539.
-    return elemente_validate[0]
-# [AUTO-COMMENT] Linia 540: linie goală.
-
-# [AUTO-COMMENT] Linia 541: linie goală.
-
+        metric = element.get("metric")
+# [AUTO-COMMENT] Linia 540.
+        metric_normalizat = text_normalizat(metric)
+# [AUTO-COMMENT] Linia 541.
+        if (
 # [AUTO-COMMENT] Linia 542.
-def selectie_element_extern_sau_eroare(date_externe, payload_client, actiune, mesaj_eroare, extra=None):
+            metric_normalizat == indicator_cerut_normalizat
 # [AUTO-COMMENT] Linia 543.
-    element = selecteaza_element_extern(date_externe["elemente_validate"], payload_client)
+            or indicator_cerut_normalizat in metric_normalizat
 # [AUTO-COMMENT] Linia 544.
-    if element is not None:
+            or metric_normalizat in indicator_cerut_normalizat
 # [AUTO-COMMENT] Linia 545.
-        return element, None
-# [AUTO-COMMENT] Linia 546: linie goală.
+        ):
+# [AUTO-COMMENT] Linia 546.
+            return element
+# [AUTO-COMMENT] Linia 547: linie goală.
 
-# [AUTO-COMMENT] Linia 547.
-    payload_eroare = {
 # [AUTO-COMMENT] Linia 548.
-        "eroare": mesaj_eroare,
-# [AUTO-COMMENT] Linia 549.
-        "actiune": actiune,
-# [AUTO-COMMENT] Linia 550.
-        "numar_ignorate": len(date_externe["elemente_ignorate"]),
+    return elemente_validate[0]
+# [AUTO-COMMENT] Linia 549: linie goală.
+
+# [AUTO-COMMENT] Linia 550: linie goală.
+
 # [AUTO-COMMENT] Linia 551.
-        "elemente_ignorate": date_externe["elemente_ignorate"],
+def selectie_element_extern_sau_eroare(date_externe, payload_client, actiune, mesaj_eroare, extra=None):
 # [AUTO-COMMENT] Linia 552.
-    }
+    element = selecteaza_element_extern(date_externe["elemente_validate"], payload_client)
 # [AUTO-COMMENT] Linia 553.
-    if extra:
+    if element is not None:
 # [AUTO-COMMENT] Linia 554.
-        payload_eroare.update(extra)
+        return element, None
 # [AUTO-COMMENT] Linia 555: linie goală.
 
 # [AUTO-COMMENT] Linia 556.
-    return None, make_response(jsonify(payload_eroare), 502)
-# [AUTO-COMMENT] Linia 557: linie goală.
-
-# [AUTO-COMMENT] Linia 558: linie goală.
-
+    payload_eroare = {
+# [AUTO-COMMENT] Linia 557.
+        "eroare": mesaj_eroare,
+# [AUTO-COMMENT] Linia 558.
+        "actiune": actiune,
 # [AUTO-COMMENT] Linia 559.
-def gaseste_id_dupa_metric_si_oras(metric_cautat, oras_cautat):
+        "numar_ignorate": len(date_externe["elemente_ignorate"]),
 # [AUTO-COMMENT] Linia 560.
-    metric_normalizat = text_normalizat(metric_cautat)
+        "elemente_ignorate": date_externe["elemente_ignorate"],
 # [AUTO-COMMENT] Linia 561.
-    oras_normalizat = text_normalizat(oras_cautat)
-# [AUTO-COMMENT] Linia 562: linie goală.
-
+    }
+# [AUTO-COMMENT] Linia 562.
+    if extra:
 # [AUTO-COMMENT] Linia 563.
-    if not metric_normalizat:
-# [AUTO-COMMENT] Linia 564.
-        return None
-# [AUTO-COMMENT] Linia 565: linie goală.
+        payload_eroare.update(extra)
+# [AUTO-COMMENT] Linia 564: linie goală.
 
-# [AUTO-COMMENT] Linia 566.
-    for item_id in sorted(baza_masuratori.keys()):
-# [AUTO-COMMENT] Linia 567.
-        element = baza_masuratori[item_id]
+# [AUTO-COMMENT] Linia 565.
+    return None, make_response(jsonify(payload_eroare), 502)
+# [AUTO-COMMENT] Linia 566: linie goală.
+
+# [AUTO-COMMENT] Linia 567: linie goală.
+
 # [AUTO-COMMENT] Linia 568.
-        metric_curent = text_normalizat(element.get("metric"))
+def gaseste_id_dupa_metric_si_oras(metric_cautat, oras_cautat):
 # [AUTO-COMMENT] Linia 569.
-        if metric_curent != metric_normalizat:
+    metric_normalizat = text_normalizat(metric_cautat)
 # [AUTO-COMMENT] Linia 570.
-            continue
+    oras_normalizat = text_normalizat(oras_cautat)
 # [AUTO-COMMENT] Linia 571: linie goală.
 
 # [AUTO-COMMENT] Linia 572.
-        oras_curent = text_normalizat(element.get("city"))
+    if not metric_normalizat:
 # [AUTO-COMMENT] Linia 573.
-        if oras_normalizat:
-# [AUTO-COMMENT] Linia 574.
-            if oras_curent == oras_normalizat:
-# [AUTO-COMMENT] Linia 575.
-                return item_id
-# [AUTO-COMMENT] Linia 576.
-        else:
-# [AUTO-COMMENT] Linia 577.
-            return item_id
-# [AUTO-COMMENT] Linia 578: linie goală.
+        return None
+# [AUTO-COMMENT] Linia 574: linie goală.
 
+# [AUTO-COMMENT] Linia 575.
+    for item_id in sorted(baza_masuratori.keys()):
+# [AUTO-COMMENT] Linia 576.
+        element = baza_masuratori[item_id]
+# [AUTO-COMMENT] Linia 577.
+        metric_curent = text_normalizat(element.get("metric"))
+# [AUTO-COMMENT] Linia 578.
+        if metric_curent != metric_normalizat:
 # [AUTO-COMMENT] Linia 579.
-    return None
+            continue
 # [AUTO-COMMENT] Linia 580: linie goală.
 
-# [AUTO-COMMENT] Linia 581: linie goală.
-
+# [AUTO-COMMENT] Linia 581.
+        oras_curent = text_normalizat(element.get("city"))
 # [AUTO-COMMENT] Linia 582.
-def salveaza_element(element, item_id=None):
+        if oras_normalizat:
 # [AUTO-COMMENT] Linia 583.
-    global urmatorul_id
-# [AUTO-COMMENT] Linia 584: linie goală.
-
+            if oras_curent == oras_normalizat:
+# [AUTO-COMMENT] Linia 584.
+                return item_id
 # [AUTO-COMMENT] Linia 585.
-    if item_id is None:
+        else:
 # [AUTO-COMMENT] Linia 586.
-        item_id = urmatorul_id
+            return item_id
 # [AUTO-COMMENT] Linia 587: linie goală.
 
 # [AUTO-COMMENT] Linia 588.
-    if item_id >= urmatorul_id:
-# [AUTO-COMMENT] Linia 589.
-        urmatorul_id = item_id + 1
+    return None
+# [AUTO-COMMENT] Linia 589: linie goală.
+
 # [AUTO-COMMENT] Linia 590: linie goală.
 
 # [AUTO-COMMENT] Linia 591.
-    creat = {"id": item_id, **element}
+def salveaza_element(element, item_id=None):
 # [AUTO-COMMENT] Linia 592.
-    baza_masuratori[item_id] = creat
-# [AUTO-COMMENT] Linia 593.
-    return creat
-# [AUTO-COMMENT] Linia 594: linie goală.
+    global urmatorul_id
+# [AUTO-COMMENT] Linia 593: linie goală.
 
-# [AUTO-COMMENT] Linia 595: linie goală.
+# [AUTO-COMMENT] Linia 594.
+    if item_id is None:
+# [AUTO-COMMENT] Linia 595.
+        item_id = urmatorul_id
+# [AUTO-COMMENT] Linia 596: linie goală.
 
-# [AUTO-COMMENT] Linia 596.
-def aplica_patch_element(element_baza, campuri_noi):
 # [AUTO-COMMENT] Linia 597.
-    element_actualizat = {**element_baza}
+    if item_id >= urmatorul_id:
 # [AUTO-COMMENT] Linia 598.
-    campuri_actualizate = []
+        urmatorul_id = item_id + 1
 # [AUTO-COMMENT] Linia 599: linie goală.
 
 # [AUTO-COMMENT] Linia 600.
-    for camp, valoare in campuri_noi.items():
+    creat = {"id": item_id, **element}
 # [AUTO-COMMENT] Linia 601.
-        if element_actualizat.get(camp) != valoare:
+    baza_masuratori[item_id] = creat
 # [AUTO-COMMENT] Linia 602.
-            element_actualizat[camp] = valoare
-# [AUTO-COMMENT] Linia 603.
-            campuri_actualizate.append(camp)
+    return creat
+# [AUTO-COMMENT] Linia 603: linie goală.
+
 # [AUTO-COMMENT] Linia 604: linie goală.
 
 # [AUTO-COMMENT] Linia 605.
-    return element_actualizat, sorted(campuri_actualizate)
-# [AUTO-COMMENT] Linia 606: linie goală.
+def aplica_patch_element(element_baza, campuri_noi):
+# [AUTO-COMMENT] Linia 606.
+    element_actualizat = {**element_baza}
+# [AUTO-COMMENT] Linia 607.
+    campuri_actualizate = []
+# [AUTO-COMMENT] Linia 608: linie goală.
 
-# [AUTO-COMMENT] Linia 607: linie goală.
-
-# [AUTO-COMMENT] Linia 608.
-def raspuns_creare(payload, item_id):
 # [AUTO-COMMENT] Linia 609.
-    raspuns = make_response(jsonify(payload), 201)
+    for camp, valoare in campuri_noi.items():
 # [AUTO-COMMENT] Linia 610.
-    raspuns.headers["Location"] = f"/masuratori/{item_id}"
+        if element_actualizat.get(camp) != valoare:
 # [AUTO-COMMENT] Linia 611.
-    return raspuns
-# [AUTO-COMMENT] Linia 612: linie goală.
-
+            element_actualizat[camp] = valoare
+# [AUTO-COMMENT] Linia 612.
+            campuri_actualizate.append(camp)
 # [AUTO-COMMENT] Linia 613: linie goală.
 
 # [AUTO-COMMENT] Linia 614.
-def extrage_element_extern_din_request(actiune, mesaj_eroare, extra=None, adauga_oras_cerut=False):
-# [AUTO-COMMENT] Linia 615.
-    payload, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
-# [AUTO-COMMENT] Linia 616.
-    if raspuns_eroare_externa:
-# [AUTO-COMMENT] Linia 617.
-        return None, None, raspuns_eroare_externa
-# [AUTO-COMMENT] Linia 618: linie goală.
+    return element_actualizat, sorted(campuri_actualizate)
+# [AUTO-COMMENT] Linia 615: linie goală.
 
+# [AUTO-COMMENT] Linia 616: linie goală.
+
+# [AUTO-COMMENT] Linia 617.
+def raspuns_creare(payload, item_id):
+# [AUTO-COMMENT] Linia 618.
+    raspuns = make_response(jsonify(payload), 201)
 # [AUTO-COMMENT] Linia 619.
-    extra_final = dict(extra or {})
+    raspuns.headers["Location"] = f"/masuratori/{item_id}"
 # [AUTO-COMMENT] Linia 620.
-    if adauga_oras_cerut:
-# [AUTO-COMMENT] Linia 621.
-        extra_final["oras_cerut"] = date_externe["oras_cerut"]
+    return raspuns
+# [AUTO-COMMENT] Linia 621: linie goală.
+
 # [AUTO-COMMENT] Linia 622: linie goală.
 
 # [AUTO-COMMENT] Linia 623.
-    element, raspuns_selectie = selectie_element_extern_sau_eroare(
+def extrage_element_extern_din_request(actiune, mesaj_eroare, extra=None, adauga_oras_cerut=False):
 # [AUTO-COMMENT] Linia 624.
-        date_externe,
+    payload, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
 # [AUTO-COMMENT] Linia 625.
-        payload,
+    if raspuns_eroare_externa:
 # [AUTO-COMMENT] Linia 626.
-        actiune,
-# [AUTO-COMMENT] Linia 627.
-        mesaj_eroare,
+        return None, None, raspuns_eroare_externa
+# [AUTO-COMMENT] Linia 627: linie goală.
+
 # [AUTO-COMMENT] Linia 628.
-        extra=extra_final or None,
+    extra_final = dict(extra or {})
 # [AUTO-COMMENT] Linia 629.
-    )
+    if adauga_oras_cerut:
 # [AUTO-COMMENT] Linia 630.
-    if raspuns_selectie:
-# [AUTO-COMMENT] Linia 631.
-        return None, None, raspuns_selectie
-# [AUTO-COMMENT] Linia 632: linie goală.
+        extra_final["oras_cerut"] = date_externe["oras_cerut"]
+# [AUTO-COMMENT] Linia 631: linie goală.
 
+# [AUTO-COMMENT] Linia 632.
+    element, raspuns_selectie = selectie_element_extern_sau_eroare(
 # [AUTO-COMMENT] Linia 633.
-    return element, date_externe, None
-# [AUTO-COMMENT] Linia 634: linie goală.
-
-# [AUTO-COMMENT] Linia 635: linie goală.
-
+        date_externe,
+# [AUTO-COMMENT] Linia 634.
+        payload,
+# [AUTO-COMMENT] Linia 635.
+        actiune,
 # [AUTO-COMMENT] Linia 636.
-@app.route("/", methods=["GET"])
+        mesaj_eroare,
 # [AUTO-COMMENT] Linia 637.
-def acasa():
+        extra=extra_final or None,
 # [AUTO-COMMENT] Linia 638.
-    return render_template("panou_masuratori.html")
-# [AUTO-COMMENT] Linia 639: linie goală.
+    )
+# [AUTO-COMMENT] Linia 639.
+    if raspuns_selectie:
+# [AUTO-COMMENT] Linia 640.
+        return None, None, raspuns_selectie
+# [AUTO-COMMENT] Linia 641: linie goală.
 
-# [AUTO-COMMENT] Linia 640: linie goală.
-
-# [AUTO-COMMENT] Linia 641.
-@app.route("/measurements/trace/collection", methods=["POST"])
 # [AUTO-COMMENT] Linia 642.
-@app.route("/masuratori/trace/colectie", methods=["POST"])
-# [AUTO-COMMENT] Linia 643.
-def endpoint_trace_ui_colectie():
-# [AUTO-COMMENT] Linia 644.
-    return raspuns_trace("/masuratori", "colectie_masuratori", METODE_COLECTIE, simulat_ui=True)
-# [AUTO-COMMENT] Linia 645: linie goală.
+    return element, date_externe, None
+# [AUTO-COMMENT] Linia 643: linie goală.
 
-# [AUTO-COMMENT] Linia 646: linie goală.
+# [AUTO-COMMENT] Linia 644: linie goală.
 
+# [AUTO-COMMENT] Linia 645.
+@app.route("/", methods=["GET"])
+# [AUTO-COMMENT] Linia 646.
+def acasa():
 # [AUTO-COMMENT] Linia 647.
-@app.route("/measurements/trace/item/<int:item_id>", methods=["POST"])
-# [AUTO-COMMENT] Linia 648.
-@app.route("/masuratori/trace/element/<int:item_id>", methods=["POST"])
-# [AUTO-COMMENT] Linia 649.
-def endpoint_trace_ui_element(item_id):
-# [AUTO-COMMENT] Linia 650.
-    if item_id <= 0:
-# [AUTO-COMMENT] Linia 651.
-        return raspuns_eroare("item_id trebuie să fie pozitiv.", 400)
-# [AUTO-COMMENT] Linia 652.
-    return raspuns_trace(f"/masuratori/{item_id}", f"element_masurare_{item_id}", METODE_ELEMENT, simulat_ui=True)
-# [AUTO-COMMENT] Linia 653: linie goală.
+    return render_template("panou_masuratori.html")
+# [AUTO-COMMENT] Linia 648: linie goală.
 
+# [AUTO-COMMENT] Linia 649: linie goală.
+
+# [AUTO-COMMENT] Linia 650.
+@app.route("/measurements/trace/collection", methods=["POST"])
+# [AUTO-COMMENT] Linia 651.
+@app.route("/masuratori/trace/colectie", methods=["POST"])
+# [AUTO-COMMENT] Linia 652.
+def endpoint_trace_ui_colectie():
+# [AUTO-COMMENT] Linia 653.
+    return raspuns_trace("/masuratori", "colectie_masuratori", METODE_COLECTIE, simulat_ui=True)
 # [AUTO-COMMENT] Linia 654: linie goală.
 
-# [AUTO-COMMENT] Linia 655.
-@app.route("/measurements/external-preview", methods=["POST"])
+# [AUTO-COMMENT] Linia 655: linie goală.
+
 # [AUTO-COMMENT] Linia 656.
-@app.route("/masuratori/preview-extern", methods=["POST"])
+@app.route("/measurements/trace/item/<int:item_id>", methods=["POST"])
 # [AUTO-COMMENT] Linia 657.
-def endpoint_preview_extern():
+@app.route("/masuratori/trace/element/<int:item_id>", methods=["POST"])
 # [AUTO-COMMENT] Linia 658.
-    _, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
+def endpoint_trace_ui_element(item_id):
 # [AUTO-COMMENT] Linia 659.
-    if raspuns_eroare_externa:
+    if item_id <= 0:
 # [AUTO-COMMENT] Linia 660.
-        return raspuns_eroare_externa
-# [AUTO-COMMENT] Linia 661: linie goală.
+        return raspuns_eroare("item_id trebuie să fie pozitiv.", 400)
+# [AUTO-COMMENT] Linia 661.
+    return raspuns_trace(f"/masuratori/{item_id}", f"element_masurare_{item_id}", METODE_ELEMENT, simulat_ui=True)
+# [AUTO-COMMENT] Linia 662: linie goală.
 
-# [AUTO-COMMENT] Linia 662.
-    elemente_preview = [
-# [AUTO-COMMENT] Linia 663.
-        {"id_preview": index, **element}
+# [AUTO-COMMENT] Linia 663: linie goală.
+
 # [AUTO-COMMENT] Linia 664.
-        for index, element in enumerate(date_externe["elemente_validate"], start=1)
+@app.route("/measurements/external-preview", methods=["POST"])
 # [AUTO-COMMENT] Linia 665.
-    ]
-# [AUTO-COMMENT] Linia 666: linie goală.
-
+@app.route("/masuratori/preview-extern", methods=["POST"])
+# [AUTO-COMMENT] Linia 666.
+def endpoint_preview_extern():
 # [AUTO-COMMENT] Linia 667.
-    return jsonify({
-# [AUTO-COMMENT] Linia 668.
-        "mesaj": "Preview date externe generat.",
-# [AUTO-COMMENT] Linia 669.
-        "actiune": "preview_date_externe",
-# [AUTO-COMMENT] Linia 670.
-        "sursa": "open-meteo",
-# [AUTO-COMMENT] Linia 671.
-        "oras_cerut": date_externe["oras_cerut"],
-# [AUTO-COMMENT] Linia 672.
-        "oras_rezolvat": date_externe["info_geo"].get("city"),
-# [AUTO-COMMENT] Linia 673.
-        "numar_preview": len(elemente_preview),
-# [AUTO-COMMENT] Linia 674.
-        "numar_ignorate": len(date_externe["elemente_ignorate"]),
-# [AUTO-COMMENT] Linia 675.
-        "elemente_preview": elemente_preview,
-# [AUTO-COMMENT] Linia 676.
-        "elemente_ignorate": date_externe["elemente_ignorate"],
-# [AUTO-COMMENT] Linia 677.
-    }), 200
-# [AUTO-COMMENT] Linia 678: linie goală.
-
-# [AUTO-COMMENT] Linia 679: linie goală.
-
-# [AUTO-COMMENT] Linia 680.
-@app.route("/measurements/synchronize", methods=["POST"])
-# [AUTO-COMMENT] Linia 681.
-@app.route("/masuratori/sincronizeaza", methods=["POST"])
-# [AUTO-COMMENT] Linia 682.
-def endpoint_sincronizare_externa():
-# [AUTO-COMMENT] Linia 683.
     _, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
-# [AUTO-COMMENT] Linia 684.
+# [AUTO-COMMENT] Linia 668.
     if raspuns_eroare_externa:
-# [AUTO-COMMENT] Linia 685.
+# [AUTO-COMMENT] Linia 669.
         return raspuns_eroare_externa
-# [AUTO-COMMENT] Linia 686: linie goală.
+# [AUTO-COMMENT] Linia 670: linie goală.
 
-# [AUTO-COMMENT] Linia 687.
-    elemente_adaugate = [
-# [AUTO-COMMENT] Linia 688.
-        salveaza_element(element)
-# [AUTO-COMMENT] Linia 689.
-        for element in date_externe["elemente_validate"]
-# [AUTO-COMMENT] Linia 690.
+# [AUTO-COMMENT] Linia 671.
+    elemente_preview = [
+# [AUTO-COMMENT] Linia 672.
+        {"id_preview": index, **element}
+# [AUTO-COMMENT] Linia 673.
+        for index, element in enumerate(date_externe["elemente_validate"], start=1)
+# [AUTO-COMMENT] Linia 674.
     ]
-# [AUTO-COMMENT] Linia 691.
-    elemente_ignorate = date_externe["elemente_ignorate"]
-# [AUTO-COMMENT] Linia 692: linie goală.
+# [AUTO-COMMENT] Linia 675: linie goală.
 
+# [AUTO-COMMENT] Linia 676.
+    return jsonify({
+# [AUTO-COMMENT] Linia 677.
+        "mesaj": "Preview date externe generat.",
+# [AUTO-COMMENT] Linia 678.
+        "actiune": "preview_date_externe",
+# [AUTO-COMMENT] Linia 679.
+        "sursa": "open-meteo",
+# [AUTO-COMMENT] Linia 680.
+        "oras_cerut": date_externe["oras_cerut"],
+# [AUTO-COMMENT] Linia 681.
+        "oras_rezolvat": date_externe["info_geo"].get("city"),
+# [AUTO-COMMENT] Linia 682.
+        "numar_preview": len(elemente_preview),
+# [AUTO-COMMENT] Linia 683.
+        "numar_ignorate": len(date_externe["elemente_ignorate"]),
+# [AUTO-COMMENT] Linia 684.
+        "elemente_preview": elemente_preview,
+# [AUTO-COMMENT] Linia 685.
+        "elemente_ignorate": date_externe["elemente_ignorate"],
+# [AUTO-COMMENT] Linia 686.
+    }), 200
+# [AUTO-COMMENT] Linia 687: linie goală.
+
+# [AUTO-COMMENT] Linia 688: linie goală.
+
+# [AUTO-COMMENT] Linia 689.
+@app.route("/measurements/synchronize", methods=["POST"])
+# [AUTO-COMMENT] Linia 690.
+@app.route("/masuratori/sincronizeaza", methods=["POST"])
+# [AUTO-COMMENT] Linia 691.
+def endpoint_sincronizare_externa():
+# [AUTO-COMMENT] Linia 692.
+    _, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
 # [AUTO-COMMENT] Linia 693.
-    if not elemente_adaugate:
+    if raspuns_eroare_externa:
 # [AUTO-COMMENT] Linia 694.
-        return jsonify({
-# [AUTO-COMMENT] Linia 695.
-            "eroare": "Nu am putut importa măsurători valide din sursa externă.",
+        return raspuns_eroare_externa
+# [AUTO-COMMENT] Linia 695: linie goală.
+
 # [AUTO-COMMENT] Linia 696.
-            "actiune": "sincronizeaza_din_open_meteo",
+    elemente_adaugate = [
 # [AUTO-COMMENT] Linia 697.
-            "oras_cerut": date_externe["oras_cerut"],
+        salveaza_element(element)
 # [AUTO-COMMENT] Linia 698.
-            "numar_ignorate": len(elemente_ignorate),
+        for element in date_externe["elemente_validate"]
 # [AUTO-COMMENT] Linia 699.
-            "elemente_ignorate": elemente_ignorate,
+    ]
 # [AUTO-COMMENT] Linia 700.
-        }), 502
+    elemente_ignorate = date_externe["elemente_ignorate"]
 # [AUTO-COMMENT] Linia 701: linie goală.
 
 # [AUTO-COMMENT] Linia 702.
-    return jsonify({
+    if not elemente_adaugate:
 # [AUTO-COMMENT] Linia 703.
-        "mesaj": "Sincronizare externă finalizată.",
+        return jsonify({
 # [AUTO-COMMENT] Linia 704.
-        "actiune": "sincronizeaza_din_open_meteo",
+            "eroare": "Nu am putut importa măsurători valide din sursa externă.",
 # [AUTO-COMMENT] Linia 705.
-        "sursa": "open-meteo",
+            "actiune": "sincronizeaza_din_open_meteo",
 # [AUTO-COMMENT] Linia 706.
-        "oras_cerut": date_externe["oras_cerut"],
+            "oras_cerut": date_externe["oras_cerut"],
 # [AUTO-COMMENT] Linia 707.
-        "oras_rezolvat": date_externe["info_geo"].get("city"),
+            "numar_ignorate": len(elemente_ignorate),
 # [AUTO-COMMENT] Linia 708.
-        "numar_adaugate": len(elemente_adaugate),
+            "elemente_ignorate": elemente_ignorate,
 # [AUTO-COMMENT] Linia 709.
-        "numar_ignorate": len(elemente_ignorate),
-# [AUTO-COMMENT] Linia 710.
-        "ids_generate": [element["id"] for element in elemente_adaugate],
+        }), 502
+# [AUTO-COMMENT] Linia 710: linie goală.
+
 # [AUTO-COMMENT] Linia 711.
-        "elemente_adaugate": elemente_adaugate,
+    return jsonify({
 # [AUTO-COMMENT] Linia 712.
-        "elemente_ignorate": elemente_ignorate,
+        "mesaj": "Sincronizare externă finalizată.",
 # [AUTO-COMMENT] Linia 713.
-    }), 201
-# [AUTO-COMMENT] Linia 714: linie goală.
-
-# [AUTO-COMMENT] Linia 715: linie goală.
-
+        "actiune": "sincronizeaza_din_open_meteo",
+# [AUTO-COMMENT] Linia 714.
+        "sursa": "open-meteo",
+# [AUTO-COMMENT] Linia 715.
+        "oras_cerut": date_externe["oras_cerut"],
 # [AUTO-COMMENT] Linia 716.
-@app.route("/measurements", methods=METODE_COLECTIE)
+        "oras_rezolvat": date_externe["info_geo"].get("city"),
 # [AUTO-COMMENT] Linia 717.
-@app.route("/masuratori", methods=METODE_COLECTIE)
+        "numar_adaugate": len(elemente_adaugate),
 # [AUTO-COMMENT] Linia 718.
-def endpoint_colectie():
+        "numar_ignorate": len(elemente_ignorate),
 # [AUTO-COMMENT] Linia 719.
-    global baza_masuratori
+        "ids_generate": [element["id"] for element in elemente_adaugate],
 # [AUTO-COMMENT] Linia 720.
-    global urmatorul_id
-# [AUTO-COMMENT] Linia 721: linie goală.
-
+        "elemente_adaugate": elemente_adaugate,
+# [AUTO-COMMENT] Linia 721.
+        "elemente_ignorate": elemente_ignorate,
 # [AUTO-COMMENT] Linia 722.
-    if request.method == "OPTIONS":
-# [AUTO-COMMENT] Linia 723.
-        return raspuns_options("/masuratori", METODE_COLECTIE, "colectie_masuratori")
+    }), 201
+# [AUTO-COMMENT] Linia 723: linie goală.
+
 # [AUTO-COMMENT] Linia 724: linie goală.
 
 # [AUTO-COMMENT] Linia 725.
-    if request.method == "TRACE":
+@app.route("/measurements", methods=METODE_COLECTIE)
 # [AUTO-COMMENT] Linia 726.
-        return raspuns_trace("/masuratori", "colectie_masuratori", METODE_COLECTIE)
-# [AUTO-COMMENT] Linia 727: linie goală.
-
+@app.route("/masuratori", methods=METODE_COLECTIE)
+# [AUTO-COMMENT] Linia 727.
+def endpoint_colectie():
 # [AUTO-COMMENT] Linia 728.
-    if request.method == "HEAD":
+    global baza_masuratori
 # [AUTO-COMMENT] Linia 729.
-        raspuns = make_response("", 200)
-# [AUTO-COMMENT] Linia 730.
-        raspuns.headers["Allow"] = header_allow_pentru(METODE_COLECTIE)
+    global urmatorul_id
+# [AUTO-COMMENT] Linia 730: linie goală.
+
 # [AUTO-COMMENT] Linia 731.
-        raspuns.headers["X-Numar-Elemente"] = str(len(baza_masuratori))
+    if request.method == "OPTIONS":
 # [AUTO-COMMENT] Linia 732.
-        return raspuns
+        return raspuns_options("/masuratori", METODE_COLECTIE, "colectie_masuratori")
 # [AUTO-COMMENT] Linia 733: linie goală.
 
 # [AUTO-COMMENT] Linia 734.
-    if request.method == "GET":
+    if request.method == "TRACE":
 # [AUTO-COMMENT] Linia 735.
-        return jsonify(raspuns_colectie()), 200
+        return raspuns_trace("/masuratori", "colectie_masuratori", METODE_COLECTIE)
 # [AUTO-COMMENT] Linia 736: linie goală.
 
 # [AUTO-COMMENT] Linia 737.
-    if request.method == "POST":
+    if request.method == "HEAD":
 # [AUTO-COMMENT] Linia 738.
-        element, date_externe, raspuns_eroare_externa = extrage_element_extern_din_request(
+        raspuns = make_response("", 200)
 # [AUTO-COMMENT] Linia 739.
-            "post_colectie_din_api_extern",
+        raspuns.headers["Allow"] = header_allow_pentru(METODE_COLECTIE)
 # [AUTO-COMMENT] Linia 740.
-            "Nu am putut extrage niciun element valid din sursa externă.",
+        raspuns.headers["X-Numar-Elemente"] = str(len(baza_masuratori))
 # [AUTO-COMMENT] Linia 741.
-            adauga_oras_cerut=True,
-# [AUTO-COMMENT] Linia 742.
-        )
+        return raspuns
+# [AUTO-COMMENT] Linia 742: linie goală.
+
 # [AUTO-COMMENT] Linia 743.
-        if raspuns_eroare_externa:
+    if request.method == "GET":
 # [AUTO-COMMENT] Linia 744.
-            return raspuns_eroare_externa
+        return jsonify(raspuns_colectie()), 200
 # [AUTO-COMMENT] Linia 745: linie goală.
 
 # [AUTO-COMMENT] Linia 746.
-        creat = salveaza_element(element)
-# [AUTO-COMMENT] Linia 747: linie goală.
-
+    if request.method == "POST":
+# [AUTO-COMMENT] Linia 747.
+        element, date_externe, raspuns_eroare_externa = extrage_element_extern_din_request(
 # [AUTO-COMMENT] Linia 748.
-        return raspuns_creare(
+            "post_colectie_din_api_extern",
 # [AUTO-COMMENT] Linia 749.
-            {
+            "Nu am putut extrage niciun element valid din sursa externă.",
 # [AUTO-COMMENT] Linia 750.
-                **creat,
+            adauga_oras_cerut=True,
 # [AUTO-COMMENT] Linia 751.
-                "actiune": "post_colectie_din_api_extern",
-# [AUTO-COMMENT] Linia 752.
-                "sursa": "open-meteo",
-# [AUTO-COMMENT] Linia 753.
-                "oras_rezolvat": date_externe["info_geo"].get("city"),
-# [AUTO-COMMENT] Linia 754.
-            },
-# [AUTO-COMMENT] Linia 755.
-            creat["id"],
-# [AUTO-COMMENT] Linia 756.
         )
-# [AUTO-COMMENT] Linia 757: linie goală.
-
-# [AUTO-COMMENT] Linia 758.
-    if request.method == "PUT":
-# [AUTO-COMMENT] Linia 759.
-        _, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
-# [AUTO-COMMENT] Linia 760.
+# [AUTO-COMMENT] Linia 752.
         if raspuns_eroare_externa:
-# [AUTO-COMMENT] Linia 761.
+# [AUTO-COMMENT] Linia 753.
             return raspuns_eroare_externa
-# [AUTO-COMMENT] Linia 762: linie goală.
+# [AUTO-COMMENT] Linia 754: linie goală.
 
+# [AUTO-COMMENT] Linia 755.
+        creat = salveaza_element(element)
+# [AUTO-COMMENT] Linia 756: linie goală.
+
+# [AUTO-COMMENT] Linia 757.
+        return raspuns_creare(
+# [AUTO-COMMENT] Linia 758.
+            {
+# [AUTO-COMMENT] Linia 759.
+                **creat,
+# [AUTO-COMMENT] Linia 760.
+                "actiune": "post_colectie_din_api_extern",
+# [AUTO-COMMENT] Linia 761.
+                "sursa": "open-meteo",
+# [AUTO-COMMENT] Linia 762.
+                "oras_rezolvat": date_externe["info_geo"].get("city"),
 # [AUTO-COMMENT] Linia 763.
-        if not date_externe["elemente_validate"]:
+            },
 # [AUTO-COMMENT] Linia 764.
-            return jsonify({
+            creat["id"],
 # [AUTO-COMMENT] Linia 765.
-                "eroare": "Nu am putut importa măsurători valide pentru înlocuirea colecției.",
-# [AUTO-COMMENT] Linia 766.
-                "actiune": "put_colectie_din_api_extern",
+        )
+# [AUTO-COMMENT] Linia 766: linie goală.
+
 # [AUTO-COMMENT] Linia 767.
-                "oras_cerut": date_externe["oras_cerut"],
+    if request.method == "PUT":
 # [AUTO-COMMENT] Linia 768.
-                "numar_ignorate": len(date_externe["elemente_ignorate"]),
+        _, date_externe, raspuns_eroare_externa = extrage_date_externe_din_request()
 # [AUTO-COMMENT] Linia 769.
-                "elemente_ignorate": date_externe["elemente_ignorate"],
+        if raspuns_eroare_externa:
 # [AUTO-COMMENT] Linia 770.
-            }), 502
+            return raspuns_eroare_externa
 # [AUTO-COMMENT] Linia 771: linie goală.
 
 # [AUTO-COMMENT] Linia 772.
-        date_noi = {
+        if not date_externe["elemente_validate"]:
 # [AUTO-COMMENT] Linia 773.
-            index: {"id": index, **element}
+            return jsonify({
 # [AUTO-COMMENT] Linia 774.
-            for index, element in enumerate(date_externe["elemente_validate"], start=1)
+                "eroare": "Nu am putut importa măsurători valide pentru înlocuirea colecției.",
 # [AUTO-COMMENT] Linia 775.
-        }
-# [AUTO-COMMENT] Linia 776: linie goală.
-
+                "actiune": "put_colectie_din_api_extern",
+# [AUTO-COMMENT] Linia 776.
+                "oras_cerut": date_externe["oras_cerut"],
 # [AUTO-COMMENT] Linia 777.
-        baza_masuratori = date_noi
+                "numar_ignorate": len(date_externe["elemente_ignorate"]),
 # [AUTO-COMMENT] Linia 778.
-        urmatorul_id = len(baza_masuratori) + 1
-# [AUTO-COMMENT] Linia 779: linie goală.
+                "elemente_ignorate": date_externe["elemente_ignorate"],
+# [AUTO-COMMENT] Linia 779.
+            }), 502
+# [AUTO-COMMENT] Linia 780: linie goală.
 
-# [AUTO-COMMENT] Linia 780.
-        raspuns = raspuns_colectie()
 # [AUTO-COMMENT] Linia 781.
-        raspuns["actiune"] = "put_colectie_din_api_extern"
+        date_noi = {
 # [AUTO-COMMENT] Linia 782.
-        raspuns["sursa"] = "open-meteo"
+            index: {"id": index, **element}
 # [AUTO-COMMENT] Linia 783.
-        raspuns["oras_rezolvat"] = date_externe["info_geo"].get("city")
+            for index, element in enumerate(date_externe["elemente_validate"], start=1)
 # [AUTO-COMMENT] Linia 784.
-        raspuns["numar_ignorate"] = len(date_externe["elemente_ignorate"])
-# [AUTO-COMMENT] Linia 785.
-        raspuns["elemente_ignorate"] = date_externe["elemente_ignorate"]
-# [AUTO-COMMENT] Linia 786.
-        return jsonify(raspuns), 200
-# [AUTO-COMMENT] Linia 787: linie goală.
-
-# [AUTO-COMMENT] Linia 788.
-    if request.method == "PATCH":
-# [AUTO-COMMENT] Linia 789.
-        element_nou, date_externe, raspuns_eroare_externa = extrage_element_extern_din_request(
-# [AUTO-COMMENT] Linia 790.
-            "patch_colectie_din_api_extern",
-# [AUTO-COMMENT] Linia 791.
-            "Nu am putut extrage niciun element valid pentru patch din sursa externă.",
-# [AUTO-COMMENT] Linia 792.
-            adauga_oras_cerut=True,
-# [AUTO-COMMENT] Linia 793.
-        )
-# [AUTO-COMMENT] Linia 794.
-        if raspuns_eroare_externa:
-# [AUTO-COMMENT] Linia 795.
-            return raspuns_eroare_externa
-# [AUTO-COMMENT] Linia 796.
-        id_tinta = gaseste_id_dupa_metric_si_oras(element_nou.get("metric"), element_nou.get("city"))
-# [AUTO-COMMENT] Linia 797: linie goală.
-
-# [AUTO-COMMENT] Linia 798.
-        status_patch = "adaugat"
-# [AUTO-COMMENT] Linia 799.
-        cod_status = 201
-# [AUTO-COMMENT] Linia 800.
-        campuri_actualizate = []
-# [AUTO-COMMENT] Linia 801: linie goală.
-
-# [AUTO-COMMENT] Linia 802.
-        if id_tinta is None:
-# [AUTO-COMMENT] Linia 803.
-            element_final = salveaza_element(element_nou)
-# [AUTO-COMMENT] Linia 804.
-            id_tinta = element_final["id"]
-# [AUTO-COMMENT] Linia 805.
-            campuri_actualizate = sorted(list(element_nou.keys()))
-# [AUTO-COMMENT] Linia 806.
-        else:
-# [AUTO-COMMENT] Linia 807.
-            element_actualizat, campuri_actualizate = aplica_patch_element(baza_masuratori[id_tinta], element_nou)
-# [AUTO-COMMENT] Linia 808.
-            baza_masuratori[id_tinta] = element_actualizat
-# [AUTO-COMMENT] Linia 809.
-            status_patch = "actualizat"
-# [AUTO-COMMENT] Linia 810.
-            cod_status = 200
-# [AUTO-COMMENT] Linia 811: linie goală.
-
-# [AUTO-COMMENT] Linia 812.
-        element_final = baza_masuratori[id_tinta]
-# [AUTO-COMMENT] Linia 813.
-        payload_raspuns = {
-# [AUTO-COMMENT] Linia 814.
-            "actiune": "patch_colectie_din_api_extern",
-# [AUTO-COMMENT] Linia 815.
-            "status_patch": status_patch,
-# [AUTO-COMMENT] Linia 816.
-            "id_tinta": id_tinta,
-# [AUTO-COMMENT] Linia 817.
-            "campuri_actualizate": campuri_actualizate,
-# [AUTO-COMMENT] Linia 818.
-            "sursa": "open-meteo",
-# [AUTO-COMMENT] Linia 819.
-            "oras_rezolvat": date_externe["info_geo"].get("city"),
-# [AUTO-COMMENT] Linia 820.
-            "element": element_final,
-# [AUTO-COMMENT] Linia 821.
         }
-# [AUTO-COMMENT] Linia 822: linie goală.
+# [AUTO-COMMENT] Linia 785: linie goală.
 
+# [AUTO-COMMENT] Linia 786.
+        baza_masuratori = date_noi
+# [AUTO-COMMENT] Linia 787.
+        urmatorul_id = len(baza_masuratori) + 1
+# [AUTO-COMMENT] Linia 788: linie goală.
+
+# [AUTO-COMMENT] Linia 789.
+        raspuns = raspuns_colectie()
+# [AUTO-COMMENT] Linia 790.
+        raspuns["actiune"] = "put_colectie_din_api_extern"
+# [AUTO-COMMENT] Linia 791.
+        raspuns["sursa"] = "open-meteo"
+# [AUTO-COMMENT] Linia 792.
+        raspuns["oras_rezolvat"] = date_externe["info_geo"].get("city")
+# [AUTO-COMMENT] Linia 793.
+        raspuns["numar_ignorate"] = len(date_externe["elemente_ignorate"])
+# [AUTO-COMMENT] Linia 794.
+        raspuns["elemente_ignorate"] = date_externe["elemente_ignorate"]
+# [AUTO-COMMENT] Linia 795.
+        return jsonify(raspuns), 200
+# [AUTO-COMMENT] Linia 796: linie goală.
+
+# [AUTO-COMMENT] Linia 797.
+    if request.method == "PATCH":
+# [AUTO-COMMENT] Linia 798.
+        element_nou, date_externe, raspuns_eroare_externa = extrage_element_extern_din_request(
+# [AUTO-COMMENT] Linia 799.
+            "patch_colectie_din_api_extern",
+# [AUTO-COMMENT] Linia 800.
+            "Nu am putut extrage niciun element valid pentru patch din sursa externă.",
+# [AUTO-COMMENT] Linia 801.
+            adauga_oras_cerut=True,
+# [AUTO-COMMENT] Linia 802.
+        )
+# [AUTO-COMMENT] Linia 803.
+        if raspuns_eroare_externa:
+# [AUTO-COMMENT] Linia 804.
+            return raspuns_eroare_externa
+# [AUTO-COMMENT] Linia 805.
+        id_tinta = gaseste_id_dupa_metric_si_oras(element_nou.get("metric"), element_nou.get("city"))
+# [AUTO-COMMENT] Linia 806: linie goală.
+
+# [AUTO-COMMENT] Linia 807.
+        status_patch = "adaugat"
+# [AUTO-COMMENT] Linia 808.
+        cod_status = 201
+# [AUTO-COMMENT] Linia 809.
+        campuri_actualizate = []
+# [AUTO-COMMENT] Linia 810: linie goală.
+
+# [AUTO-COMMENT] Linia 811.
+        if id_tinta is None:
+# [AUTO-COMMENT] Linia 812.
+            element_final = salveaza_element(element_nou)
+# [AUTO-COMMENT] Linia 813.
+            id_tinta = element_final["id"]
+# [AUTO-COMMENT] Linia 814.
+            campuri_actualizate = sorted(list(element_nou.keys()))
+# [AUTO-COMMENT] Linia 815.
+        else:
+# [AUTO-COMMENT] Linia 816.
+            element_actualizat, campuri_actualizate = aplica_patch_element(baza_masuratori[id_tinta], element_nou)
+# [AUTO-COMMENT] Linia 817.
+            baza_masuratori[id_tinta] = element_actualizat
+# [AUTO-COMMENT] Linia 818.
+            status_patch = "actualizat"
+# [AUTO-COMMENT] Linia 819.
+            cod_status = 200
+# [AUTO-COMMENT] Linia 820: linie goală.
+
+# [AUTO-COMMENT] Linia 821.
+        element_final = baza_masuratori[id_tinta]
+# [AUTO-COMMENT] Linia 822.
+        payload_raspuns = {
 # [AUTO-COMMENT] Linia 823.
-        if cod_status == 201:
+            "actiune": "patch_colectie_din_api_extern",
 # [AUTO-COMMENT] Linia 824.
-            return raspuns_creare(payload_raspuns, id_tinta)
-# [AUTO-COMMENT] Linia 825: linie goală.
-
+            "status_patch": status_patch,
+# [AUTO-COMMENT] Linia 825.
+            "id_tinta": id_tinta,
 # [AUTO-COMMENT] Linia 826.
-        return jsonify(payload_raspuns), 200
-# [AUTO-COMMENT] Linia 827: linie goală.
-
+            "campuri_actualizate": campuri_actualizate,
+# [AUTO-COMMENT] Linia 827.
+            "sursa": "open-meteo",
 # [AUTO-COMMENT] Linia 828.
-    if request.method == "DELETE":
+            "oras_rezolvat": date_externe["info_geo"].get("city"),
 # [AUTO-COMMENT] Linia 829.
-        sterse = len(baza_masuratori)
+            "element": element_final,
 # [AUTO-COMMENT] Linia 830.
-        baza_masuratori = {}
-# [AUTO-COMMENT] Linia 831.
-        urmatorul_id = 1
+        }
+# [AUTO-COMMENT] Linia 831: linie goală.
+
 # [AUTO-COMMENT] Linia 832.
-        return jsonify({
+        if cod_status == 201:
 # [AUTO-COMMENT] Linia 833.
-            "mesaj": "Toate măsurătorile din colecție au fost șterse.",
-# [AUTO-COMMENT] Linia 834.
-            "numar_sterse": sterse,
+            return raspuns_creare(payload_raspuns, id_tinta)
+# [AUTO-COMMENT] Linia 834: linie goală.
+
 # [AUTO-COMMENT] Linia 835.
-            "colectie_curenta": [],
-# [AUTO-COMMENT] Linia 836.
-        }), 200
-# [AUTO-COMMENT] Linia 837: linie goală.
+        return jsonify(payload_raspuns), 200
+# [AUTO-COMMENT] Linia 836: linie goală.
 
+# [AUTO-COMMENT] Linia 837.
+    if request.method == "DELETE":
 # [AUTO-COMMENT] Linia 838.
-    return raspuns_eroare("Metodă HTTP neacceptată pe colecție.", 405)
-# [AUTO-COMMENT] Linia 839: linie goală.
-
-# [AUTO-COMMENT] Linia 840: linie goală.
-
+        sterse = len(baza_masuratori)
+# [AUTO-COMMENT] Linia 839.
+        baza_masuratori = {}
+# [AUTO-COMMENT] Linia 840.
+        urmatorul_id = 1
 # [AUTO-COMMENT] Linia 841.
-@app.route("/measurements/<int:item_id>", methods=METODE_ELEMENT)
+        return jsonify({
 # [AUTO-COMMENT] Linia 842.
-@app.route("/masuratori/<int:item_id>", methods=METODE_ELEMENT)
+            "mesaj": "Toate măsurătorile din colecție au fost șterse.",
 # [AUTO-COMMENT] Linia 843.
-def endpoint_element(item_id):
+            "numar_sterse": sterse,
 # [AUTO-COMMENT] Linia 844.
-    if item_id <= 0:
+            "colectie_curenta": [],
 # [AUTO-COMMENT] Linia 845.
-        return raspuns_eroare("item_id trebuie să fie pozitiv.", 400)
+        }), 200
 # [AUTO-COMMENT] Linia 846: linie goală.
 
 # [AUTO-COMMENT] Linia 847.
-    if request.method == "OPTIONS":
-# [AUTO-COMMENT] Linia 848.
-        return raspuns_options(f"/masuratori/{item_id}", METODE_ELEMENT, f"element_masurare_{item_id}")
+    return raspuns_eroare("Metodă HTTP neacceptată pe colecție.", 405)
+# [AUTO-COMMENT] Linia 848: linie goală.
+
 # [AUTO-COMMENT] Linia 849: linie goală.
 
 # [AUTO-COMMENT] Linia 850.
-    if request.method == "TRACE":
+@app.route("/measurements/<int:item_id>", methods=METODE_ELEMENT)
 # [AUTO-COMMENT] Linia 851.
-        return raspuns_trace(f"/masuratori/{item_id}", f"element_masurare_{item_id}", METODE_ELEMENT)
-# [AUTO-COMMENT] Linia 852: linie goală.
-
+@app.route("/masuratori/<int:item_id>", methods=METODE_ELEMENT)
+# [AUTO-COMMENT] Linia 852.
+def endpoint_element(item_id):
 # [AUTO-COMMENT] Linia 853.
-    if request.method == "HEAD":
+    if item_id <= 0:
 # [AUTO-COMMENT] Linia 854.
-        element = baza_masuratori.get(item_id)
-# [AUTO-COMMENT] Linia 855.
-        exista = element is not None
+        return raspuns_eroare("item_id trebuie să fie pozitiv.", 400)
+# [AUTO-COMMENT] Linia 855: linie goală.
+
 # [AUTO-COMMENT] Linia 856.
-        cod = 200 if exista else 404
-# [AUTO-COMMENT] Linia 857: linie goală.
+    if request.method == "OPTIONS":
+# [AUTO-COMMENT] Linia 857.
+        return raspuns_options(f"/masuratori/{item_id}", METODE_ELEMENT, f"element_masurare_{item_id}")
+# [AUTO-COMMENT] Linia 858: linie goală.
 
-# [AUTO-COMMENT] Linia 858.
-        raspuns = make_response("", cod)
 # [AUTO-COMMENT] Linia 859.
-        raspuns.headers["Allow"] = header_allow_pentru(METODE_ELEMENT)
+    if request.method == "TRACE":
 # [AUTO-COMMENT] Linia 860.
-        raspuns.headers["X-Item-Id"] = str(item_id)
-# [AUTO-COMMENT] Linia 861.
-        raspuns.headers["X-Item-Exists"] = "true" if exista else "false"
+        return raspuns_trace(f"/masuratori/{item_id}", f"element_masurare_{item_id}", METODE_ELEMENT)
+# [AUTO-COMMENT] Linia 861: linie goală.
+
 # [AUTO-COMMENT] Linia 862.
-        if exista:
+    if request.method == "HEAD":
 # [AUTO-COMMENT] Linia 863.
-            raspuns.headers["X-Item-Metric"] = str(element.get("metric", ""))
-# [AUTO-COMMENT] Linia 864.
-        return raspuns
-# [AUTO-COMMENT] Linia 865: linie goală.
-
-# [AUTO-COMMENT] Linia 866.
-    if request.method == "GET":
-# [AUTO-COMMENT] Linia 867.
         element = baza_masuratori.get(item_id)
+# [AUTO-COMMENT] Linia 864.
+        exista = element is not None
+# [AUTO-COMMENT] Linia 865.
+        cod = 200 if exista else 404
+# [AUTO-COMMENT] Linia 866: linie goală.
+
+# [AUTO-COMMENT] Linia 867.
+        raspuns = make_response("", cod)
 # [AUTO-COMMENT] Linia 868.
-        if element is None:
+        raspuns.headers["Allow"] = header_allow_pentru(METODE_ELEMENT)
 # [AUTO-COMMENT] Linia 869.
-            return raspuns_eroare("Elementul cerut nu există.", 404)
+        raspuns.headers["X-Item-Id"] = str(item_id)
 # [AUTO-COMMENT] Linia 870.
-        return jsonify(element), 200
-# [AUTO-COMMENT] Linia 871: linie goală.
-
+        raspuns.headers["X-Item-Exists"] = "true" if exista else "false"
+# [AUTO-COMMENT] Linia 871.
+        if exista:
 # [AUTO-COMMENT] Linia 872.
-    if request.method == "POST":
+            raspuns.headers["X-Item-Metric"] = str(element.get("metric", ""))
 # [AUTO-COMMENT] Linia 873.
-        if item_id in baza_masuratori:
-# [AUTO-COMMENT] Linia 874.
-            return raspuns_eroare("Elementul există deja pentru acest id.", 409)
-# [AUTO-COMMENT] Linia 875: linie goală.
+        return raspuns
+# [AUTO-COMMENT] Linia 874: linie goală.
 
+# [AUTO-COMMENT] Linia 875.
+    if request.method == "GET":
 # [AUTO-COMMENT] Linia 876.
-        element, _, raspuns_eroare_externa = extrage_element_extern_din_request(
+        element = baza_masuratori.get(item_id)
 # [AUTO-COMMENT] Linia 877.
-            "post_element_din_api_extern",
+        if element is None:
 # [AUTO-COMMENT] Linia 878.
-            "Nu am putut extrage un element valid pentru acest id din sursa externă.",
+            return raspuns_eroare("Elementul cerut nu există.", 404)
 # [AUTO-COMMENT] Linia 879.
-            extra={"id_cerut": item_id},
-# [AUTO-COMMENT] Linia 880.
-        )
+        return jsonify(element), 200
+# [AUTO-COMMENT] Linia 880: linie goală.
+
 # [AUTO-COMMENT] Linia 881.
-        if raspuns_eroare_externa:
+    if request.method == "POST":
 # [AUTO-COMMENT] Linia 882.
-            return raspuns_eroare_externa
-# [AUTO-COMMENT] Linia 883: linie goală.
+        if item_id in baza_masuratori:
+# [AUTO-COMMENT] Linia 883.
+            return raspuns_eroare("Elementul există deja pentru acest id.", 409)
+# [AUTO-COMMENT] Linia 884: linie goală.
 
-# [AUTO-COMMENT] Linia 884.
-        creat = salveaza_element(element, item_id=item_id)
-# [AUTO-COMMENT] Linia 885: linie goală.
-
-# [AUTO-COMMENT] Linia 886.
-        return raspuns_creare(creat, item_id)
-# [AUTO-COMMENT] Linia 887: linie goală.
-
-# [AUTO-COMMENT] Linia 888.
-    if request.method == "PUT":
-# [AUTO-COMMENT] Linia 889.
+# [AUTO-COMMENT] Linia 885.
         element, _, raspuns_eroare_externa = extrage_element_extern_din_request(
-# [AUTO-COMMENT] Linia 890.
-            "put_element_din_api_extern",
-# [AUTO-COMMENT] Linia 891.
-            "Nu am putut extrage un element valid pentru actualizare din sursa externă.",
-# [AUTO-COMMENT] Linia 892.
+# [AUTO-COMMENT] Linia 886.
+            "post_element_din_api_extern",
+# [AUTO-COMMENT] Linia 887.
+            "Nu am putut extrage un element valid pentru acest id din sursa externă.",
+# [AUTO-COMMENT] Linia 888.
             extra={"id_cerut": item_id},
-# [AUTO-COMMENT] Linia 893.
+# [AUTO-COMMENT] Linia 889.
         )
-# [AUTO-COMMENT] Linia 894.
+# [AUTO-COMMENT] Linia 890.
         if raspuns_eroare_externa:
-# [AUTO-COMMENT] Linia 895.
+# [AUTO-COMMENT] Linia 891.
             return raspuns_eroare_externa
+# [AUTO-COMMENT] Linia 892: linie goală.
+
+# [AUTO-COMMENT] Linia 893.
+        creat = salveaza_element(element, item_id=item_id)
+# [AUTO-COMMENT] Linia 894: linie goală.
+
+# [AUTO-COMMENT] Linia 895.
+        return raspuns_creare(creat, item_id)
 # [AUTO-COMMENT] Linia 896: linie goală.
 
 # [AUTO-COMMENT] Linia 897.
-        exista = item_id in baza_masuratori
+    if request.method == "PUT":
 # [AUTO-COMMENT] Linia 898.
-        actualizat = salveaza_element(element, item_id=item_id)
-# [AUTO-COMMENT] Linia 899: linie goală.
-
+        element, _, raspuns_eroare_externa = extrage_element_extern_din_request(
+# [AUTO-COMMENT] Linia 899.
+            "put_element_din_api_extern",
 # [AUTO-COMMENT] Linia 900.
-        if exista:
+            "Nu am putut extrage un element valid pentru actualizare din sursa externă.",
 # [AUTO-COMMENT] Linia 901.
-            return jsonify(actualizat), 200
-# [AUTO-COMMENT] Linia 902: linie goală.
-
-# [AUTO-COMMENT] Linia 903.
-        return raspuns_creare(actualizat, item_id)
-# [AUTO-COMMENT] Linia 904: linie goală.
-
-# [AUTO-COMMENT] Linia 905.
-    if request.method == "PATCH":
-# [AUTO-COMMENT] Linia 906.
-        element_existent = baza_masuratori.get(item_id)
-# [AUTO-COMMENT] Linia 907.
-        if element_existent is None:
-# [AUTO-COMMENT] Linia 908.
-            return raspuns_eroare("Elementul cerut nu există pentru patch.", 404)
-# [AUTO-COMMENT] Linia 909: linie goală.
-
-# [AUTO-COMMENT] Linia 910.
-        element_nou, date_externe, raspuns_eroare_externa = extrage_element_extern_din_request(
-# [AUTO-COMMENT] Linia 911.
-            "patch_element_din_api_extern",
-# [AUTO-COMMENT] Linia 912.
-            "Nu am putut extrage un element valid pentru patch din sursa externă.",
-# [AUTO-COMMENT] Linia 913.
             extra={"id_cerut": item_id},
-# [AUTO-COMMENT] Linia 914.
+# [AUTO-COMMENT] Linia 902.
         )
-# [AUTO-COMMENT] Linia 915.
+# [AUTO-COMMENT] Linia 903.
         if raspuns_eroare_externa:
-# [AUTO-COMMENT] Linia 916.
+# [AUTO-COMMENT] Linia 904.
             return raspuns_eroare_externa
+# [AUTO-COMMENT] Linia 905: linie goală.
+
+# [AUTO-COMMENT] Linia 906.
+        exista = item_id in baza_masuratori
+# [AUTO-COMMENT] Linia 907.
+        actualizat = salveaza_element(element, item_id=item_id)
+# [AUTO-COMMENT] Linia 908: linie goală.
+
+# [AUTO-COMMENT] Linia 909.
+        if exista:
+# [AUTO-COMMENT] Linia 910.
+            return jsonify(actualizat), 200
+# [AUTO-COMMENT] Linia 911: linie goală.
+
+# [AUTO-COMMENT] Linia 912.
+        return raspuns_creare(actualizat, item_id)
+# [AUTO-COMMENT] Linia 913: linie goală.
+
+# [AUTO-COMMENT] Linia 914.
+    if request.method == "PATCH":
+# [AUTO-COMMENT] Linia 915.
+        element_existent = baza_masuratori.get(item_id)
+# [AUTO-COMMENT] Linia 916.
+        if element_existent is None:
 # [AUTO-COMMENT] Linia 917.
-        element_actualizat, campuri_actualizate = aplica_patch_element(element_existent, element_nou)
+            return raspuns_eroare("Elementul cerut nu există pentru patch.", 404)
 # [AUTO-COMMENT] Linia 918: linie goală.
 
 # [AUTO-COMMENT] Linia 919.
-        baza_masuratori[item_id] = element_actualizat
-# [AUTO-COMMENT] Linia 920: linie goală.
-
+        element_nou, date_externe, raspuns_eroare_externa = extrage_element_extern_din_request(
+# [AUTO-COMMENT] Linia 920.
+            "patch_element_din_api_extern",
 # [AUTO-COMMENT] Linia 921.
-        return jsonify({
+            "Nu am putut extrage un element valid pentru patch din sursa externă.",
 # [AUTO-COMMENT] Linia 922.
-            "actiune": "patch_element_din_api_extern",
+            extra={"id_cerut": item_id},
 # [AUTO-COMMENT] Linia 923.
-            "id_actualizat": item_id,
+        )
 # [AUTO-COMMENT] Linia 924.
-            "campuri_actualizate": campuri_actualizate,
+        if raspuns_eroare_externa:
 # [AUTO-COMMENT] Linia 925.
-            "sursa": "open-meteo",
+            return raspuns_eroare_externa
 # [AUTO-COMMENT] Linia 926.
-            "oras_rezolvat": date_externe["info_geo"].get("city"),
-# [AUTO-COMMENT] Linia 927.
-            "element": element_actualizat,
+        element_actualizat, campuri_actualizate = aplica_patch_element(element_existent, element_nou)
+# [AUTO-COMMENT] Linia 927: linie goală.
+
 # [AUTO-COMMENT] Linia 928.
-        }), 200
+        baza_masuratori[item_id] = element_actualizat
 # [AUTO-COMMENT] Linia 929: linie goală.
 
 # [AUTO-COMMENT] Linia 930.
-    if request.method == "DELETE":
-# [AUTO-COMMENT] Linia 931.
-        element = baza_masuratori.get(item_id)
-# [AUTO-COMMENT] Linia 932.
-        if element is None:
-# [AUTO-COMMENT] Linia 933.
-            return raspuns_eroare("Elementul cerut nu există.", 404)
-# [AUTO-COMMENT] Linia 934: linie goală.
-
-# [AUTO-COMMENT] Linia 935.
-        del baza_masuratori[item_id]
-# [AUTO-COMMENT] Linia 936.
         return jsonify({
+# [AUTO-COMMENT] Linia 931.
+            "actiune": "patch_element_din_api_extern",
+# [AUTO-COMMENT] Linia 932.
+            "id_actualizat": item_id,
+# [AUTO-COMMENT] Linia 933.
+            "campuri_actualizate": campuri_actualizate,
+# [AUTO-COMMENT] Linia 934.
+            "sursa": "open-meteo",
+# [AUTO-COMMENT] Linia 935.
+            "oras_rezolvat": date_externe["info_geo"].get("city"),
+# [AUTO-COMMENT] Linia 936.
+            "element": element_actualizat,
 # [AUTO-COMMENT] Linia 937.
-            "mesaj": "Elementul selectat a fost șters.",
-# [AUTO-COMMENT] Linia 938.
-            "id_sters": item_id,
-# [AUTO-COMMENT] Linia 939.
         }), 200
-# [AUTO-COMMENT] Linia 940: linie goală.
+# [AUTO-COMMENT] Linia 938: linie goală.
 
+# [AUTO-COMMENT] Linia 939.
+    if request.method == "DELETE":
+# [AUTO-COMMENT] Linia 940.
+        element = baza_masuratori.get(item_id)
 # [AUTO-COMMENT] Linia 941.
-    return raspuns_eroare("Metodă HTTP neacceptată pe element.", 405)
-# [AUTO-COMMENT] Linia 942: linie goală.
-
+        if element is None:
+# [AUTO-COMMENT] Linia 942.
+            return raspuns_eroare("Elementul cerut nu există.", 404)
 # [AUTO-COMMENT] Linia 943: linie goală.
 
 # [AUTO-COMMENT] Linia 944.
-if __name__ == "__main__":
+        del baza_masuratori[item_id]
 # [AUTO-COMMENT] Linia 945.
+        return jsonify({
+# [AUTO-COMMENT] Linia 946.
+            "mesaj": "Elementul selectat a fost șters.",
+# [AUTO-COMMENT] Linia 947.
+            "id_sters": item_id,
+# [AUTO-COMMENT] Linia 948.
+        }), 200
+# [AUTO-COMMENT] Linia 949: linie goală.
+
+# [AUTO-COMMENT] Linia 950.
+    return raspuns_eroare("Metodă HTTP neacceptată pe element.", 405)
+# [AUTO-COMMENT] Linia 951: linie goală.
+
+# [AUTO-COMMENT] Linia 952: linie goală.
+
+# [AUTO-COMMENT] Linia 953.
+if __name__ == "__main__":
+# [AUTO-COMMENT] Linia 954.
     app.run(host="127.0.0.1", port=5000, debug=True)
