@@ -1,272 +1,158 @@
-<!-- [AUTO-COMMENT] Linia 1. -->
-<!doctype html>
-<!-- [AUTO-COMMENT] Linia 2. -->
-<html lang="ro">
-<!-- [AUTO-COMMENT] Linia 3. -->
-<head>
-<!-- [AUTO-COMMENT] Linia 4. -->
-  <meta charset="utf-8">
-<!-- [AUTO-COMMENT] Linia 5. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- [AUTO-COMMENT] Linia 6. -->
-  <title>Panou local API măsurători</title>
-<!-- [AUTO-COMMENT] Linia 7. -->
-  <style>
-<!-- [AUTO-COMMENT] Linia 8. -->
-    body {
-<!-- [AUTO-COMMENT] Linia 9. -->
-      font-family: Arial, sans-serif;
-<!-- [AUTO-COMMENT] Linia 10. -->
-      margin: 24px;
-<!-- [AUTO-COMMENT] Linia 11. -->
-      max-width: 1180px;
-<!-- [AUTO-COMMENT] Linia 12. -->
-      background: #f7f8fa;
-<!-- [AUTO-COMMENT] Linia 13. -->
-      color: #222;
-<!-- [AUTO-COMMENT] Linia 14. -->
-    }
-<!-- [AUTO-COMMENT] Linia 15: linie goală. -->
+<!doctype html> <!-- Declară standardul HTML5 pentru parserul browserului. -->
+<html lang="ro"> <!-- Setează limba documentului la română (SEO + accesibilitate). -->
+<head> <!-- Începutul secțiunii de metadate și resurse. -->
+  <!-- Meta de bază: UTF-8 pentru diacritice și viewport responsive pe mobile. -->
+  <meta charset="utf-8"> <!-- Definește codarea UTF-8 pentru diacritice corecte. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Face layout-ul responsive pe ecrane mici. -->
+  <title>Panou local API măsurători</title> <!-- Titlul afișat în tab-ul browserului. -->
 
-<!-- [AUTO-COMMENT] Linia 16. -->
-    h1 {
-<!-- [AUTO-COMMENT] Linia 17. -->
-      margin-top: 0;
-<!-- [AUTO-COMMENT] Linia 18. -->
-      margin-bottom: 8px;
-<!-- [AUTO-COMMENT] Linia 19. -->
-    }
-<!-- [AUTO-COMMENT] Linia 20: linie goală. -->
+  <!--
+    CSS inline pentru demo local.
+    Sintaxă CSS: selector { proprietate: valoare; }
+  -->
+  <style> /* Începutul blocului CSS local (fără fișier separat). */
+    body { /* Selector global pentru corpul paginii. */
+      font-family: Arial, sans-serif; /* Font fallback: Arial, apoi generic sans-serif. */
+      margin: 24px; /* Spațiere externă pe toate laturile corpului paginii. */
+      max-width: 1180px; /* Limitează lățimea pentru lizibilitate pe ecrane mari. */
+      background: #f7f8fa; /* Fundal deschis pentru contrast bun cu cardurile albe. */
+      color: #222; /* Culoare de text aproape negru pentru accesibilitate. */
+    } /* Închide regula CSS pentru body. */
 
-<!-- [AUTO-COMMENT] Linia 21. -->
-    .panel {
-<!-- [AUTO-COMMENT] Linia 22. -->
-      background: #fff;
-<!-- [AUTO-COMMENT] Linia 23. -->
-      border: 1px solid #ddd;
-<!-- [AUTO-COMMENT] Linia 24. -->
-      border-radius: 10px;
-<!-- [AUTO-COMMENT] Linia 25. -->
-      padding: 14px;
-<!-- [AUTO-COMMENT] Linia 26. -->
-      margin-bottom: 14px;
-<!-- [AUTO-COMMENT] Linia 27. -->
-    }
-<!-- [AUTO-COMMENT] Linia 28: linie goală. -->
+    h1 { /* Stil pentru titlul principal al paginii. */
+      margin-top: 0; /* Elimină spațiul superior implicit al heading-ului. */
+      margin-bottom: 8px; /* Păstrează o distanță mică față de secțiunea următoare. */
+    } /* Închide regula CSS pentru h1. */
 
-<!-- [AUTO-COMMENT] Linia 29. -->
-    .buttons {
-<!-- [AUTO-COMMENT] Linia 30. -->
-      margin: 8px 0;
-<!-- [AUTO-COMMENT] Linia 31. -->
-      display: flex;
-<!-- [AUTO-COMMENT] Linia 32. -->
-      flex-wrap: wrap;
-<!-- [AUTO-COMMENT] Linia 33. -->
-      gap: 8px;
-<!-- [AUTO-COMMENT] Linia 34. -->
-    }
-<!-- [AUTO-COMMENT] Linia 35: linie goală. -->
+    .panel { /* Card vizual reutilizabil pentru fiecare secțiune. */
+      background: #fff; /* Fundal alb pentru separare față de fundalul paginii. */
+      border: 1px solid #ddd; /* Contur discret pentru delimitare. */
+      border-radius: 10px; /* Colțuri rotunjite pentru aspect modern. */
+      padding: 14px; /* Spațiu interior între margine și conținut. */
+      margin-bottom: 14px; /* Spațiu între panouri consecutive. */
+    } /* Închide regula CSS pentru .panel. */
 
-<!-- [AUTO-COMMENT] Linia 36. -->
-    button {
-<!-- [AUTO-COMMENT] Linia 37. -->
-      padding: 8px 12px;
-<!-- [AUTO-COMMENT] Linia 38. -->
-      cursor: pointer;
-<!-- [AUTO-COMMENT] Linia 39. -->
-    }
-<!-- [AUTO-COMMENT] Linia 40: linie goală. -->
+    .buttons { /* Container pentru grupurile de butoane API. */
+      margin: 8px 0; /* Spațiu vertical înainte și după grupul de butoane. */
+      display: flex; /* Activează layout flexibil pe axa principală. */
+      flex-wrap: wrap; /* Permite trecerea butoanelor pe rândul următor. */
+      gap: 8px; /* Distanță uniformă între butoane. */
+    } /* Închide regula CSS pentru .buttons. */
 
-<!-- [AUTO-COMMENT] Linia 41. -->
-    input,
-<!-- [AUTO-COMMENT] Linia 42. -->
-    select {
-<!-- [AUTO-COMMENT] Linia 43. -->
-      width: 100%;
-<!-- [AUTO-COMMENT] Linia 44. -->
-      box-sizing: border-box;
-<!-- [AUTO-COMMENT] Linia 45. -->
-      padding: 8px;
-<!-- [AUTO-COMMENT] Linia 46. -->
-      border: 1px solid #bbb;
-<!-- [AUTO-COMMENT] Linia 47. -->
-      border-radius: 6px;
-<!-- [AUTO-COMMENT] Linia 48. -->
-      margin: 6px 0 10px;
-<!-- [AUTO-COMMENT] Linia 49. -->
-      font-family: Consolas, monospace;
-<!-- [AUTO-COMMENT] Linia 50. -->
-      font-size: 14px;
-<!-- [AUTO-COMMENT] Linia 51. -->
-    }
-<!-- [AUTO-COMMENT] Linia 52: linie goală. -->
+    button { /* Stil de bază pentru toate butoanele din UI. */
+      padding: 8px 12px; /* Mărește zona de click și lizibilitatea textului. */
+      cursor: pointer; /* Cursor „mână” pentru a indica interactivitate. */
+    } /* Închide regula CSS pentru button. */
 
-<!-- [AUTO-COMMENT] Linia 53. -->
-    #status {
-<!-- [AUTO-COMMENT] Linia 54. -->
-      font-weight: bold;
-<!-- [AUTO-COMMENT] Linia 55. -->
-      margin-bottom: 8px;
-<!-- [AUTO-COMMENT] Linia 56. -->
-    }
-<!-- [AUTO-COMMENT] Linia 57: linie goală. -->
+    input, /* Primul selector al regulii combinate (toate input-urile). */
+    select { /* Al doilea selector (toate dropdown-urile). */
+      width: 100%; /* Câmpurile ocupă toată lățimea containerului. */
+      box-sizing: border-box; /* Include padding/border în calculul lățimii. */
+      padding: 8px; /* Spațiu interior pentru textul introdus/afișat. */
+      border: 1px solid #bbb; /* Contur discret pentru delimitare vizuală. */
+      border-radius: 6px; /* Colțuri ușor rotunjite. */
+      margin: 6px 0 10px; /* Spațiere verticală între câmpuri. */
+      font-family: Consolas, monospace; /* Font monospace pentru consistență tehnică. */
+      font-size: 14px; /* Mărime de text echilibrată pentru formular. */
+    } /* Închide regula CSS pentru input/select. */
 
-<!-- [AUTO-COMMENT] Linia 58. -->
-    #output {
-<!-- [AUTO-COMMENT] Linia 59. -->
-      background: #f0f2f6;
-<!-- [AUTO-COMMENT] Linia 60. -->
-      border: 1px solid #ccc;
-<!-- [AUTO-COMMENT] Linia 61. -->
-      border-radius: 8px;
-<!-- [AUTO-COMMENT] Linia 62. -->
-      padding: 10px;
-<!-- [AUTO-COMMENT] Linia 63. -->
-      min-height: 160px;
-<!-- [AUTO-COMMENT] Linia 64. -->
-      white-space: pre-wrap;
-<!-- [AUTO-COMMENT] Linia 65. -->
-      word-break: break-word;
-<!-- [AUTO-COMMENT] Linia 66. -->
-    }
-<!-- [AUTO-COMMENT] Linia 67. -->
-  </style>
-<!-- [AUTO-COMMENT] Linia 68. -->
-</head>
-<!-- [AUTO-COMMENT] Linia 69. -->
-<body>
-<!-- [AUTO-COMMENT] Linia 70. -->
-  <h1>Tema 2 - Dashboard API măsurători</h1>
-<!-- [AUTO-COMMENT] Linia 71: linie goală. -->
+    #status { /* Zona unde afișăm codul și starea răspunsului HTTP. */
+      font-weight: bold; /* Evidențiază vizual statusul request-ului. */
+      margin-bottom: 8px; /* Lasă spațiu față de payload-ul din <pre>. */
+    } /* Închide regula CSS pentru #status. */
 
-<!-- [AUTO-COMMENT] Linia 72. -->
-  <div class="panel">
-<!-- [AUTO-COMMENT] Linia 73. -->
-    <h2>Colecție: /masuratori</h2>
-<!-- [AUTO-COMMENT] Linia 74. -->
-    <div class="buttons">
-<!-- [AUTO-COMMENT] Linia 75. -->
-      <button id="getCollection">GET /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 76. -->
-      <button id="headCollection">HEAD /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 77. -->
-      <button id="postCollection">POST /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 78. -->
-      <button id="putCollection">PUT /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 79. -->
-      <button id="patchCollection">PATCH /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 80. -->
-      <button id="deleteCollection">DELETE /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 81. -->
-    </div>
-<!-- [AUTO-COMMENT] Linia 82: linie goală. -->
+    #output { /* Container pentru body-ul răspunsului serverului. */
+      background: #f0f2f6; /* Fundal distinct pentru zona de output. */
+      border: 1px solid #ccc; /* Bordură ușoară pentru delimitare. */
+      border-radius: 8px; /* Colțuri rotunjite pentru coerență vizuală. */
+      padding: 10px; /* Spațiu interior pentru text JSON/text. */
+      min-height: 160px; /* Păstrează o înălțime minimă chiar fără răspuns. */
+      white-space: pre-wrap; /* Păstrează newline-urile și permite wrap. */
+      word-break: break-word; /* Rupe cuvintele lungi ca să nu iasă din container. */
+    } /* Închide regula CSS pentru #output. */
+  </style> <!-- Sfârșitul blocului CSS local. -->
+</head> <!-- Sfârșitul secțiunii head. -->
+<body> <!-- Începutul conținutului vizibil al paginii. -->
+  <h1>Tema 2 - Dashboard API măsurători</h1> <!-- Titlul principal al interfeței. -->
 
-<!-- [AUTO-COMMENT] Linia 83. -->
-    <div class="buttons">
-<!-- [AUTO-COMMENT] Linia 84. -->
-      <button id="optionsCollection">OPTIONS /masuratori</button>
-<!-- [AUTO-COMMENT] Linia 85. -->
-      <button id="traceCollection">POST /masuratori/trace/colectie (TRACE helper)</button>
-<!-- [AUTO-COMMENT] Linia 86. -->
-      <button id="previewExternal">POST /masuratori/preview-extern</button>
-<!-- [AUTO-COMMENT] Linia 87. -->
-      <button id="syncExternal">POST /masuratori/sincronizeaza</button>
-<!-- [AUTO-COMMENT] Linia 88. -->
-    </div>
-<!-- [AUTO-COMMENT] Linia 89: linie goală. -->
+  <!--
+    Secțiunea pentru endpoint-ul de colecție (/masuratori).
+    Fiecare buton are id unic; JS-ul caută butonul prin getElementById(...) și îi leagă click handler.
+  -->
+  <div class="panel"> <!-- Card UI pentru operațiile de colecție. -->
+    <h2>Colecție: /masuratori</h2> <!-- Subtitlu care indică endpoint-ul țintă. -->
+    <div class="buttons"> <!-- Grupul principal de butoane CRUD pe colecție. -->
+      <button id="getCollection">GET /masuratori</button> <!-- Citește întreaga colecție. -->
+      <button id="headCollection">HEAD /masuratori</button> <!-- Citește doar antetele colecției. -->
+      <button id="postCollection">POST /masuratori</button> <!-- Creează element nou din sursă externă. -->
+      <button id="putCollection">PUT /masuratori</button> <!-- Înlocuiește colecția cu date noi. -->
+      <button id="patchCollection">PATCH /masuratori</button> <!-- Actualizează parțial colecția. -->
+      <button id="deleteCollection">DELETE /masuratori</button> <!-- Șterge toate elementele din colecție. -->
+    </div> <!-- Sfârșitul grupului CRUD. -->
 
-<!-- [AUTO-COMMENT] Linia 90. -->
-    <p><strong>Notă TRACE:</strong> browserul blochează metoda TRACE direct; butonul folosește endpoint helper.</p>
-<!-- [AUTO-COMMENT] Linia 91: linie goală. -->
+    <div class="buttons"> <!-- Grupul de operații auxiliare (meta/trace/sync). -->
+      <button id="optionsCollection">OPTIONS /masuratori</button> <!-- Afișează metodele permise de server. -->
+      <button id="traceCollection">POST /masuratori/trace/colectie (TRACE helper)</button> <!-- Simulează TRACE în browser. -->
+      <button id="previewExternal">POST /masuratori/preview-extern</button> <!-- Preview date externe fără salvare. -->
+      <button id="syncExternal">POST /masuratori/sincronizeaza</button> <!-- Sincronizează și persistă date externe. -->
+    </div> <!-- Sfârșitul grupului auxiliar. -->
 
-<!-- [AUTO-COMMENT] Linia 92. -->
-    <p><strong>Notă:</strong> operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).</p>
-<!-- [AUTO-COMMENT] Linia 93: linie goală. -->
+    <p><strong>Notă TRACE:</strong> browserul blochează metoda TRACE direct; butonul folosește endpoint helper.</p> <!-- Explică de ce TRACE este expus prin POST helper. -->
 
-<!-- [AUTO-COMMENT] Linia 94. -->
-    <label for="externalCity">Oraș pentru sincronizare externă</label>
-<!-- [AUTO-COMMENT] Linia 95. -->
-    <input id="externalCity" type="text" value="Iasi">
-<!-- [AUTO-COMMENT] Linia 96: linie goală. -->
+    <p><strong>Notă:</strong> operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).</p> <!-- Clarifică sursa datelor pentru POST/PUT/PATCH. -->
 
-<!-- [AUTO-COMMENT] Linia 97. -->
-    <label for="externalCountry">Țară</label>
-<!-- [AUTO-COMMENT] Linia 98. -->
-    <input id="externalCountry" type="text" value="Romania">
-<!-- [AUTO-COMMENT] Linia 99: linie goală. -->
+    <!--
+      Câmpurile de mai jos sunt citite de JS și transformate în body JSON:
+      {
+        "oras": ..., "tara": ..., "indicator": ...
+      }
+    -->
+    <label for="externalCity">Oraș pentru sincronizare externă</label> <!-- `for` leagă eticheta de input-ul cu id externalCity. -->
+    <input id="externalCity" type="text" value="Iasi"> <!-- Input text precompletat cu oraș implicit. -->
 
-<!-- [AUTO-COMMENT] Linia 100. -->
-    <label for="externalMetric">Indicator preferat (dropdown)</label>
-<!-- [AUTO-COMMENT] Linia 101. -->
-    <select id="externalMetric">
-<!-- [AUTO-COMMENT] Linia 102. -->
-      <option value="" selected>automat (primul indicator disponibil)</option>
-<!-- [AUTO-COMMENT] Linia 103. -->
-    </select>
-<!-- [AUTO-COMMENT] Linia 104. -->
-  </div>
-<!-- [AUTO-COMMENT] Linia 105: linie goală. -->
+    <label for="externalCountry">Țară</label> <!-- Eticheta câmpului de țară pentru geocodare. -->
+    <input id="externalCountry" type="text" value="Romania"> <!-- Input text precompletat cu țara implicită. -->
 
-<!-- [AUTO-COMMENT] Linia 106. -->
-  <div class="panel">
-<!-- [AUTO-COMMENT] Linia 107. -->
-    <h2>Element: /masuratori/&lt;id&gt;</h2>
-<!-- [AUTO-COMMENT] Linia 108. -->
-    <label for="itemId">ID element</label>
-<!-- [AUTO-COMMENT] Linia 109. -->
-    <input id="itemId" type="number" min="1" value="1">
-<!-- [AUTO-COMMENT] Linia 110: linie goală. -->
+    <label for="externalMetric">Indicator preferat (dropdown)</label> <!-- Etichetă pentru selectorul de metrică externă. -->
+    <select id="externalMetric"> <!-- Dropdown completat dinamic de JavaScript. -->
+      <option value="" selected>automat (primul indicator disponibil)</option> <!-- Fallback: selecție automată pe primul disponibil. -->
+    </select> <!-- Sfârșit selector metrică externă. -->
+  </div> <!-- Sfârșit panel colecție. -->
 
-<!-- [AUTO-COMMENT] Linia 111. -->
-    <div class="buttons">
-<!-- [AUTO-COMMENT] Linia 112. -->
-      <button id="getItem">GET /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 113. -->
-      <button id="headItem">HEAD /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 114. -->
-      <button id="postItem">POST /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 115. -->
-      <button id="putItem">PUT /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 116. -->
-      <button id="patchItem">PATCH /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 117. -->
-      <button id="deleteItem">DELETE /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 118. -->
-      <button id="optionsItem">OPTIONS /masuratori/{id}</button>
-<!-- [AUTO-COMMENT] Linia 119. -->
-      <button id="traceItem">POST /masuratori/trace/element/{id} (TRACE helper)</button>
-<!-- [AUTO-COMMENT] Linia 120. -->
-    </div>
-<!-- [AUTO-COMMENT] Linia 121: linie goală. -->
+  <!--
+    Secțiunea pentru endpoint-ul de element (/masuratori/{id}).
+    {id} este completat în runtime din input-ul numeric #itemId.
+  -->
+  <div class="panel"> <!-- Card UI pentru operații pe resursa individuală. -->
+    <h2>Element: /masuratori/&lt;id&gt;</h2> <!-- Indică endpoint-ul parametrizat cu id. -->
+    <label for="itemId">ID element</label> <!-- Etichetă pentru controlul numeric de id. -->
+    <input id="itemId" type="number" min="1" value="1"> <!-- Input numeric validat minim 1. -->
 
-<!-- [AUTO-COMMENT] Linia 122. -->
-    <label for="itemMetric">Indicator preferat pentru item (dropdown)</label>
-<!-- [AUTO-COMMENT] Linia 123. -->
-    <select id="itemMetric">
-<!-- [AUTO-COMMENT] Linia 124. -->
-      <option value="" selected>automat (primul indicator disponibil)</option>
-<!-- [AUTO-COMMENT] Linia 125. -->
-    </select>
-<!-- [AUTO-COMMENT] Linia 126. -->
-  </div>
-<!-- [AUTO-COMMENT] Linia 127: linie goală. -->
+    <div class="buttons"> <!-- Grupul de butoane pentru operații pe item. -->
+      <button id="getItem">GET /masuratori/{id}</button> <!-- Citește item-ul curent. -->
+      <button id="headItem">HEAD /masuratori/{id}</button> <!-- Verifică existența item-ului prin antete. -->
+      <button id="postItem">POST /masuratori/{id}</button> <!-- Creează item la id fix dacă nu există. -->
+      <button id="putItem">PUT /masuratori/{id}</button> <!-- Upsert item la id-ul specificat. -->
+      <button id="patchItem">PATCH /masuratori/{id}</button> <!-- Modifică parțial item-ul curent. -->
+      <button id="deleteItem">DELETE /masuratori/{id}</button> <!-- Șterge item-ul curent. -->
+      <button id="optionsItem">OPTIONS /masuratori/{id}</button> <!-- Cere capabilitățile endpoint-ului item. -->
+      <button id="traceItem">POST /masuratori/trace/element/{id} (TRACE helper)</button> <!-- TRACE helper pe item. -->
+    </div> <!-- Sfârșit grup butoane item. -->
 
-<!-- [AUTO-COMMENT] Linia 128. -->
-  <div class="panel">
-<!-- [AUTO-COMMENT] Linia 129. -->
-    <h2>Răspuns server</h2>
-<!-- [AUTO-COMMENT] Linia 130. -->
-    <div id="status">Status: -</div>
-<!-- [AUTO-COMMENT] Linia 131. -->
-    <pre id="output">Aștept primul request.</pre>
-<!-- [AUTO-COMMENT] Linia 132. -->
-  </div>
-<!-- [AUTO-COMMENT] Linia 133: linie goală. -->
+    <label for="itemMetric">Indicator preferat pentru item (dropdown)</label> <!-- Etichetă pentru selectorul metricii item. -->
+    <select id="itemMetric"> <!-- Dropdown pentru selectarea indicatorului preferat pe item. -->
+      <option value="" selected>automat (primul indicator disponibil)</option> <!-- Implicit: backend selectează automat. -->
+    </select> <!-- Sfârșit selector metrică item. -->
+  </div> <!-- Sfârșit panel item. -->
 
-<!-- [AUTO-COMMENT] Linia 134. -->
-  <script src="{{ url_for('static', filename='client_masuratori.js') }}"></script>
-<!-- [AUTO-COMMENT] Linia 135. -->
-</body>
-<!-- [AUTO-COMMENT] Linia 136. -->
-</html>
+  <!-- Zona de output; JS scrie aici statusul și payload-ul răspunsului. -->
+  <div class="panel"> <!-- Card pentru afișarea rezultatului apelurilor API. -->
+    <h2>Răspuns server</h2> <!-- Titlul secțiunii de rezultat. -->
+    <div id="status">Status: -</div> <!-- Aici JS scrie codul/status text al răspunsului. -->
+    <pre id="output">Aștept primul request.</pre> <!-- Aici JS scrie payload-ul JSON/text preformatat. -->
+  </div> <!-- Sfârșit panel rezultat. -->
+
+  <!-- Template Flask/Jinja2: url_for(...) generează automat ruta statică corectă. -->
+  <script src="{{ url_for('static', filename='client_masuratori.js') }}"></script> <!-- Jinja2 generează ruta corectă către scriptul static. -->
+</body> <!-- Sfârșitul corpului documentului HTML. -->
+</html> <!-- Sfârșitul documentului. -->

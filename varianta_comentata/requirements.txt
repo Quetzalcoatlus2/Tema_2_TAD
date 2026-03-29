@@ -1,2 +1,1 @@
-# [AUTO-COMMENT] Linia 1.
-Flask>=3.0,<4.0
+Flask>=3.0,<4.0  # Declară o dependență necesară proiectului. ⟦auto⟧
