@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panou local API măsurători</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+      max-width: 1180px;
+      background: #f7f8fa;
+      color: #222;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .buttons {
+      margin: 8px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    input,
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      margin: 6px 0 10px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+
+    #status {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    #output {
+      background: #f0f2f6;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 160px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tema 2 - Dashboard API măsurători</h1>
+
+  <div class="panel">
+    <h2>Colecție: /masuratori</h2>
+    <div class="buttons">
+      <button id="getCollection">GET /masuratori</button>
+      <button id="headCollection">HEAD /masuratori</button>
+      <button id="postCollection">POST /masuratori</button>
+      <button id="putCollection">PUT /masuratori</button>
+      <button id="patchCollection">PATCH /masuratori</button>
+      <button id="deleteCollection">DELETE /masuratori</button>
+    </div>
+
+    <div class="buttons">
+      <button id="optionsCollection">OPTIONS /masuratori</button>
+      <button id="traceCollection">POST /masuratori/trace/colectie (TRACE helper)</button>
+      <button id="previewExternal">POST /masuratori/preview-extern</button>
+      <button id="syncExternal">POST /masuratori/sincronizeaza</button>
+    </div>
+
+    <p><strong>Notă TRACE:</strong> browserul blochează metoda TRACE direct; butonul folosește endpoint helper.</p>
+
+    <p><strong>Notă:</strong> operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).</p>
+
+    <label for="externalCity">Oraș pentru sincronizare externă</label>
+    <input id="externalCity" type="text" value="Iasi">
+
+    <label for="externalCountry">Țară</label>
+    <input id="externalCountry" type="text" value="Romania">
+
+    <label for="externalMetric">Indicator preferat (dropdown)</label>
+    <select id="externalMetric">
+      <option value="" selected>automat (primul indicator disponibil)</option>
+    </select>
+  </div>
+
+  <div class="panel">
+    <h2>Element: /masuratori/&lt;id&gt;</h2>
+    <label for="itemId">ID element</label>
+    <input id="itemId" type="number" min="1" value="1">
+
+    <div class="buttons">
+      <button id="getItem">GET /masuratori/{id}</button>
+      <button id="headItem">HEAD /masuratori/{id}</button>
+      <button id="postItem">POST /masuratori/{id}</button>
+      <button id="putItem">PUT /masuratori/{id}</button>
+      <button id="patchItem">PATCH /masuratori/{id}</button>
+      <button id="deleteItem">DELETE /masuratori/{id}</button>
+      <button id="optionsItem">OPTIONS /masuratori/{id}</button>
+      <button id="traceItem">POST /masuratori/trace/element/{id} (TRACE helper)</button>
+    </div>
+
+    <label for="itemMetric">Indicator preferat pentru item (dropdown)</label>
+    <select id="itemMetric">
+      <option value="" selected>automat (primul indicator disponibil)</option>
+    </select>
+  </div>
+
+  <div class="panel">
+    <h2>Răspuns server</h2>
+    <div id="status">Status: -</div>
+    <pre id="output">Aștept primul request.</pre>
+  </div>
+
+  <script src="{{ url_for('static', filename='client_masuratori.js') }}"></script>
+</body>
+</html>

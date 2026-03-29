@@ -1,0 +1,272 @@
+<!-- [AUTO-COMMENT] Linia 1. -->
+<!doctype html>
+<!-- [AUTO-COMMENT] Linia 2. -->
+<html lang="ro">
+<!-- [AUTO-COMMENT] Linia 3. -->
+<head>
+<!-- [AUTO-COMMENT] Linia 4. -->
+  <meta charset="utf-8">
+<!-- [AUTO-COMMENT] Linia 5. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [AUTO-COMMENT] Linia 6. -->
+  <title>Panou local API măsurători</title>
+<!-- [AUTO-COMMENT] Linia 7. -->
+  <style>
+<!-- [AUTO-COMMENT] Linia 8. -->
+    body {
+<!-- [AUTO-COMMENT] Linia 9. -->
+      font-family: Arial, sans-serif;
+<!-- [AUTO-COMMENT] Linia 10. -->
+      margin: 24px;
+<!-- [AUTO-COMMENT] Linia 11. -->
+      max-width: 1180px;
+<!-- [AUTO-COMMENT] Linia 12. -->
+      background: #f7f8fa;
+<!-- [AUTO-COMMENT] Linia 13. -->
+      color: #222;
+<!-- [AUTO-COMMENT] Linia 14. -->
+    }
+<!-- [AUTO-COMMENT] Linia 15: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 16. -->
+    h1 {
+<!-- [AUTO-COMMENT] Linia 17. -->
+      margin-top: 0;
+<!-- [AUTO-COMMENT] Linia 18. -->
+      margin-bottom: 8px;
+<!-- [AUTO-COMMENT] Linia 19. -->
+    }
+<!-- [AUTO-COMMENT] Linia 20: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 21. -->
+    .panel {
+<!-- [AUTO-COMMENT] Linia 22. -->
+      background: #fff;
+<!-- [AUTO-COMMENT] Linia 23. -->
+      border: 1px solid #ddd;
+<!-- [AUTO-COMMENT] Linia 24. -->
+      border-radius: 10px;
+<!-- [AUTO-COMMENT] Linia 25. -->
+      padding: 14px;
+<!-- [AUTO-COMMENT] Linia 26. -->
+      margin-bottom: 14px;
+<!-- [AUTO-COMMENT] Linia 27. -->
+    }
+<!-- [AUTO-COMMENT] Linia 28: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 29. -->
+    .buttons {
+<!-- [AUTO-COMMENT] Linia 30. -->
+      margin: 8px 0;
+<!-- [AUTO-COMMENT] Linia 31. -->
+      display: flex;
+<!-- [AUTO-COMMENT] Linia 32. -->
+      flex-wrap: wrap;
+<!-- [AUTO-COMMENT] Linia 33. -->
+      gap: 8px;
+<!-- [AUTO-COMMENT] Linia 34. -->
+    }
+<!-- [AUTO-COMMENT] Linia 35: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 36. -->
+    button {
+<!-- [AUTO-COMMENT] Linia 37. -->
+      padding: 8px 12px;
+<!-- [AUTO-COMMENT] Linia 38. -->
+      cursor: pointer;
+<!-- [AUTO-COMMENT] Linia 39. -->
+    }
+<!-- [AUTO-COMMENT] Linia 40: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 41. -->
+    input,
+<!-- [AUTO-COMMENT] Linia 42. -->
+    select {
+<!-- [AUTO-COMMENT] Linia 43. -->
+      width: 100%;
+<!-- [AUTO-COMMENT] Linia 44. -->
+      box-sizing: border-box;
+<!-- [AUTO-COMMENT] Linia 45. -->
+      padding: 8px;
+<!-- [AUTO-COMMENT] Linia 46. -->
+      border: 1px solid #bbb;
+<!-- [AUTO-COMMENT] Linia 47. -->
+      border-radius: 6px;
+<!-- [AUTO-COMMENT] Linia 48. -->
+      margin: 6px 0 10px;
+<!-- [AUTO-COMMENT] Linia 49. -->
+      font-family: Consolas, monospace;
+<!-- [AUTO-COMMENT] Linia 50. -->
+      font-size: 14px;
+<!-- [AUTO-COMMENT] Linia 51. -->
+    }
+<!-- [AUTO-COMMENT] Linia 52: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 53. -->
+    #status {
+<!-- [AUTO-COMMENT] Linia 54. -->
+      font-weight: bold;
+<!-- [AUTO-COMMENT] Linia 55. -->
+      margin-bottom: 8px;
+<!-- [AUTO-COMMENT] Linia 56. -->
+    }
+<!-- [AUTO-COMMENT] Linia 57: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 58. -->
+    #output {
+<!-- [AUTO-COMMENT] Linia 59. -->
+      background: #f0f2f6;
+<!-- [AUTO-COMMENT] Linia 60. -->
+      border: 1px solid #ccc;
+<!-- [AUTO-COMMENT] Linia 61. -->
+      border-radius: 8px;
+<!-- [AUTO-COMMENT] Linia 62. -->
+      padding: 10px;
+<!-- [AUTO-COMMENT] Linia 63. -->
+      min-height: 160px;
+<!-- [AUTO-COMMENT] Linia 64. -->
+      white-space: pre-wrap;
+<!-- [AUTO-COMMENT] Linia 65. -->
+      word-break: break-word;
+<!-- [AUTO-COMMENT] Linia 66. -->
+    }
+<!-- [AUTO-COMMENT] Linia 67. -->
+  </style>
+<!-- [AUTO-COMMENT] Linia 68. -->
+</head>
+<!-- [AUTO-COMMENT] Linia 69. -->
+<body>
+<!-- [AUTO-COMMENT] Linia 70. -->
+  <h1>Tema 2 - panou de lucru API măsurători</h1>
+<!-- [AUTO-COMMENT] Linia 71: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 72. -->
+  <div class="panel">
+<!-- [AUTO-COMMENT] Linia 73. -->
+    <h2>Colecție: /masuratori</h2>
+<!-- [AUTO-COMMENT] Linia 74. -->
+    <div class="buttons">
+<!-- [AUTO-COMMENT] Linia 75. -->
+      <button id="getCollection">GET /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 76. -->
+      <button id="headCollection">HEAD /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 77. -->
+      <button id="postCollection">POST /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 78. -->
+      <button id="putCollection">PUT /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 79. -->
+      <button id="patchCollection">PATCH /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 80. -->
+      <button id="deleteCollection">DELETE /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 81. -->
+    </div>
+<!-- [AUTO-COMMENT] Linia 82: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 83. -->
+    <div class="buttons">
+<!-- [AUTO-COMMENT] Linia 84. -->
+      <button id="optionsCollection">OPTIONS /masuratori</button>
+<!-- [AUTO-COMMENT] Linia 85. -->
+      <button id="traceCollection">POST /masuratori/trace/colectie (TRACE helper)</button>
+<!-- [AUTO-COMMENT] Linia 86. -->
+      <button id="previewExternal">POST /masuratori/preview-extern</button>
+<!-- [AUTO-COMMENT] Linia 87. -->
+      <button id="syncExternal">POST /masuratori/sincronizeaza</button>
+<!-- [AUTO-COMMENT] Linia 88. -->
+    </div>
+<!-- [AUTO-COMMENT] Linia 89: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 90. -->
+    <p><strong>Notă TRACE:</strong> browserul blochează metoda TRACE direct; butonul folosește endpoint helper.</p>
+<!-- [AUTO-COMMENT] Linia 91: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 92. -->
+    <p><strong>Notă:</strong> operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).</p>
+<!-- [AUTO-COMMENT] Linia 93: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 94. -->
+    <label for="externalCity">Oraș pentru sincronizare externă</label>
+<!-- [AUTO-COMMENT] Linia 95. -->
+    <input id="externalCity" type="text" value="Iasi">
+<!-- [AUTO-COMMENT] Linia 96: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 97. -->
+    <label for="externalCountry">Țară</label>
+<!-- [AUTO-COMMENT] Linia 98. -->
+    <input id="externalCountry" type="text" value="Romania">
+<!-- [AUTO-COMMENT] Linia 99: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 100. -->
+    <label for="externalMetric">Indicator preferat (dropdown)</label>
+<!-- [AUTO-COMMENT] Linia 101. -->
+    <select id="externalMetric">
+<!-- [AUTO-COMMENT] Linia 102. -->
+      <option value="" selected>automat (primul indicator disponibil)</option>
+<!-- [AUTO-COMMENT] Linia 103. -->
+    </select>
+<!-- [AUTO-COMMENT] Linia 104. -->
+  </div>
+<!-- [AUTO-COMMENT] Linia 105: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 106. -->
+  <div class="panel">
+<!-- [AUTO-COMMENT] Linia 107. -->
+    <h2>Element: /masuratori/&lt;id&gt;</h2>
+<!-- [AUTO-COMMENT] Linia 108. -->
+    <label for="itemId">ID element</label>
+<!-- [AUTO-COMMENT] Linia 109. -->
+    <input id="itemId" type="number" min="1" value="1">
+<!-- [AUTO-COMMENT] Linia 110: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 111. -->
+    <div class="buttons">
+<!-- [AUTO-COMMENT] Linia 112. -->
+      <button id="getItem">GET /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 113. -->
+      <button id="headItem">HEAD /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 114. -->
+      <button id="postItem">POST /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 115. -->
+      <button id="putItem">PUT /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 116. -->
+      <button id="patchItem">PATCH /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 117. -->
+      <button id="deleteItem">DELETE /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 118. -->
+      <button id="optionsItem">OPTIONS /masuratori/{id}</button>
+<!-- [AUTO-COMMENT] Linia 119. -->
+      <button id="traceItem">POST /masuratori/trace/element/{id} (TRACE helper)</button>
+<!-- [AUTO-COMMENT] Linia 120. -->
+    </div>
+<!-- [AUTO-COMMENT] Linia 121: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 122. -->
+    <label for="itemMetric">Indicator preferat pentru item (dropdown)</label>
+<!-- [AUTO-COMMENT] Linia 123. -->
+    <select id="itemMetric">
+<!-- [AUTO-COMMENT] Linia 124. -->
+      <option value="" selected>automat (primul indicator disponibil)</option>
+<!-- [AUTO-COMMENT] Linia 125. -->
+    </select>
+<!-- [AUTO-COMMENT] Linia 126. -->
+  </div>
+<!-- [AUTO-COMMENT] Linia 127: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 128. -->
+  <div class="panel">
+<!-- [AUTO-COMMENT] Linia 129. -->
+    <h2>Răspuns server</h2>
+<!-- [AUTO-COMMENT] Linia 130. -->
+    <div id="status">Status: -</div>
+<!-- [AUTO-COMMENT] Linia 131. -->
+    <pre id="output">Aștept primul request.</pre>
+<!-- [AUTO-COMMENT] Linia 132. -->
+  </div>
+<!-- [AUTO-COMMENT] Linia 133: linie goală. -->
+
+<!-- [AUTO-COMMENT] Linia 134. -->
+  <script src="{{ url_for('static', filename='client_masuratori.js') }}"></script>
+<!-- [AUTO-COMMENT] Linia 135. -->
+</body>
+<!-- [AUTO-COMMENT] Linia 136. -->
+</html>
