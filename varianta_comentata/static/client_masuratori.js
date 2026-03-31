@@ -121,37 +121,38 @@ async function apeleazaApi(metoda, ruta, body) {
   afiseazaRezultat(response, payload) // Afișează răspunsul în UI.
 }
 
-// Construiește ruta /masuratori/{id} pe baza inputului de id.
-function caleaElement() {
+// Extrage id-ul curent din input și validează că este întreg pozitiv.
+function idElementCurent() {
   const input = element("itemId") // Obține controlul numeric cu id-ul elementului.
-  // Optional chaining (?.) evită eroare dacă input e null.
-  const id = idPozitiv(input?.value.trim()) // Preia valoarea, face trim și validează numeric.
+  const id = idPozitiv(input?.value.trim()) // Normalizează valoarea la un id valid.
   if (id === null) {
     throw new Error("ID-ul trebuie să fie un număr întreg pozitiv") // Aruncă eroare controlată pentru handlerul global.
   }
-  return `/masuratori/${id}` // Template literal pentru ruta finală.
+  return id // Returnează id-ul numeric valid.
+}
+
+// Construiește ruta /masuratori/{id} pe baza inputului de id.
+function caleaElement() {
+  return `/masuratori/${idElementCurent()}` // Template literal pentru ruta finală.
 }
 
 // Construiește body pentru endpointurile care cer localizare + indicator.
 function construiestePayloadExtern(idIndicator) {
-  const mapari = [
-    ["externalCity", "oras"], // Mapează input UI -> cheie JSON `oras`.
-    ["externalCountry", "tara"], // Mapează input UI -> cheie JSON `tara`.
-    [idIndicator, "indicator"], // Mapează select-ul curent -> `indicator`.
-  ]
-
   const body = {} // Obiectul JSON care va fi trimis la backend.
-  // Destructuring în for...of: [idInput, camp]
-  for (const [idInput, camp] of mapari) {
-    if (!idInput) {
-      continue // Salt defensiv dacă idInput e gol/null.
-    }
+  const oras = element("externalCity")?.value.trim() // Citește orașul din input.
+  const tara = element("externalCountry")?.value.trim() // Citește țara din input.
+  const indicator = idIndicator ? element(idIndicator)?.value.trim() : "" // Citește indicatorul selectat.
 
-    const valoare = element(idInput)?.value.trim() || "" // Citește și normalizează valoarea inputului.
-    if (valoare) {
-      body[camp] = valoare // Setează dinamic proprietatea obiectului prin indexare body[camp].
-    }
+  if (oras) {
+    body.oras = oras // Scrie doar dacă valoarea este nevidă.
   }
+  if (tara) {
+    body.tara = tara // Scrie doar dacă valoarea este nevidă.
+  }
+  if (indicator) {
+    body.indicator = indicator // Scrie doar dacă valoarea este nevidă.
+  }
+
   return body // Returnează payload-ul completat parțial.
 }
 
@@ -173,50 +174,43 @@ function leagaButon(idButon, actiuneAsync) {
 
 // Config declarativ pentru acțiuni de colecție/item.
 const RUTA_COLECTIE = "/masuratori" // Rută de bază pentru operații pe colecție.
-const METODE_COLECTIE_FARA_BODY = {
-  getCollection: "GET", // Buton citire colecție.
-  headCollection: "HEAD", // Buton antete colecție.
-  deleteCollection: "DELETE", // Buton ștergere colecție.
-  optionsCollection: "OPTIONS", // Buton introspecție metode permise.
-}
-const METODE_ITEM_FARA_BODY = {
-  getItem: "GET", // Buton citire item.
-  headItem: "HEAD", // Buton antete item.
-  deleteItem: "DELETE", // Buton ștergere item.
-  optionsItem: "OPTIONS", // Buton metode permise item.
-}
-const METODE_COLECTIE_CU_BODY = {
-  postCollection: "POST", // Buton create în colecție.
-  putCollection: "PUT", // Buton înlocuire colecție.
-  patchCollection: "PATCH", // Buton patch colecție.
-}
-const METODE_ITEM_CU_BODY = {
-  postItem: "POST", // Buton create pe id fix.
-  putItem: "PUT", // Buton upsert pe id.
-  patchItem: "PATCH", // Buton patch pe id.
+
+// Leagă toate acțiunile API printr-un singur tablou declarativ.
+function leagaActiuniApi() {
+  const actiuni = [
+    { idButon: "getCollection", metoda: "GET", ruta: () => RUTA_COLECTIE },
+    { idButon: "headCollection", metoda: "HEAD", ruta: () => RUTA_COLECTIE },
+    { idButon: "deleteCollection", metoda: "DELETE", ruta: () => RUTA_COLECTIE },
+    { idButon: "optionsCollection", metoda: "OPTIONS", ruta: () => RUTA_COLECTIE },
+
+    { idButon: "postCollection", metoda: "POST", ruta: () => RUTA_COLECTIE, indicator: "externalMetric" },
+    { idButon: "putCollection", metoda: "PUT", ruta: () => RUTA_COLECTIE, indicator: "externalMetric" },
+    { idButon: "patchCollection", metoda: "PATCH", ruta: () => RUTA_COLECTIE, indicator: "externalMetric" },
+
+    { idButon: "getItem", metoda: "GET", ruta: caleaElement },
+    { idButon: "headItem", metoda: "HEAD", ruta: caleaElement },
+    { idButon: "deleteItem", metoda: "DELETE", ruta: caleaElement },
+    { idButon: "optionsItem", metoda: "OPTIONS", ruta: caleaElement },
+
+    { idButon: "postItem", metoda: "POST", ruta: caleaElement, indicator: "itemMetric" },
+    { idButon: "putItem", metoda: "PUT", ruta: caleaElement, indicator: "itemMetric" },
+    { idButon: "patchItem", metoda: "PATCH", ruta: caleaElement, indicator: "itemMetric" },
+
+    { idButon: "syncExternal", metoda: "POST", ruta: () => "/masuratori/sincronizeaza", indicator: "externalMetric" },
+    { idButon: "previewExternal", metoda: "POST", ruta: () => "/masuratori/preview-extern", indicator: "externalMetric" },
+    { idButon: "traceCollection", metoda: "POST", ruta: () => "/masuratori/trace/colectie" },
+    { idButon: "traceItem", metoda: "POST", ruta: () => `/masuratori/trace/element/${idElementCurent()}` },
+  ]
+
+  for (const actiune of actiuni) {
+    leagaButon(actiune.idButon, () => {
+      const body = actiune.indicator ? construiestePayloadExtern(actiune.indicator) : undefined
+      return apeleazaApi(actiune.metoda, actiune.ruta(), body)
+    })
+  }
 }
 
-// Object.entries(...) transformă obiectul într-un array de perechi [cheie, valoare].
-for (const [idButon, metoda] of Object.entries(METODE_COLECTIE_FARA_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, RUTA_COLECTIE)) // Leagă acțiunile GET/HEAD/DELETE/OPTIONS pe colecție.
-}
-for (const [idButon, metoda] of Object.entries(METODE_COLECTIE_CU_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, RUTA_COLECTIE, construiestePayloadExtern("externalMetric"))) // Leagă POST/PUT/PATCH cu body extern.
-}
-for (const [idButon, metoda] of Object.entries(METODE_ITEM_FARA_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, caleaElement())) // Leagă GET/HEAD/DELETE/OPTIONS pe item.
-}
-for (const [idButon, metoda] of Object.entries(METODE_ITEM_CU_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, caleaElement(), construiestePayloadExtern("itemMetric"))) // Leagă POST/PUT/PATCH pe item cu body.
-}
-
-leagaButon("syncExternal", () => apeleazaApi("POST", "/masuratori/sincronizeaza", construiestePayloadExtern("externalMetric"))) // Importă în colecție din surse externe.
-leagaButon("previewExternal", () => apeleazaApi("POST", "/masuratori/preview-extern", construiestePayloadExtern("externalMetric"))) // Preview fără persistare.
-leagaButon("traceCollection", () => apeleazaApi("POST", "/masuratori/trace/colectie")) // TRACE helper pentru colecție.
-leagaButon("traceItem", () => {
-  const id = caleaElement().split("/").pop() // Extrage segmentul final (id) din ruta item.
-  return apeleazaApi("POST", `/masuratori/trace/element/${id}`) // Apelează TRACE helper pentru item.
-})
+leagaActiuniApi()
 
 // Populează cele două dropdown-uri cu aceeași listă de indicatori.
 for (const idSelect of ["externalMetric", "itemMetric"]) {

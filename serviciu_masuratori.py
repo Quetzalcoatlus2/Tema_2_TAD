@@ -20,6 +20,101 @@ METODE_COLECTIE = METODE_HTTP
 METODE_ELEMENT = METODE_HTTP
 CORS_ALLOW_HEADERS = "Content-Type, Authorization, Accept"
 
+CAMPURI_TEXT_OPTIONALE = {
+    "location": ["location", "locatie", "pozitie_instalare"],
+    "description": ["description", "descriere", "detalii"],
+    "category": ["category", "categorie", "domeniu"],
+    "sensor_name": ["sensor_name", "nume_senzor"],
+    "sensor_model": ["sensor_model", "model_senzor"],
+    "sensor_manufacturer": ["sensor_manufacturer", "producator_senzor"],
+    "operator_name": ["operator_name", "responsabil", "persoana_responsabila"],
+    "city": ["city", "oras"],
+    "county": ["county", "judet"],
+    "source_system": ["source_system", "sursa_date", "platforma_sursa"],
+}
+
+MAPARE_METRICI_OPEN_METEO = [
+    {
+        "cheie": "relative_humidity_2m",
+        "indicator": "umiditate relativă",
+        "unitate_implicita": "u.m.",
+    },
+    {
+        "cheie": "wind_speed_10m",
+        "indicator": "viteză vânt la 10m",
+        "unitate_implicita": "u.m.",
+    },
+    {
+        "cheie": "pressure_msl",
+        "indicator": "presiune atmosferică la nivelul mării",
+        "unitate_implicita": "u.m.",
+    },
+    {
+        "cheie": "precipitation",
+        "indicator": "precipitații curente",
+        "unitate_implicita": "u.m.",
+    },
+    {
+        "cheie": "temperature_2m",
+        "indicator": "temperatură aer exterior",
+        "unitate_implicita": "°C",
+        "fara_valori_negative": True,
+    },
+]
+
+ETICHETE_UI_OPERATII = {
+    "GET": "preia / vezi",
+    "HEAD": "verifică antete / existență",
+    "POST": "adaugă / creează",
+    "PUT": "înlocuiește / salvează",
+    "PATCH": "actualizare parțială",
+    "DELETE": "șterge",
+    "OPTIONS": "capacități / metode permise",
+    "TRACE": "diagnostic trasabilitate",
+}
+
+ACTIUNI_SEMANTICE_COLECTIE = [
+    {"nume": "preia_masuratori", "metoda": "GET", "ruta": "/masuratori"},
+    {"nume": "verifica_antete_colectie", "metoda": "HEAD", "ruta": "/masuratori"},
+    {"nume": "adauga_masurare", "metoda": "POST", "ruta": "/masuratori"},
+    {"nume": "inlocuieste_colectia", "metoda": "PUT", "ruta": "/masuratori"},
+    {"nume": "actualizeaza_partial_colectia", "metoda": "PATCH", "ruta": "/masuratori"},
+    {"nume": "goleste_colectia", "metoda": "DELETE", "ruta": "/masuratori"},
+    {"nume": "capabilitati_colectie", "metoda": "OPTIONS", "ruta": "/masuratori"},
+    {"nume": "trace_colectie", "metoda": "TRACE", "ruta": "/masuratori"},
+    {"nume": "trace_colectie_ui", "metoda": "POST", "ruta": "/masuratori/trace/colectie"},
+    {"nume": "preview_date_externe", "metoda": "POST", "ruta": "/masuratori/preview-extern"},
+    {"nume": "sincronizeaza_din_open_meteo", "metoda": "POST", "ruta": "/masuratori/sincronizeaza"},
+]
+
+ACTIUNI_SEMANTICE_ELEMENT = [
+    {"nume": "vezi_masurare", "metoda": "GET", "ruta": "/masuratori/<id>"},
+    {"nume": "verifica_antete_element", "metoda": "HEAD", "ruta": "/masuratori/<id>"},
+    {"nume": "creeaza_masurare_la_id", "metoda": "POST", "ruta": "/masuratori/<id>"},
+    {"nume": "salveaza_masurare", "metoda": "PUT", "ruta": "/masuratori/<id>"},
+    {"nume": "actualizeaza_partial_element", "metoda": "PATCH", "ruta": "/masuratori/<id>"},
+    {"nume": "sterge_masurare", "metoda": "DELETE", "ruta": "/masuratori/<id>"},
+    {"nume": "capabilitati_element", "metoda": "OPTIONS", "ruta": "/masuratori/<id>"},
+    {"nume": "trace_element", "metoda": "TRACE", "ruta": "/masuratori/<id>"},
+    {"nume": "trace_element_ui", "metoda": "POST", "ruta": "/masuratori/trace/element/<id>"},
+]
+
+CAMPURI_OPTIONALE = [
+    "location",
+    "description",
+    "category",
+    "sensor_name",
+    "sensor_model",
+    "sensor_manufacturer",
+    "operator_name",
+    "city",
+    "county",
+    "source_system",
+    "tags",
+    "sampling_interval_seconds",
+    "measurement_summary",
+]
+
 
 def acum_utc_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -118,19 +213,6 @@ def valideaza_payload(payload):
         if not moment:
             return None, "timestamp/moment trebuie să fie text nevid dacă este trimis."
 
-    campuri_text_optionale = {
-        "location": ["location", "locatie", "pozitie_instalare"],
-        "description": ["description", "descriere", "detalii"],
-        "category": ["category", "categorie", "domeniu"],
-        "sensor_name": ["sensor_name", "nume_senzor"],
-        "sensor_model": ["sensor_model", "model_senzor"],
-        "sensor_manufacturer": ["sensor_manufacturer", "producator_senzor"],
-        "operator_name": ["operator_name", "responsabil", "persoana_responsabila"],
-        "city": ["city", "oras"],
-        "county": ["county", "judet"],
-        "source_system": ["source_system", "sursa_date", "platforma_sursa"],
-    }
-
     rezultat = {
         "station": statie,
         "metric": indicator,
@@ -139,7 +221,7 @@ def valideaza_payload(payload):
         "timestamp": moment,
     }
 
-    for camp, aliasuri in campuri_text_optionale.items():
+    for camp, aliasuri in CAMPURI_TEXT_OPTIONALE.items():
         valoare_text = text_scurt(prima_valoare(payload, aliasuri))
         if valoare_text:
             rezultat[camp] = valoare_text
@@ -166,12 +248,8 @@ def raspuns_eroare(mesaj, cod=400):
     return jsonify({"eroare": mesaj}), cod
 
 
-def metode_cu_head_unice(metode):
-    return list(dict.fromkeys([*metode, "HEAD"]))
-
-
 def header_allow_pentru(metode):
-    return ", ".join(metode_cu_head_unice(metode))
+    return ", ".join(metode)
 
 
 @app.after_request
@@ -183,12 +261,11 @@ def adauga_antete_cors(raspuns):
 
 
 def raspuns_options(ruta, metode, descriere_resursa):
-    metode_permise = metode_cu_head_unice(metode)
     payload = {
         "tip_raspuns": "options",
         "ruta": ruta,
         "resursa": descriere_resursa,
-        "metode_permise": metode_permise,
+        "metode_permise": metode,
         "nota": "Metoda OPTIONS descrie capabilitățile resursei.",
     }
 
@@ -233,58 +310,13 @@ def raspuns_colectie():
         "operatii_colectie": METODE_COLECTIE,
         "operatii_element": METODE_ELEMENT,
         "operatii_ui": METODE_COLECTIE,
-        "etichete_ui": {
-            "GET": "preia / vezi",
-            "HEAD": "verifică antete / existență",
-            "POST": "adaugă / creează",
-            "PUT": "înlocuiește / salvează",
-            "PATCH": "actualizare parțială",
-            "DELETE": "șterge",
-            "OPTIONS": "capacități / metode permise",
-            "TRACE": "diagnostic trasabilitate",
-        },
+        "etichete_ui": ETICHETE_UI_OPERATII,
         "nota_operatii_ui": "În browser, TRACE este disponibil prin butoane helper care trimit POST către endpointuri dedicate.",
         "regula_date": "Operațiile de scriere folosesc exclusiv date externe (Nominatim + Open-Meteo).",
-        "actiuni_semantice_colectie": [
-            {"nume": "preia_masuratori", "metoda": "GET", "ruta": "/masuratori"},
-            {"nume": "verifica_antete_colectie", "metoda": "HEAD", "ruta": "/masuratori"},
-            {"nume": "adauga_masurare", "metoda": "POST", "ruta": "/masuratori"},
-            {"nume": "inlocuieste_colectia", "metoda": "PUT", "ruta": "/masuratori"},
-            {"nume": "actualizeaza_partial_colectia", "metoda": "PATCH", "ruta": "/masuratori"},
-            {"nume": "goleste_colectia", "metoda": "DELETE", "ruta": "/masuratori"},
-            {"nume": "capabilitati_colectie", "metoda": "OPTIONS", "ruta": "/masuratori"},
-            {"nume": "trace_colectie", "metoda": "TRACE", "ruta": "/masuratori"},
-            {"nume": "trace_colectie_ui", "metoda": "POST", "ruta": "/masuratori/trace/colectie"},
-            {"nume": "preview_date_externe", "metoda": "POST", "ruta": "/masuratori/preview-extern"},
-            {"nume": "sincronizeaza_din_open_meteo", "metoda": "POST", "ruta": "/masuratori/sincronizeaza"},
-        ],
-        "actiuni_semantice_element": [
-            {"nume": "vezi_masurare", "metoda": "GET", "ruta": "/masuratori/<id>"},
-            {"nume": "verifica_antete_element", "metoda": "HEAD", "ruta": "/masuratori/<id>"},
-            {"nume": "creeaza_masurare_la_id", "metoda": "POST", "ruta": "/masuratori/<id>"},
-            {"nume": "salveaza_masurare", "metoda": "PUT", "ruta": "/masuratori/<id>"},
-            {"nume": "actualizeaza_partial_element", "metoda": "PATCH", "ruta": "/masuratori/<id>"},
-            {"nume": "sterge_masurare", "metoda": "DELETE", "ruta": "/masuratori/<id>"},
-            {"nume": "capabilitati_element", "metoda": "OPTIONS", "ruta": "/masuratori/<id>"},
-            {"nume": "trace_element", "metoda": "TRACE", "ruta": "/masuratori/<id>"},
-            {"nume": "trace_element_ui", "metoda": "POST", "ruta": "/masuratori/trace/element/<id>"},
-        ],
+        "actiuni_semantice_colectie": ACTIUNI_SEMANTICE_COLECTIE,
+        "actiuni_semantice_element": ACTIUNI_SEMANTICE_ELEMENT,
         "campuri_principale": ["id", "station", "metric", "value", "unit", "timestamp"],
-        "campuri_optionale": [
-            "location",
-            "description",
-            "category",
-            "sensor_name",
-            "sensor_model",
-            "sensor_manufacturer",
-            "operator_name",
-            "city",
-            "county",
-            "source_system",
-            "tags",
-            "sampling_interval_seconds",
-            "measurement_summary",
-        ],
+        "campuri_optionale": CAMPURI_OPTIONALE,
         "numar_elemente": len(baza_masuratori),
         "elemente": lista_ordonata(),
     }
@@ -405,37 +437,8 @@ def payloaduri_din_open_meteo(info_geo, meteo):
         "moment_inregistrare": moment,
     }
 
-    mapare_metrici = [
-        {
-            "cheie": "relative_humidity_2m",
-            "indicator": "umiditate relativă",
-            "unitate_implicita": "u.m.",
-        },
-        {
-            "cheie": "wind_speed_10m",
-            "indicator": "viteză vânt la 10m",
-            "unitate_implicita": "u.m.",
-        },
-        {
-            "cheie": "pressure_msl",
-            "indicator": "presiune atmosferică la nivelul mării",
-            "unitate_implicita": "u.m.",
-        },
-        {
-            "cheie": "precipitation",
-            "indicator": "precipitații curente",
-            "unitate_implicita": "u.m.",
-        },
-        {
-            "cheie": "temperature_2m",
-            "indicator": "temperatură aer exterior",
-            "unitate_implicita": "°C",
-            "fara_valori_negative": True,
-        },
-    ]
-
     payloaduri = []
-    for metrica in mapare_metrici:
+    for metrica in MAPARE_METRICI_OPEN_METEO:
         cheie_api = metrica["cheie"]
         valoare = valori_curente.get(cheie_api)
         if valoare is None:
@@ -465,15 +468,6 @@ def text_normalizat(valoare):
     baza = unicodedata.normalize("NFD", valoare.lower())
     fara_diacritice = "".join(caracter for caracter in baza if unicodedata.category(caracter) != "Mn")
     return " ".join(fara_diacritice.split())
-
-
-def extrage_payload_obiect_din_request():
-    payload = request.get_json(silent=True)
-    if payload is None:
-        return {}, None
-    if not isinstance(payload, dict):
-        return None, raspuns_eroare("Body trebuie să fie obiect JSON.", 400)
-    return payload, None
 
 
 def extrage_localizare(payload):
@@ -511,9 +505,11 @@ def pregateste_date_externe(payload):
 
 
 def extrage_date_externe_din_request():
-    payload, raspuns_eroare_payload = extrage_payload_obiect_din_request()
-    if raspuns_eroare_payload:
-        return None, None, raspuns_eroare_payload
+    payload = request.get_json(silent=True)
+    if payload is None:
+        payload = {}
+    elif not isinstance(payload, dict):
+        return None, None, raspuns_eroare("Body trebuie să fie obiect JSON.", 400)
 
     try:
         date_externe = pregateste_date_externe(payload)
@@ -546,23 +542,6 @@ def selecteaza_element_extern(elemente_validate, payload_client):
             return element
 
     return elemente_validate[0]
-
-
-def selectie_element_extern_sau_eroare(date_externe, payload_client, actiune, mesaj_eroare, extra=None):
-    element = selecteaza_element_extern(date_externe["elemente_validate"], payload_client)
-    if element is not None:
-        return element, None
-
-    payload_eroare = {
-        "eroare": mesaj_eroare,
-        "actiune": actiune,
-        "numar_ignorate": len(date_externe["elemente_ignorate"]),
-        "elemente_ignorate": date_externe["elemente_ignorate"],
-    }
-    if extra:
-        payload_eroare.update(extra)
-
-    return None, make_response(jsonify(payload_eroare), 502)
 
 
 def gaseste_id_dupa_metric_si_oras(metric_cautat, oras_cautat):
@@ -625,19 +604,19 @@ def extrage_element_extern_din_request(actiune, mesaj_eroare, extra=None, adauga
     if raspuns_eroare_externa:
         return None, None, raspuns_eroare_externa
 
-    extra_final = dict(extra or {})
-    if adauga_oras_cerut:
-        extra_final["oras_cerut"] = date_externe["oras_cerut"]
-
-    element, raspuns_selectie = selectie_element_extern_sau_eroare(
-        date_externe,
-        payload,
-        actiune,
-        mesaj_eroare,
-        extra=extra_final or None,
-    )
-    if raspuns_selectie:
-        return None, None, raspuns_selectie
+    element = selecteaza_element_extern(date_externe["elemente_validate"], payload)
+    if element is None:
+        payload_eroare = {
+            "eroare": mesaj_eroare,
+            "actiune": actiune,
+            "numar_ignorate": len(date_externe["elemente_ignorate"]),
+            "elemente_ignorate": date_externe["elemente_ignorate"],
+        }
+        if adauga_oras_cerut:
+            payload_eroare["oras_cerut"] = date_externe["oras_cerut"]
+        if extra:
+            payload_eroare.update(extra)
+        return None, None, make_response(jsonify(payload_eroare), 502)
 
     return element, date_externe, None
 

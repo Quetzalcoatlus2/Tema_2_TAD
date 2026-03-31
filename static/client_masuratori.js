@@ -102,33 +102,35 @@ async function apeleazaApi(metoda, ruta, body) {
   afiseazaRezultat(response, payload)
 }
 
-function caleaElement() {
+function idElementCurent() {
   const input = element("itemId")
   const id = idPozitiv(input?.value.trim())
   if (id === null) {
     throw new Error("ID-ul trebuie să fie un număr întreg pozitiv")
   }
-  return `/masuratori/${id}`
+  return id
+}
+
+function caleaElement() {
+  return `/masuratori/${idElementCurent()}`
 }
 
 function construiestePayloadExtern(idIndicator) {
-  const mapari = [
-    ["externalCity", "oras"],
-    ["externalCountry", "tara"],
-    [idIndicator, "indicator"],
-  ]
-
   const body = {}
-  for (const [idInput, camp] of mapari) {
-    if (!idInput) {
-      continue
-    }
+  const oras = element("externalCity")?.value.trim()
+  const tara = element("externalCountry")?.value.trim()
+  const indicator = idIndicator ? element(idIndicator)?.value.trim() : ""
 
-    const valoare = element(idInput)?.value.trim() || ""
-    if (valoare) {
-      body[camp] = valoare
-    }
+  if (oras) {
+    body.oras = oras
   }
+  if (tara) {
+    body.tara = tara
+  }
+  if (indicator) {
+    body.indicator = indicator
+  }
+
   return body
 }
 
@@ -148,48 +150,42 @@ function leagaButon(idButon, actiuneAsync) {
 }
 
 const RUTA_COLECTIE = "/masuratori"
-const METODE_COLECTIE_FARA_BODY = {
-  getCollection: "GET",
-  headCollection: "HEAD",
-  deleteCollection: "DELETE",
-  optionsCollection: "OPTIONS",
-}
-const METODE_ITEM_FARA_BODY = {
-  getItem: "GET",
-  headItem: "HEAD",
-  deleteItem: "DELETE",
-  optionsItem: "OPTIONS",
-}
-const METODE_COLECTIE_CU_BODY = {
-  postCollection: "POST",
-  putCollection: "PUT",
-  patchCollection: "PATCH",
-}
-const METODE_ITEM_CU_BODY = {
-  postItem: "POST",
-  putItem: "PUT",
-  patchItem: "PATCH",
+
+function leagaActiuniApi() {
+  const actiuni = [
+    { idButon: "getCollection", metoda: "GET", ruta: () => RUTA_COLECTIE },
+    { idButon: "headCollection", metoda: "HEAD", ruta: () => RUTA_COLECTIE },
+    { idButon: "deleteCollection", metoda: "DELETE", ruta: () => RUTA_COLECTIE },
+    { idButon: "optionsCollection", metoda: "OPTIONS", ruta: () => RUTA_COLECTIE },
+
+    { idButon: "postCollection", metoda: "POST", ruta: () => RUTA_COLECTIE, indicator: "externalMetric" },
+    { idButon: "putCollection", metoda: "PUT", ruta: () => RUTA_COLECTIE, indicator: "externalMetric" },
+    { idButon: "patchCollection", metoda: "PATCH", ruta: () => RUTA_COLECTIE, indicator: "externalMetric" },
+
+    { idButon: "getItem", metoda: "GET", ruta: caleaElement },
+    { idButon: "headItem", metoda: "HEAD", ruta: caleaElement },
+    { idButon: "deleteItem", metoda: "DELETE", ruta: caleaElement },
+    { idButon: "optionsItem", metoda: "OPTIONS", ruta: caleaElement },
+
+    { idButon: "postItem", metoda: "POST", ruta: caleaElement, indicator: "itemMetric" },
+    { idButon: "putItem", metoda: "PUT", ruta: caleaElement, indicator: "itemMetric" },
+    { idButon: "patchItem", metoda: "PATCH", ruta: caleaElement, indicator: "itemMetric" },
+
+    { idButon: "syncExternal", metoda: "POST", ruta: () => "/masuratori/sincronizeaza", indicator: "externalMetric" },
+    { idButon: "previewExternal", metoda: "POST", ruta: () => "/masuratori/preview-extern", indicator: "externalMetric" },
+    { idButon: "traceCollection", metoda: "POST", ruta: () => "/masuratori/trace/colectie" },
+    { idButon: "traceItem", metoda: "POST", ruta: () => `/masuratori/trace/element/${idElementCurent()}` },
+  ]
+
+  for (const actiune of actiuni) {
+    leagaButon(actiune.idButon, () => {
+      const body = actiune.indicator ? construiestePayloadExtern(actiune.indicator) : undefined
+      return apeleazaApi(actiune.metoda, actiune.ruta(), body)
+    })
+  }
 }
 
-for (const [idButon, metoda] of Object.entries(METODE_COLECTIE_FARA_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, RUTA_COLECTIE))
-}
-for (const [idButon, metoda] of Object.entries(METODE_COLECTIE_CU_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, RUTA_COLECTIE, construiestePayloadExtern("externalMetric")))
-}
-for (const [idButon, metoda] of Object.entries(METODE_ITEM_FARA_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, caleaElement()))
-}
-for (const [idButon, metoda] of Object.entries(METODE_ITEM_CU_BODY)) {
-  leagaButon(idButon, () => apeleazaApi(metoda, caleaElement(), construiestePayloadExtern("itemMetric")))
-}
-leagaButon("syncExternal", () => apeleazaApi("POST", "/masuratori/sincronizeaza", construiestePayloadExtern("externalMetric")))
-leagaButon("previewExternal", () => apeleazaApi("POST", "/masuratori/preview-extern", construiestePayloadExtern("externalMetric")))
-leagaButon("traceCollection", () => apeleazaApi("POST", "/masuratori/trace/colectie"))
-leagaButon("traceItem", () => {
-  const id = caleaElement().split("/").pop()
-  return apeleazaApi("POST", `/masuratori/trace/element/${id}`)
-})
+leagaActiuniApi()
 
 for (const idSelect of ["externalMetric", "itemMetric"]) {
   populeazaSelectIndicator(idSelect)
